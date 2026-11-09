@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>文本整理 · 行排序 / 去重 / 去空行 - util123 工具箱</title>
+<meta name="description" content="免费在线文本整理工具：按行排序、去除重复行、删除空行、每行首尾去空格。处理日志、名单、ID 列表很顺手。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/lines/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="文本整理,行排序,去重,删除空行,首尾去空格,文本处理,在线文本工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="文本整理 · 行排序 / 去重 / 去空行">
+<meta property="og:description" content="按行排序、去除重复行、删除空行、每行首尾去空格。处理日志、名单、ID 列表很顺手。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/lines/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文本整理 · 行排序 / 去重 / 去空行">
+<meta name="twitter:description" content="按行排序、去重、去空行、去空格。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="23" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="22" fill="white">&#182;</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/lines/#app","name":"文本整理工具","url":"https://util123.cn/lines/","description":"在线文本整理：按行排序、去除重复行、删除空行、每行首尾去空格。处理日志、名单、ID 列表很顺手。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["按行排序（升序/降序）","去除重复行","删除空行","每行首尾去空格","一键整理全部"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"文本整理","item":"https://util123.cn/lines/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"去重会保留原来的顺序吗？","acceptedAnswer":{"@type":"Answer","text":"会。本工具去重时保留每行第一次出现的位置，只删除后面重复的行，顺序不乱。"}},
+{"@type":"Question","name":"排序区分大小写吗？","acceptedAnswer":{"@type":"Answer","text":"区分。大写字母排在小写字母之前（按 Unicode 码点排序），中文按拼音顺序不保证，需要精确中文排序建议先用其它工具。"}},
+{"@type":"Question","name":"整理过程会上传文本吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有处理都在浏览器本地完成，文本不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="23" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="22" fill="#fff">&#182;</text>
+      </svg>
+      <span class="name">文本整理</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 行排序 / 去重 / 去空行</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f1" aria-hidden="true">&#182;</div>
+    <h1>文本<span class="grad">整理</span></h1>
+    <p>把一段乱糟糟的多行文本理顺：排序、去重、去空行、去首尾空格。点一下，干净利落。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">原始文本 <span class="tip">（每行一项）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="把要整理的列表粘进来，一行一项……"></textarea>
+      <div class="toolbar">
+        <button id="btnSample">填入示例</button>
+        <button id="btnClear">清空</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">整理操作</span>
+      <div class="row">
+        <span class="seg" id="segOrder" role="group" aria-label="排序方式">
+          <button data-order="asc" class="on">升序</button>
+          <button data-order="desc">降序</button>
+        </span>
+        <label class="chk" id="lbDedup"><input type="checkbox" id="ckDedup">去重（保留首次）</label>
+        <label class="chk" id="lbBlank"><input type="checkbox" id="ckBlank">删空行</label>
+        <label class="chk" id="lbTrim"><input type="checkbox" id="ckTrim">首尾去空格</label>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="btnRun">整理</button>
+        <button id="btnAll">一键整理（全选）</button>
+      </div>
+      <span class="lbl" style="margin-top:18px">结果 <span class="tip" id="outInfo"></span></span>
+      <div class="out-box" id="out">—</div>
+      <div class="status" id="status">点「整理」后在这里显示结果，可直接复制。</div>
+      <div class="toolbar">
+        <button id="btnCopy">复制结果</button>
+        <button id="btnDl">下载为 .txt</button>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>去重会保留原来的顺序吗？</dt>
+      <dd>会。本工具去重时保留每行第一次出现的位置，只删除后面重复的行，顺序不乱。</dd>
+      <dt>排序区分大小写吗？</dt>
+      <dd>区分。大写字母排在小写字母之前（按 Unicode 码点排序），中文按拼音顺序不保证，需要精确中文排序建议先用其它工具。</dd>
+      <dt>整理过程会上传文本吗？</dt>
+      <dd>不会。所有处理都在浏览器本地完成，文本不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var outText = '';
+
+function setStatus(msg, type){ var s = $('status'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+function run(){
+  var raw = $('inp').value;
+  if(!raw){ setStatus('请先在上方粘贴文本。', ''); return; }
+  var lines = raw.split(/\r?\n/);
+  var order = $('segOrder').dataset.order || 'asc';
+
+  if($('ckTrim').checked) lines = lines.map(function(l){ return l.replace(/^\s+|\s+$/g, ''); });
+  if($('ckBlank').checked) lines = lines.filter(function(l){ return l.length > 0; });
+  if($('ckDedup').checked){
+    /* 用无原型对象，避免 constructor/toString/__proto__ 等行被误判重复而吞掉 */
+    var seen = Object.create(null), out = [];
+    lines.forEach(function(l){ if(!seen[l]){ seen[l] = 1; out.push(l); } });
+    lines = out;
+  }
+  lines.sort(function(a, b){ return order === 'asc' ? (a < b ? -1 : a > b ? 1 : 0) : (a > b ? -1 : a < b ? 1 : 0); });
+
+  outText = lines.join('\n');
+  $('out').textContent = outText || '（结果为空）';
+  $('outInfo').textContent = '共 ' + lines.length + ' 行';
+  setStatus('整理完成 · 剩余 ' + lines.length + ' 行。', 'ok');
+}
+
+/* 分段控件：排序方式 */
+UY.qsa('#segOrder button').forEach(function(b){
+  b.onclick = function(){
+    UY.qsa('#segOrder button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    $('segOrder').dataset.order = b.dataset.order;
+  };
+});
+/* 勾选项视觉 */
+[['ckDedup','lbDedup'],['ckBlank','lbBlank'],['ckTrim','lbTrim']].forEach(function(p){
+  $(p[0]).addEventListener('change', function(){ $(p[1]).classList.toggle('on', $(p[0]).checked); });
+});
+
+$('btnSample').onclick = function(){
+  $('inp').value = ['banana','Apple','  cherry  ','apple','','durian','Banana','  apple','fig',''];
+  run();
+};
+$('btnClear').onclick = function(){ $('inp').value=''; outText=''; $('out').textContent='—'; $('outInfo').textContent=''; setStatus('点「整理」后在这里显示结果，可直接复制。', ''); };
+$('btnRun').onclick = run;
+$('btnAll').onclick = function(){
+  $('ckDedup').checked = true; $('lbDedup').classList.add('on');
+  $('ckBlank').checked = true; $('lbBlank').classList.add('on');
+  $('ckTrim').checked = true; $('lbTrim').classList.add('on');
+  run();
+};
+$('btnCopy').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可复制'); return; }
+  UY.copyWith(outText, '结果已复制');
+};
+$('btnDl').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可下载'); return; }
+  UY.download('lines-util123.txt', URL.createObjectURL(new Blob([outText], { type: 'text/plain;charset=utf-8' })));
+  UY.toast('已下载 txt');
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

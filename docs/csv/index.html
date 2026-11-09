@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSV ↔ JSON 互转 · 表格数据转换 - util123 工具箱</title>
+<meta name="description" content="免费在线 CSV 与 JSON 互转工具：CSV 转 JSON 数组，JSON 数组转 CSV。支持带引号字段，纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/csv/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="CSV转JSON,JSON转CSV,CSV JSON 互转,表格转换,数据格式,在线工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="CSV ↔ JSON 互转">
+<meta property="og:description" content="CSV 转 JSON、JSON 转 CSV，支持带引号字段。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/csv/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSV ↔ JSON 互转">
+<meta name="twitter:description" content="CSV 与 JSON 互转，支持带引号字段。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="15" fill="white">⇄</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/csv/#app","name":"CSV ↔ JSON 互转工具","url":"https://util123.cn/csv/","description":"在线把 CSV 与 JSON 互转：CSV 转 JSON 数组、JSON 数组转 CSV，支持带引号字段。纯前端运行，数据不上传。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["CSV 转 JSON 数组","JSON 数组转 CSV","支持带引号字段","首行作表头"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"CSV ↔ JSON","item":"https://util123.cn/csv/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"CSV 的第一行是表头吗？","acceptedAnswer":{"@type":"Answer","text":"是的。CSV 转 JSON 时，第一行会被当作字段名（表头），后续每行生成一个对象。如果第一行就是数据，得到的对象键会是 c1、c2… 这样的默认列名。"}},
+{"@type":"Question","name":"支持带引号的字段吗？","acceptedAnswer":{"@type":"Answer","text":"支持。字段可用双引号包裹，引号内的逗号、换行会被当作字段内容；连续两个双引号表示一个双引号字符，符合 RFC 4180 常见约定。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。转换完全在浏览器本地完成，文本不会发送到任何服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="15" fill="#fff">⇄</text>
+      </svg>
+      <span class="name">CSV ↔ JSON</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 表格数据互转</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">⇄</div>
+    <h1>CSV <span class="grad">↔</span> JSON</h1>
+    <p>CSV 与 JSON 数组互转，支持带引号字段。处理表格、接口数据随手就用。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入（CSV 或 JSON 数组）</span>
+      <textarea id="inp" spellcheck="false" placeholder="name,age,city&#10;张三,28,北京&#10;李四,33,上海"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnToJson">CSV → JSON</button>
+        <button id="btnToCsv">JSON → CSV</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="note" id="note">提示：CSV 第一行作为表头；JSON 需为数组，如 [{"a":1},{"a":2}]。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">转换结果</span>
+      <textarea id="out" spellcheck="false" placeholder="结果会出现在这里"></textarea>
+      <div class="toolbar">
+        <button id="btnCopy">复制结果</button>
+      </div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>CSV 的第一行是表头吗？</dt>
+      <dd>是的。CSV 转 JSON 时第一行作字段名，后续每行生成一个对象；若第一行就是数据，键会是 c1、c2… 默认列名。</dd>
+      <dt>支持带引号的字段吗？</dt>
+      <dd>支持。双引号包裹的字段里，逗号、换行视为内容；连续两个双引号表示一个双引号字符，符合常见 CSV 约定。</dd>
+      <dt>数据会上传吗？</dt>
+      <dd>不会。转换完全在浏览器本地完成，文本不会发送到任何服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+function parseCsv(t){
+  t = String(t).replace(/^\ufeff/, '');   // 剥离 Excel 导出的 UTF-8 BOM
+  var rows = [], row = [], field = '', i = 0, inQ = false;
+  while (i < t.length){
+    var c = t.charAt(i);
+    if (inQ){
+      if (c === '"'){ if (t.charAt(i + 1) === '"'){ field += '"'; i++; } else { inQ = false; } }
+      else { field += c; }
+    } else {
+      if (c === '"') inQ = true;
+      else if (c === ','){ row.push(field); field = ''; }
+      else if (c === '\n'){ row.push(field); rows.push(row); row = []; field = ''; }
+      else if (c === '\r'){ /* skip */ }
+      else field += c;
+    }
+    i++;
+  }
+  if (field !== '' || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(function(r){ return r.length > 1 || (r.length === 1 && r[0] !== ''); });
+}
+function csvToJson(t){
+  var rows = parseCsv(t);
+  if (!rows.length) return [];
+  var head = rows[0], seen = {};
+  return rows.slice(1).map(function(r){
+    var o = {};
+    head.forEach(function(h, idx){
+      /* 重名列加序号后缀，避免后者覆盖前者 */
+      var k = h && h !== '' ? h : ('c' + (idx + 1));
+      if (seen[k]){ var n = 2; while (seen[k + '_' + n]) n++; k = k + '_' + n; }
+      seen[k] = true;
+      o[k] = r[idx] !== undefined ? r[idx] : '';
+    });
+    return o;
+  });
+}
+function jsonToCsv(t){
+  var data = JSON.parse(t);
+  if (!Array.isArray(data)) throw new Error('JSON 顶层必须是数组');
+  if (!data.length) return '';
+  var cols = [];
+  data.forEach(function(o){ Object.keys(o).forEach(function(k){ if (cols.indexOf(k) < 0) cols.push(k); }); });
+  /* 嵌套对象/数组序列化为 JSON 串，不再静默变成 [object Object] */
+  var esc = function(v){
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'object') v = JSON.stringify(v);
+    v = String(v);
+    return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  };
+  var lines = [cols.join(',')];
+  data.forEach(function(o){ lines.push(cols.map(function(k){ return esc(o[k]); }).join(',')); });
+  return lines.join('\n');
+}
+function setOut(s){ $('out').value = s; }
+$('btnSample').onclick = function(){
+  $('inp').value = 'name,age,city\nAlice,28,New York\nBob,33,Beijing';
+  $('btnToJson').onclick();
+};
+$('btnToJson').onclick = function(){
+  try {
+    var rows = parseCsv($('inp').value);
+    if (!rows.length){ UY.toast('请输入 CSV 内容'); return; }
+    setOut(JSON.stringify(csvToJson($('inp').value), null, 2));
+    $('note').textContent = '✅ 已转为 JSON（' + (rows.length - 1) + ' 行）。';
+  } catch (e){ $('note').textContent = '⚠️ ' + e.message; }
+};
+$('btnToCsv').onclick = function(){
+  try {
+    setOut(jsonToCsv($('inp').value.trim()));
+    $('note').textContent = '✅ 已转为 CSV。';
+  } catch (e){ $('note').textContent = '⚠️ ' + e.message; }
+};
+$('btnClear').onclick = function(){ $('inp').value = ''; setOut(''); $('note').textContent = '提示：CSV 第一行作为表头；JSON 需为数组。'; };
+$('btnCopy').onclick = function(){
+  if (!$('out').value){ UY.toast('还没有结果'); return; }
+  UY.copyWith($('out').value, '结果已复制');
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

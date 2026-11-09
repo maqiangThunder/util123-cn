@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>字数统计 · 字符 / 词 / 行 / 字节计数 - util123 工具箱</title>
+<meta name="description" content="免费在线字数统计工具：实时统计字符数（含/不含空格）、单词数、行数、UTF-8 字节数、汉字数与数字个数。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/counter/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="字数统计,字符统计,在线字数统计,字符数,单词数,行数,字节数,汉字统计,字数计数器">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="字数统计 · 字符 / 词 / 行 / 字节计数">
+<meta property="og:description" content="实时统计字符数（含/不含空格）、单词数、行数、UTF-8 字节数、汉字数与数字个数。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/counter/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字数统计 · 字符 / 词 / 行 / 字节计数">
+<meta name="twitter:description" content="实时统计字符数、单词数、行数、字节数等。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="18" fill="white">&#931;</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/counter/#app","name":"字数统计工具","url":"https://util123.cn/counter/","description":"在线字数统计：实时统计字符数（含/不含空格）、单词数、行数、UTF-8 字节数、汉字数与数字个数。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["字符数（含/不含空格）","单词数","行数","UTF-8 字节数","汉字数","数字个数","实时统计"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"字数统计","item":"https://util123.cn/counter/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"字数统计里的「字符数」算不算空格？","acceptedAnswer":{"@type":"Answer","text":"本工具同时给出「含空格」和「不含空格」两个数字。写文章发朋友圈时通常看「不含空格」；程序里算长度往往看「含空格」。"}},
+{"@type":"Question","name":"字节数和字符数为什么不一样？","acceptedAnswer":{"@type":"Answer","text":"一个英文字符通常占 1 字节，一个汉字按 UTF-8 占 3 字节，emoji 可能占 4 字节。所以中文字多的内容，字节数会明显大于字符数。"}},
+{"@type":"Question","name":"统计过程会上传我的文本吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有统计都在浏览器本地实时完成，文本不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="18" fill="#fff">&#931;</text>
+      </svg>
+      <span class="name">字数统计</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 字符 / 词 / 行 / 字节计数</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f1" aria-hidden="true">&#931;</div>
+    <h1>字数<span class="grad">统计</span></h1>
+    <p>实时统计字符数、单词数、行数、字节数，顺便数数汉字和数字。边打字边看，不用点按钮。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入文本 <span class="tip">（输入即统计，纯本地运行）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="在这里粘贴或输入文字……&#10;中英文混排也没问题。"></textarea>
+      <div class="toolbar">
+        <button id="btnClear">清空</button>
+        <button id="btnSample">填入示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">统计结果</span>
+      <div class="grid" id="stat" style="margin-top:0"></div>
+      <div class="hint" style="margin-top:12px">· 单词数按空白（空格 / 换行 / Tab）切分，适合英文；中文按「汉字个数」单独统计。<br>· 字节数按 UTF-8 计算，一个汉字约 3 字节。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>字数统计里的「字符数」算不算空格？</dt>
+      <dd>本工具同时给出「含空格」和「不含空格」两个数字。写文章发朋友圈通常看「不含空格」；程序里算长度往往看「含空格」。</dd>
+      <dt>字节数和字符数为什么不一样？</dt>
+      <dd>一个英文字符通常占 1 字节，一个汉字按 UTF-8 占 3 字节，emoji 可能占 4 字节。所以中文字多的内容，字节数会明显大于字符数。</dd>
+      <dt>统计过程会上传我的文本吗？</dt>
+      <dd>不会。所有统计都在浏览器本地实时完成，文本不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var SAMPLE = '床前明月光，疑是地上霜。\n举头望明月，低头思故乡。\n\nThe quick brown fox jumps over 13 lazy dogs.';
+
+function setStat(el, rows){
+  el.innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">'+UY.esc(r[0])+'</div><div class="v">'+UY.esc(r[1])+'</div></div>';
+  }).join('');
+}
+
+function calc(){
+  var text = $('inp').value;
+  var charsAll = text.length;
+  var charsNoSpace = text.replace(/\s/g, '').length;
+  var han = (text.match(/[一-龥]/g) || []).length;
+  var digits = (text.match(/[0-9]/g) || []).length;
+  var words = (text.trim().match(/\S+/g) || []).length;
+  var lines = text === '' ? 0 : text.split(/\n/).length;
+  var bytes = new TextEncoder().encode(text).length;
+  setStat($('stat'), [
+    ['字符数（含空格）', charsAll.toLocaleString()],
+    ['字符数（不含空格）', charsNoSpace.toLocaleString()],
+    ['单词数', words.toLocaleString()],
+    ['行数', lines.toLocaleString()],
+    ['汉字数', han.toLocaleString()],
+    ['数字个数', digits.toLocaleString()],
+    ['UTF-8 字节数', bytes.toLocaleString()]
+  ]);
+}
+
+$('inp').addEventListener('input', calc);
+$('btnClear').onclick = function(){ $('inp').value=''; calc(); $('inp').focus(); };
+$('btnSample').onclick = function(){ $('inp').value = SAMPLE; calc(); };
+calc();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

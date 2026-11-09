@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>哈希计算 · MD5 / SHA-1 / SHA-256 / SHA-512 在线计算 - util123 工具箱</title>
+<meta name="description" content="免费在线哈希计算工具：一键算出文本的 MD5、SHA-1、SHA-256、SHA-512 摘要，也支持对文件计算哈希，结果可复制为小写或大写。纯前端处理，内容不上传服务器。">
+<link rel="canonical" href="https://util123.cn/hash/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="哈希计算,MD5,SHA256,SHA512,SHA1,哈希值,文件哈希,摘要算法,在线哈希">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="哈希计算 · MD5 / SHA-1 / SHA-256 / SHA-512 在线计算">
+<meta property="og:description" content="一键计算文本或文件的 MD5 / SHA-1 / SHA-256 / SHA-512 摘要，结果可复制。纯前端处理，内容不上传。">
+<meta property="og:url" content="https://util123.cn/hash/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哈希计算 · MD5 / SHA-1 / SHA-256 / SHA-512 在线计算">
+<meta name="twitter:description" content="一键计算文本或文件的 MD5 / SHA-1 / SHA-256 / SHA-512 摘要，结果可复制。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">H%23</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/hash/#app","name":"哈希计算工具","url":"https://util123.cn/hash/","description":"在线哈希计算工具：一键计算文本或文件的 MD5、SHA-1、SHA-256、SHA-512 摘要，支持大小写切换与复制。纯前端处理，内容不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["MD5 计算","SHA-1 计算","SHA-256 计算","SHA-512 计算","文件哈希","结果复制/大写切换"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"哈希计算","item":"https://util123.cn/hash/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"MD5 和 SHA-256 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"MD5 输出 128 位（32 个十六进制字符），速度快但已被证明存在碰撞漏洞，不适合做安全校验；SHA-256 输出 256 位（64 个字符），安全性更高，常用于文件完整性校验和数字签名。"}},
+{"@type":"Question","name":"哈希（Hash）是加密吗？能还原原文吗？","acceptedAnswer":{"@type":"Answer","text":"不是加密，也不能还原。哈希是单向摘要算法，把任意长度内容变成固定长度的字符串；哪怕原文只改一个字符，结果也会完全不同。它用来校验完整性，不能据此反推原文。"}},
+{"@type":"Question","name":"可以用来校验下载文件是否被篡改吗？","acceptedAnswer":{"@type":"Answer","text":"可以。软件发布页通常会给出安装包的 SHA-256 值，你用本工具对下载下来的文件算一次哈希，与官方公布的值一致，就说明文件没被篡改或损坏。"}},
+{"@type":"Question","name":"计算哈希会上传我的文本或文件吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有计算都在浏览器本地完成，文本与文件都不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">H#</text>
+      </svg>
+      <span class="name">哈希计算</span>
+    </a>
+    <span class="tagline">util123 工具箱 · MD5 / SHA-1 / SHA-256 / SHA-512</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">H#</div>
+    <h1>哈希<span class="grad">计算</span></h1>
+    <p>一键算出文本或文件的 MD5、SHA-1、SHA-256、SHA-512 摘要，结果可复制为小写或大写。纯前端处理，内容不上传服务器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">算法 <span class="tip">（可多选，至少选一种）</span></span>
+      <div class="row" id="algoRow">
+        <label class="chk on"><input type="checkbox" class="ck-algo" value="md5" checked>MD5</label>
+        <label class="chk"><input type="checkbox" class="ck-algo" value="sha1">SHA-1</label>
+        <label class="chk on"><input type="checkbox" class="ck-algo" value="sha256" checked>SHA-256</label>
+        <label class="chk"><input type="checkbox" class="ck-algo" value="sha512">SHA-512</label>
+      </div>
+
+      <span class="lbl" style="margin-top:18px">输入 <span class="tip">（原文，或选择下方文件）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="粘贴要计算哈希的文本……"></textarea>
+
+      <div class="row" style="margin-top:12px">
+        <label class="chk" id="lbUpper"><input type="checkbox" id="ckUpper">结果转为大写</label>
+        <label class="chk" style="cursor:pointer">
+          <input type="file" id="file" style="display:none">选择文件计算哈希
+        </label>
+        <button id="btnClearFile" style="height:38px;display:none">移除文件</button>
+      </div>
+      <div class="status" id="fileStatus">也可以选择一个本地文件，对文件内容计算哈希。</div>
+
+      <div class="toolbar">
+        <button class="primary" id="btnCalc">计算哈希</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">结果</span>
+      <div id="res" class="hash-res"><div class="empty">选择算法并输入内容后，点击「计算哈希」。</div></div>
+      <div class="status" id="status">等待计算。</div>
+      <div class="toolbar">
+        <button id="btnCopyAll">复制全部结果</button>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>MD5 和 SHA-256 有什么区别？</dt>
+      <dd>MD5 输出 128 位（32 个十六进制字符），速度快但已被证明存在碰撞漏洞，不适合做安全校验；SHA-256 输出 256 位（64 个字符），安全性更高，常用于文件完整性校验和数字签名。</dd>
+      <dt>哈希（Hash）是加密吗？能还原原文吗？</dt>
+      <dd>不是加密，也不能还原。哈希是单向摘要算法，把任意长度内容变成固定长度的字符串；哪怕原文只改一个字符，结果也会完全不同。它用来校验完整性，不能据此反推原文。</dd>
+      <dt>可以用来校验下载文件是否被篡改吗？</dt>
+      <dd>可以。软件发布页通常会给出安装包的 SHA-256 值，你用本工具对下载下来的文件算一次哈希，与官方公布的值一致，就说明文件没被篡改或损坏。</dd>
+      <dt>计算哈希会上传我的文本或文件吗？</dt>
+      <dd>不会。所有计算都在浏览器本地完成，文本与文件都不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/vendor/md5.min.js"></script>
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var state = { fileBuf: null, fileName: '', lastResults: '' };
+
+var ALGOS = {
+  md5:    { name: 'MD5',    subtle: null },
+  sha1:   { name: 'SHA-1',  subtle: 'SHA-1' },
+  sha256: { name: 'SHA-256', subtle: 'SHA-256' },
+  sha512: { name: 'SHA-512', subtle: 'SHA-512' }
+};
+
+function setStatus(msg, type){ var s = $('status'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+function selected(){ return UY.qsa('.ck-algo').filter(function(c){ return c.checked; }).map(function(c){ return c.value; }); }
+
+/* 把 ArrayBuffer 整理成「干净」的 ArrayBuffer（去掉可能的 subarray 偏移与多余长度） */
+function cleanBuffer(u8){
+  if(u8.byteOffset === 0 && u8.byteLength === u8.buffer.byteLength) return u8.buffer;
+  return u8.buffer.slice(u8.byteOffset, u8.byteOffset + u8.byteLength);
+}
+
+function readSource(){
+  if(state.fileBuf) return Promise.resolve(state.fileBuf);
+  var text = $('inp').value;
+  if(!text){ UY.toast('请先输入文本或选择文件'); return null; }
+  var u8 = new TextEncoder().encode(text);
+  return Promise.resolve(cleanBuffer(u8));
+}
+
+async function compute(){
+  var sel = selected();
+  if(!sel.length){ UY.toast('请至少选择一种算法'); return; }
+  var buf = readSource();
+  if(buf === null) return;
+  buf = await buf;
+
+  var upper = $('ckUpper').checked;
+  var rows = [];
+  var srcDesc = state.fileBuf
+    ? ('文件「' + state.fileName + '」· ' + UY.fmtBytes(state.fileBuf.byteLength))
+    : ('文本 · ' + $('inp').value.length + ' 字符');
+
+  for(var i = 0; i < sel.length; i++){
+    var key = sel[i], a = ALGOS[key], hex = '';
+    try{
+      if(key === 'md5'){
+        hex = md5(buf);                       // js-md5 支持 ArrayBuffer
+      }else{
+        if(window.crypto && crypto.subtle){
+          var dg = await crypto.subtle.digest(a.subtle, buf);
+          hex = UY.toHex(new Uint8Array(dg));
+        }else{
+          hex = '当前环境不支持（需在 HTTPS 下使用）';
+        }
+      }
+    }catch(e){ hex = '计算失败：' + ((e && e.message) || e); }
+    if(upper && /^[0-9a-f]+$/i.test(hex)) hex = hex.toUpperCase();
+    rows.push({ name: a.name, hex: hex });
+  }
+
+  var html = rows.map(function(r){
+    return '<div class="hash-row" data-hex="' + UY.esc(r.hex) + '">' +
+             '<span class="h-name">' + UY.esc(r.name) + '</span>' +
+             '<code class="h-val">' + UY.esc(r.hex) + '</code>' +
+             '<button class="h-copy" type="button">复制</button>' +
+           '</div>';
+  }).join('');
+  $('res').innerHTML = html;
+  state.lastResults = rows.map(function(r){ return r.name + ':\n' + r.hex; }).join('\n\n');
+  setStatus('计算完成 · ' + srcDesc + ' · ' + rows.length + ' 种算法', 'ok');
+
+  UY.qsa('#res .h-copy').forEach(function(btn){
+    btn.onclick = function(){
+      var hex = btn.parentNode.getAttribute('data-hex');
+      UY.copyWith(hex, '已复制 ' + btn.parentNode.querySelector('.h-name').textContent + ' 结果');
+    };
+  });
+}
+
+$('btnCalc').onclick = function(){ compute().catch(function(e){ setStatus('计算出错：' + ((e && e.message) || e), 'err'); }); };
+$('btnSample').onclick = function(){
+  $('inp').value = 'Hello, World! 这是一段用于哈希计算的示例文本。';
+  $('btnCalc').onclick();
+};
+$('btnClear').onclick = function(){
+  $('inp').value = '';
+  $('res').innerHTML = '<div class="empty">选择算法并输入内容后，点击「计算哈希」。</div>';
+  setStatus('等待计算。', '');
+  state.lastResults = '';
+};
+$('btnCopyAll').onclick = function(){
+  if(!state.lastResults){ UY.toast('还没有结果'); return; }
+  UY.copyWith(state.lastResults, '已复制全部结果');
+};
+
+/* 算法复选框联动高亮 */
+UY.qsa('#algoRow .chk').forEach(function(lab){
+  var ck = lab.querySelector('input');
+  ck.addEventListener('change', function(){ lab.classList.toggle('on', ck.checked); });
+});
+$('ckUpper').addEventListener('change', function(){ $('lbUpper').classList.toggle('on', $('ckUpper').checked); });
+
+/* 文件选择 */
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0];
+  if(!f) return;
+  if(f.size > 50 * 1024 * 1024 && !confirm('文件较大（' + UY.fmtBytes(f.size) + '），计算可能需要一点时间。继续？')){ e.target.value=''; return; }
+  var fr = new FileReader();
+  fr.onload = function(){
+    state.fileBuf = fr.result;
+    state.fileName = f.name;
+    $('fileStatus').textContent = '已选择文件：' + f.name + ' · ' + UY.fmtBytes(f.size) + '（将对该文件内容计算哈希）';
+    $('fileStatus').className = 'status ok';
+    $('btnClearFile').style.display = '';
+  };
+  fr.onerror = function(){ $('fileStatus').textContent = '文件读取失败，请换一个文件再试。'; $('fileStatus').className = 'status err'; };
+  fr.readAsArrayBuffer(f);
+});
+$('btnClearFile').onclick = function(){
+  state.fileBuf = null; state.fileName = '';
+  $('file').value = '';
+  $('fileStatus').textContent = '也可以选择一个本地文件，对文件内容计算哈希。';
+  $('fileStatus').className = 'status';
+  $('btnClearFile').style.display = 'none';
+};
+
+$('inp').addEventListener('input', function(){
+  if(state.fileBuf){
+    // 用户又想改回文本：若输入非空则提示，但仍优先算文件
+    setStatus('检测到已选择文件，将优先对文件计算；点「移除文件」可改回对文本计算。', '');
+  }
+});
+})();
+</script>
+<style>
+/* 仅本页使用的局部样式（其余沿用 /assets/tool.css） */
+.hash-res{display:flex;flex-direction:column;gap:10px;margin-top:2px}
+.hash-res .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
+.hash-row{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px}
+.hash-row .h-name{flex:0 0 64px;font-weight:700;font-size:13px;color:var(--primary);font-family:var(--mono)}
+.hash-row .h-val{flex:1;font-family:var(--mono);font-size:12.5px;color:var(--text);word-break:break-all;line-height:1.5}
+.hash-row .h-copy{flex:0 0 auto;height:32px;padding:0 12px;border:1px solid var(--border);border-radius:8px;
+  background:var(--panel);color:var(--muted);cursor:pointer;font-size:12.5px}
+.hash-row .h-copy:hover{border-color:var(--border-strong);color:var(--text)}
+@media(max-width:640px){
+  .hash-row .h-name{flex-basis:54px;font-size:12px}
+  .hash-row .h-val{font-size:11.5px}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

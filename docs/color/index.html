@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>颜色工具 · HEX / RGB / HSL 互转与取色 - util123 工具箱</title>
+<meta name="description" content="免费在线颜色工具：HEX、RGB、RGBA、HSL、HSV 实时互转，支持屏幕吸管取色、取色器、常用色板与对比色预览，一键复制各种色值写法。纯前端运行，不上传数据。">
+<link rel="canonical" href="https://util123.cn/color/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="颜色转换,HEX转RGB,RGB转HSL,HSV,在线取色器,颜色代码,十六进制颜色,色值转换">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="颜色工具 · HEX / RGB / HSL 互转与取色">
+<meta property="og:description" content="HEX / RGB / RGBA / HSL / HSV 实时互转，带取色器、色板与对比色预览。纯前端运行，不上传数据。">
+<meta property="og:url" content="https://util123.cn/color/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="颜色工具 · HEX / RGB / HSL 互转与取色">
+<meta name="twitter:description" content="HEX / RGB / RGBA / HSL / HSV 实时互转。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="11" fill="white">RGB</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/color/#app","name":"颜色转换工具","url":"https://util123.cn/color/","description":"在线颜色转换工具：HEX、RGB、RGBA、HSL、HSV 色彩格式实时互转，内置取色器、常用色板与黑白对比色预览，可一键复制各种色值写法。纯前端运行，数据不上传服务器。","applicationCategory":"DesignApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["HEX / RGB / HSL / HSV 互转","取色器","常用色板","对比色预览","一键复制","随机颜色"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"颜色工具","item":"https://util123.cn/color/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"HEX 和 RGB 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"两者表示的是同一种颜色，只是写法不同。HEX 用十六进制表示，如 #4F46E5；RGB 用三个 0~255 的分量表示，如 rgb(79, 70, 229)。本工具可以让它们实时互转。"}},
+{"@type":"Question","name":"HSL 和 HSV 是什么？","acceptedAnswer":{"@type":"Answer","text":"HSL 用色相（Hue）、饱和度（Saturation）、明度（Lightness）描述颜色；HSV（也叫 HSB）则用色相、饱和度、明度（Value/Brightness）。它们比 RGB 更符合人眼直觉，做配色调整时更方便。"}},
+{"@type":"Question","name":"怎么让文字在这个颜色上看得清？","acceptedAnswer":{"@type":"Answer","text":"看对比度即可。工具会根据颜色的相对亮度计算它与白色、黑色文字的 WCAG 对比度，并给出建议。一般来说对比度达到 4.5 : 1 以上，正文文字就算清晰可读。"}},
+{"@type":"Question","name":"转换会上传我的数据吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有颜色计算都在浏览器本地完成，不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="11" fill="#fff" letter-spacing=".5">RGB</text>
+      </svg>
+      <span class="name">颜色工具</span>
+    </a>
+    <span class="tagline">util123 工具箱 · HEX / RGB / HSL / HSV 互转</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">RGB</div>
+    <h1>颜色<span class="grad">工具</span></h1>
+    <p>HEX、RGB、RGBA、HSL、HSV 实时互转，带取色器、常用色板与对比色预览，一键复制各种色值写法。纯前端运行，不上传数据。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">选择颜色</span>
+      <div class="cl-pick">
+        <div class="cl-swatch" id="clSwatch"></div>
+        <div class="cl-pick-right">
+          <div class="row">
+            <div class="field" style="flex:0 1 auto">
+              <label>取色器</label>
+              <input type="color" id="clPicker" value="#4f46e5">
+            </div>
+            <div class="field" style="flex:1 1 160px">
+              <label>HEX 值</label>
+              <input class="ipt" id="clHex" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="#4f46e5">
+            </div>
+            <button id="btnClRandom" style="height:40px">随机颜色</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px;align-items:center">
+        <button id="btnClPick" class="primary" style="height:40px;padding:0 16px">🎨 从屏幕取色（吸管）</button>
+        <span id="clPickTip" style="color:var(--muted);font-size:12.5px"></span>
+      </div>
+      <div class="toolbar" style="margin-top:12px">
+        <button id="btnSample">示例</button>
+      </div>
+      <span class="lbl" style="margin-top:16px">常用色板 <span class="tip">（点击选用）</span></span>
+      <div class="cl-palette" id="clPalette"></div>
+      <div class="status" id="clStatus">输入或选择颜色后，下方会实时给出多种格式。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">各种格式 <span class="tip">（点击任意一行可复制）</span></span>
+      <div class="cl-res" id="clOut"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">对比色预览</span>
+      <div class="cl-contrast">
+        <div class="cl-demo" id="clDemoWhite"><span>白色文字 · Aa 文字示例</span><em id="clRatioW"></em></div>
+        <div class="cl-demo" id="clDemoBlack"><span>黑色文字 · Aa 文字示例</span><em id="clRatioB"></em></div>
+      </div>
+      <div class="hint" style="margin-top:10px">对比度依据 WCAG 相对亮度计算，达到 4.5 : 1 以上时正文文字清晰可读。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>HEX 和 RGB 有什么区别？</dt>
+      <dd>两者表示的是同一种颜色，只是写法不同。HEX 用十六进制表示，如 #4F46E5；RGB 用三个 0~255 的分量表示，如 rgb(79, 70, 229)。本工具可以让它们实时互转。</dd>
+      <dt>HSL 和 HSV 是什么？</dt>
+      <dd>HSL 用色相（Hue）、饱和度（Saturation）、明度（Lightness）描述颜色；HSV（也叫 HSB）则用色相、饱和度、明度（Value/Brightness）。它们比 RGB 更符合人眼直觉，做配色调整时更方便。</dd>
+      <dt>怎么让文字在这个颜色上看得清？</dt>
+      <dd>看对比度即可。工具会根据颜色的相对亮度计算它与白色、黑色文字的 WCAG 对比度，并给出建议。一般来说对比度达到 4.5 : 1 以上，正文文字就算清晰可读。</dd>
+      <dt>转换会上传我的数据吗？</dt>
+      <dd>不会。所有颜色计算都在浏览器本地完成，不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var PALETTE = ['#4f46e5','#8b5cf6','#a855f7','#ec4899','#ef4444','#f97316','#f59e0b','#eab308','#84cc16','#22c55e','#14b8a6','#06b6d4','#3b82f6','#6366f1','#64748b','#1f2328','#59636e','#d8dee4','#f6f8fa','#ffffff'];
+
+function setStatus(msg, type){ var s = $('clStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+function normHex(h){
+  h = String(h).trim().replace(/^#/, '');
+  if(/^[0-9a-fA-F]{3}$/.test(h)) h = h.split('').map(function(c){ return c + c; }).join('');
+  return /^[0-9a-fA-F]{6}$/.test(h) ? ('#' + h.toLowerCase()) : null;
+}
+function hexToRgb(hex){
+  var h = normHex(hex); if(!h) return null;
+  var n = parseInt(h.slice(1), 16);
+  return { r:(n >> 16) & 255, g:(n >> 8) & 255, b:n & 255 };
+}
+function rgbToHex(r, g, b){
+  return '#' + [r, g, b].map(function(v){ v = Math.max(0, Math.min(255, Math.round(v))); return ('0' + v.toString(16)).slice(-2); }).join('');
+}
+function rgbToHsl(r, g, b){
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  var h = 0, s = 0, l = (max + min) / 2;
+  if(d){
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    if(max === r) h = (g - b) / d + (g < b ? 6 : 0);
+    else if(max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h /= 6;
+  }
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+function rgbToHsv(r, g, b){
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, h = 0;
+  if(d){
+    if(max === r) h = (g - b) / d + (g < b ? 6 : 0);
+    else if(max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+  }
+  var s = max === 0 ? 0 : d / max;
+  return { h: Math.round(h), s: Math.round(s * 100), v: Math.round(max * 100) };
+}
+function lum(r, g, b){
+  var a = [r, g, b].map(function(v){ v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+}
+function ratio(l1, l2){ var a = Math.max(l1, l2), b = Math.min(l1, l2); return (a + 0.05) / (b + 0.05); }
+
+var lastHex = '#4f46e5';
+
+function render(hex){
+  var h = normHex(hex);
+  if(!h){ setStatus('颜色格式不正确，请输入 #RRGGBB 或 #RGB（如 #4f46e5）。', 'err'); return; }
+  lastHex = h;
+  var c = hexToRgb(h);
+  var hsl = rgbToHsl(c.r, c.g, c.b);
+  var hsv = rgbToHsv(c.r, c.g, c.b);
+
+  $('clSwatch').style.background = h;
+  $('clSwatch').style.color = ratio(lum(c.r, c.g, c.b), 1) >= ratio(lum(c.r, c.g, c.b), 0) ? '#fff' : '#111';
+  $('clSwatch').textContent = h.toUpperCase();
+
+  if(document.activeElement !== $('clHex')) $('clHex').value = h;
+  $('clPicker').value = h;
+
+  var rows = [
+    { k:'HEX', v:h.toUpperCase() },
+    { k:'HEX 无 #', v:h.slice(1).toUpperCase() },
+    { k:'RGB', v:'rgb(' + c.r + ', ' + c.g + ', ' + c.b + ')' },
+    { k:'RGBA', v:'rgba(' + c.r + ', ' + c.g + ', ' + c.b + ', 1)' },
+    { k:'HSL', v:'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)' },
+    { k:'HSV / HSB', v:'hsv(' + hsv.h + ', ' + hsv.s + '%, ' + hsv.v + '%)' }
+  ];
+  $('clOut').innerHTML = rows.map(function(r){
+    return '<div class="cl-row" data-v="' + UY.esc(r.v) + '">' +
+      '<span class="cl-k">' + UY.esc(r.k) + '</span>' +
+      '<code class="cl-v">' + UY.esc(r.v) + '</code>' +
+      '<button class="cl-copy" type="button">复制</button>' +
+    '</div>';
+  }).join('');
+  UY.qsa('#clOut .cl-copy').forEach(function(btn){
+    btn.onclick = function(){ UY.copyWith(btn.parentNode.getAttribute('data-v'), '已复制 ' + btn.parentNode.querySelector('.cl-k').textContent); };
+  });
+
+  var lc = lum(c.r, c.g, c.b);
+  var rw = ratio(lc, 1), rb = ratio(lc, 0);
+  $('clDemoWhite').style.background = h;
+  $('clDemoWhite').querySelector('span').style.color = '#ffffff';
+  $('clRatioW').textContent = rw.toFixed(2) + ':1' + (rw >= 4.5 ? ' ✓ 可读' : ' ✗ 偏弱');
+  $('clDemoBlack').style.background = h;
+  $('clDemoBlack').querySelector('span').style.color = '#111111';
+  $('clRatioB').textContent = rb.toFixed(2) + ':1' + (rb >= 4.5 ? ' ✓ 可读' : ' ✗ 偏弱');
+
+  setStatus('当前颜色 ' + h.toUpperCase() + ' · RGB(' + c.r + ', ' + c.g + ', ' + c.b + ') · HSL(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)', 'ok');
+}
+
+/* 色板 */
+(function(){
+  $('clPalette').innerHTML = PALETTE.map(function(c){
+    return '<button type="button" class="cl-pc" data-c="' + c + '" style="background:' + c + '" title="' + c + '" aria-label="' + c + '"></button>';
+  }).join('');
+  UY.qsa('#clPalette .cl-pc').forEach(function(btn){
+    btn.onclick = function(){ render(btn.dataset.c); };
+  });
+})();
+
+$('clPicker').addEventListener('input', function(){ render(this.value); });
+$('clHex').addEventListener('input', function(){ render(this.value); });
+$('btnClRandom').onclick = function(){
+  var b = UY.randomBytes(3);
+  render(rgbToHex(b[0], b[1], b[2]));
+};
+
+(function(){
+  var pickBtn = $('btnClPick');
+  if ('EyeDropper' in window) {
+    $('clPickTip').textContent = '点击后用吸管从屏幕任意位置取色（需 Chrome / Edge 且 HTTPS 环境）。';
+    pickBtn.onclick = function(){
+      new EyeDropper().open().then(function(r){ render(r.sRGBHex); UY.toast('已取色 ' + r.sRGBHex.toUpperCase()); }).catch(function(){});
+    };
+  } else {
+    $('clPickTip').textContent = '当前浏览器不支持屏幕吸管（需 Chrome / Edge 且 HTTPS），可用上方取色器手动选色。';
+    pickBtn.disabled = true; pickBtn.style.opacity = '.5'; pickBtn.title = '当前浏览器不支持屏幕吸管';
+  }
+})();
+
+$('btnSample').onclick = function(){
+  $('clHex').value = '#3366cc';
+  render('#3366cc');
+};
+
+render('#4f46e5');
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+.cl-pick{display:flex;gap:16px;align-items:stretch;flex-wrap:wrap}
+.cl-swatch{flex:0 0 130px;min-height:110px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:14px;color:#fff;border:1px solid var(--border);letter-spacing:.5px}
+.cl-pick-right{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.cl-pick-right .row{width:100%}
+input[type=color]{-webkit-appearance:none;appearance:none;width:56px;height:40px;border:1px solid var(--border);
+  border-radius:9px;background:var(--panel-2);cursor:pointer;padding:3px}
+input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+input[type=color]::-webkit-color-swatch{border:0;border-radius:6px}
+.cl-palette{display:flex;flex-wrap:wrap;gap:8px}
+.cl-pc{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);cursor:pointer;padding:0;box-shadow:var(--shadow-sm)}
+.cl-pc:hover{transform:translateY(-1px)}
+.cl-res{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+.cl-row{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;padding:9px 12px;cursor:pointer}
+.cl-row:hover{border-color:var(--border-strong)}
+.cl-row .cl-k{flex:0 0 90px;font-size:12.5px;font-weight:700;color:var(--muted)}
+.cl-row .cl-v{flex:1;font-family:var(--mono);font-size:13.5px;color:var(--text);word-break:break-all}
+.cl-row .cl-copy{flex:0 0 auto;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;
+  background:var(--panel);color:var(--muted);cursor:pointer;font-size:12.5px}
+.cl-row .cl-copy:hover{border-color:var(--border-strong);color:var(--text)}
+.cl-contrast{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cl-demo{min-height:86px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;border:1px solid var(--border);padding:12px}
+.cl-demo span{font-size:15px;font-weight:700}
+.cl-demo em{font-style:normal;font-size:12px;font-family:var(--mono);color:inherit;opacity:.85}
+@media(max-width:640px){
+  .cl-swatch{flex-basis:100%;min-height:84px}
+  .cl-row .cl-k{flex-basis:76px}
+  .cl-contrast{grid-template-columns:1fr}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

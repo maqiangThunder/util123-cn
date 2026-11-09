@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Markdown 实时预览 · 在线编辑器 - util123 工具箱</title>
+<meta name="description" content="免费在线 Markdown 实时预览工具：左侧写 Markdown，右侧即时渲染，支持标题、加粗、斜体、代码、列表、引用、链接与分割线，可一键复制 HTML。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/markdown/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="Markdown,Markdown预览,Markdown编辑器,MD转HTML,实时预览,Markdown渲染">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="Markdown 实时预览 · 在线编辑器">
+<meta property="og:description" content="左侧写 Markdown，右侧即时渲染，可复制 HTML。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/markdown/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Markdown 实时预览 · 在线编辑器">
+<meta name="twitter:description" content="左侧写 Markdown，右侧即时渲染，可复制 HTML。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h9l5 5v15H9z"/><path d="M18 6v5h5"/><path d="M12 15h8M12 19h8M12 23h5" opacity=".7"/></g></svg>'>
+<style>
+  .md-grid{grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+  .md-grid .card{display:flex;flex-direction:column;margin:0}
+  .md-grid textarea{flex:1;min-height:420px}
+  .md-body{flex:1;min-height:420px;overflow:auto;font-size:14.5px;line-height:1.8;word-wrap:break-word}
+  .md-body h1,.md-body h2,.md-body h3,.md-body h4,.md-body h5,.md-body h6{line-height:1.35;margin:1.1em 0 .5em;font-weight:700}
+  .md-body h1{font-size:1.7em;border-bottom:1px solid var(--border);padding-bottom:.25em}
+  .md-body h2{font-size:1.4em;border-bottom:1px solid var(--border);padding-bottom:.2em}
+  .md-body h3{font-size:1.2em}
+  .md-body h4{font-size:1.05em}
+  .md-body p{margin:.6em 0}
+  .md-body a{color:var(--primary);text-decoration:none}
+  .md-body a:hover{text-decoration:underline}
+  .md-body code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:1px 5px;border-radius:4px}
+  .md-body pre{background:var(--panel-2);padding:12px 14px;border-radius:8px;overflow:auto;margin:.7em 0}
+  .md-body pre code{background:none;padding:0}
+  .md-body blockquote{margin:.7em 0;padding:.3em 14px;border-left:3px solid var(--primary);background:var(--panel-2);border-radius:0 8px 8px 0;color:var(--muted)}
+  .md-body ul,.md-body ol{padding-left:22px;margin:.5em 0}
+  .md-body li{margin:.2em 0}
+  .md-body hr{border:none;border-top:1px solid var(--border);margin:1.1em 0}
+  .md-body img{max-width:100%}
+  @media(max-width:720px){.md-grid{grid-template-columns:1fr}.md-grid textarea,.md-body{min-height:280px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/markdown/#app","name":"Markdown 实时预览","url":"https://util123.cn/markdown/","description":"在线 Markdown 实时预览与编辑工具，左侧书写右侧即时渲染，可一键复制生成的 HTML。纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["Markdown 实时预览","标题/列表/引用渲染","代码块与行内代码","链接与分割线","复制 HTML 源码"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"Markdown 实时预览","item":"https://util123.cn/markdown/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"这个 Markdown 工具会把我的内容上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有解析与渲染都在你的浏览器本地完成，文本不会发送到任何服务器。"}},
+{"@type":"Question","name":"支持哪些 Markdown 语法？","acceptedAnswer":{"@type":"Answer","text":"支持标题、加粗、斜体、行内代码与代码块、有序/无序列表、引用、链接、分割线等常见语法，覆盖日常写作与文档排版所需。"}},
+{"@type":"Question","name":"可以导出成 HTML 吗？","acceptedAnswer":{"@type":"Answer","text":"可以。预览区上方提供“复制 HTML”按钮，一键把渲染结果对应的 HTML 源码复制到剪贴板，方便贴到博客或文档里。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h9l5 5v15H9z"/><path d="M18 6v5h5"/><path d="M12 15h8M12 19h8M12 23h5" opacity=".7"/></g>
+      </svg>
+      <span class="name">Markdown 预览</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 写即所见</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h9l5 5v15H9z"/><path d="M18 6v5h5"/><path d="M12 15h8M12 19h8M12 23h5" opacity=".7"/></g></svg></div>
+    <h1>Markdown <span class="grad">实时预览</span></h1>
+    <p>左边写，右边即时渲染，纯前端、数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="grid md-grid">
+      <div class="card">
+        <span class="lbl" style="display:block;margin-bottom:10px">Markdown 源文</span>
+        <textarea id="src" class="ipt" style="resize:vertical" placeholder="在这里输入 Markdown…" aria-label="Markdown 输入"># 欢迎使用 Markdown 预览
+
+这是一段**加粗**、*斜体*和 `行内代码` 的示例。
+
+## 列表
+- 苹果
+- 香蕉
+- 橙子
+
+1. 第一步
+2. 第二步
+
+> 引用一句话，工具会自动渲染成引用块。
+
+[访问工具箱](https://util123.cn/)
+
+---
+
+写点什么，右侧立刻变。</textarea>
+        <div class="toolbar" style="margin-top:10px">
+          <button id="btnSample">示例</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="toolbar" style="margin:0 0 10px"><span class="lbl" style="margin:0">预览效果</span>
+          <span class="spacer" style="flex:1"></span>
+          <button class="primary" id="btnCopy">复制 HTML</button>
+        </div>
+        <div id="out" class="md-body" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>这个 Markdown 工具会把我的内容上传吗？</h3><p>不会。所有解析与渲染都在你的浏览器本地完成，文本不会发送到任何服务器。</p></div>
+    <div class="faq"><h3>支持哪些 Markdown 语法？</h3><p>支持标题、加粗、斜体、行内代码与代码块、有序/无序列表、引用、链接、分割线等常见语法。</p></div>
+    <div class="faq"><h3>可以导出成 HTML 吗？</h3><p>可以。预览区右上角有“复制 HTML”按钮，一键把渲染结果对应的 HTML 源码复制到剪贴板。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    /* 引号也必须转义：否则链接 URL 里的 " 会闭合 href 属性注入事件属性（XSS） */
+    function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function inline(s){
+      s = escapeHtml(s);
+      s = s.replace(/`([^`]+)`/g, function(_,c){ return '<code>'+c+'</code>'; });
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+      s = s.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+      /* 斜体下划线要求前后是空白/标点，避免 snake_case_word 被误渲染 */
+      s = s.replace(/(^|[^A-Za-z0-9_])_([^_\n]+)_(?![A-Za-z0-9_])/g, '$1<em>$2</em>');
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(_,t,u){
+        var safe = /^(https?:|\/|#|mailto:)/i.test(u) ? u : '#';
+        return '<a href="'+safe+'" target="_blank" rel="noopener">'+t+'</a>';
+      });
+      return s;
+    }
+    function md2html(src){
+      var lines = src.replace(/\r\n?/g,'\n').split('\n');
+      var html = '', i = 0;
+      var isBlank = function(l){ return /^\s*$/.test(l); };
+      var blockStart = /^(#{1,6}\s|```|\s*>|\s*[-*+]\s+|\s*\d+\.\s|\s*([-*_])\1{2,}\s*$)/;
+      while(i < lines.length){
+        var line = lines[i];
+        if(/^```/.test(line)){
+          var buf=[]; i++;
+          while(i<lines.length && !/^```/.test(lines[i])){ buf.push(lines[i]); i++; }
+          i++;
+          html += '<pre><code>'+escapeHtml(buf.join('\n'))+'</code></pre>';
+          continue;
+        }
+        var h = line.match(/^(#{1,6})\s+(.*)$/);
+        if(h){ var lv=h[1].length; html += '<h'+lv+'>'+inline(h[2])+'</h'+lv+'>'; i++; continue; }
+        if(/^\s*([-*_])\1{2,}\s*$/.test(line)){ html += '<hr>'; i++; continue; }
+        if(/^\s*>/.test(line)){
+          var qbuf=[];
+          while(i<lines.length && /^\s*>/.test(lines[i])){ qbuf.push(lines[i].replace(/^\s*>\s?/,'')); i++; }
+          html += '<blockquote>'+md2html(qbuf.join('\n'))+'</blockquote>';
+          continue;
+        }
+        if(/^\s*[-*+]\s+/.test(line)){
+          var items=[];
+          while(i<lines.length && /^\s*[-*+]\s+/.test(lines[i])){ items.push(lines[i].replace(/^\s*[-*+]\s+/,'')); i++; }
+          html += '<ul>'+items.map(function(it){return '<li>'+inline(it)+'</li>';}).join('')+'</ul>';
+          continue;
+        }
+        if(/^\s*\d+\.\s+/.test(line)){
+          var oi=[];
+          while(i<lines.length && /^\s*\d+\.\s+/.test(lines[i])){ oi.push(lines[i].replace(/^\s*\d+\.\s+/,'')); i++; }
+          html += '<ol>'+oi.map(function(it){return '<li>'+inline(it)+'</li>';}).join('')+'</ol>';
+          continue;
+        }
+        if(isBlank(line)){ i++; continue; }
+        var pbuf=[];
+        while(i<lines.length && !isBlank(lines[i]) && !blockStart.test(lines[i])){ pbuf.push(lines[i]); i++; }
+        html += '<p>'+inline(pbuf.join(' '))+'</p>';
+      }
+      return html;
+    }
+    function render(){
+      var v = $('src').value;
+      $('out').innerHTML = v.trim() ? md2html(v) : '<p style="opacity:.5">输入内容后这里会实时显示预览。</p>';
+    }
+    $('src').addEventListener('input', render);
+    $('btnSample').onclick = function(){
+      $('src').value = '# 标题示例\n\n这是**加粗**、*斜体*与 `代码` 的示例。\n\n- 项目一\n- 项目二\n\n> 一段引用文字。\n\n更多信息见 [示例链接](https://example.com)。';
+      $('src').dispatchEvent(new Event('input'));
+    };
+    $('btnCopy').onclick = function(){
+      UY.copy($('out').innerHTML).then(function(ok){
+        UY.toast(ok ? 'HTML 已复制' : '复制失败，请手动选择');
+      });
+    };
+    render();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

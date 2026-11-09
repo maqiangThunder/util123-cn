@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>反馈建议 · 报告 Bug / 建议新工具 - util123 工具箱</title>
+<meta name="description" content="给 util123 工具箱反馈问题或建议：报告工具 Bug、建议增加新的小工具、提出改进意见。直接提交，我们会自动收到邮件通知。">
+<link rel="canonical" href="https://util123.cn/feedback/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="反馈,建议,报告bug,新工具建议,util123反馈,工具箱意见">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="反馈建议 · 报告 Bug / 建议新工具">
+<meta property="og:description" content="报告工具 Bug、建议新工具、提出改进意见，直接提交即可，我们会自动收到邮件。">
+<meta property="og:url" content="https://util123.cn/feedback/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反馈建议 · 报告 Bug / 建议新工具">
+<meta name="twitter:description" content="报告工具 Bug、建议新工具、提出改进意见。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><path d="M16 5.5c-5 0-9 3.4-9 7.6 0 2.4 1.3 4.5 3.3 5.9l-.8 4 4.2-2.3c.7.1 1.5.2 2.3.2 5 0 9-3.4 9-7.6s-4-7.8-9-7.8z" fill="white"/></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","@id":"https://util123.cn/feedback/#page","url":"https://util123.cn/feedback/","name":"反馈建议 · util123 工具箱","description":"向 util123 工具箱反馈 Bug 或建议新工具。","inLanguage":"zh-CN","isPartOf":{"@id":"https://util123.cn/#website"}},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"反馈建议","item":"https://util123.cn/feedback/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"如何反馈 Bug 或建议新工具？","acceptedAnswer":{"@type":"Answer","text":"在本页表单里选择反馈类型、填写内容与（选填的）联系方式，点「提交反馈」即可。提交后我们会自动收到邮件通知，无需你自己发邮件。"}},
+{"@type":"Question","name":"反馈 Bug 时提供什么信息最有帮助？","acceptedAnswer":{"@type":"Answer","text":"最好包含：使用的工具页面、输入的内容、期望结果与实际结果、浏览器与设备（如 iPhone Safari / Windows Chrome），必要时附截图。所有反馈内容仅用于改进工具，不会公开。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <path d="M16 6c-4.6 0-8.3 3.1-8.3 7 0 2.2 1.2 4.1 3 5.4l-.7 3.7 3.8-2.1c.7.1 1.4.2 2.2.2 4.6 0 8.3-3.1 8.3-7s-3.7-7.2-8.3-7.2z" fill="#fff"/>
+      </svg>
+      <span class="name">反馈建议</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 你的反馈让工具更好用</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">反馈</div>
+    <h1>反馈<span class="grad">建议</span></h1>
+    <p>发现 Bug？想要新工具？有任何改进意见都欢迎告诉我们。直接填写下面的表单提交，我们会自动收到邮件通知。</p>
+  </div>
+
+  <div class="wrap">
+    <!-- 真实提交表单 -->
+    <div class="card">
+      <span class="lbl">提交反馈 <span style="font-weight:400">· 填写后直接提交，无需自己发邮件</span></span>
+      <form id="fbForm" novalidate>
+        <div class="row" style="margin-bottom:12px">
+          <div class="field">
+            <label for="fType">反馈类型</label>
+            <select id="fType">
+              <option value="bug">🐞 报告 Bug</option>
+              <option value="newtool">💡 建议新工具</option>
+              <option value="other">💬 其他建议</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <div class="field">
+            <label for="fName">称呼（选填）</label>
+            <input class="ipt" id="fName" maxlength="80" placeholder="怎么称呼你，方便我们回复" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="fContact">联系方式（选填）</label>
+            <input class="ipt" id="fContact" maxlength="200" placeholder="邮箱 / 微信，便于回复你" autocomplete="email">
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:6px">
+          <label for="fMsg">反馈内容 <span style="color:var(--err)">*</span></label>
+          <textarea id="fMsg" maxlength="2000" placeholder="请尽量写清楚：哪个工具、做了什么、期望 vs 实际、浏览器/设备。报 Bug 附截图更有帮助。"></textarea>
+        </div>
+        <!-- 蜜罐：真人不会填，机器人填上就静默丢弃 -->
+        <input type="text" id="fHp" tabindex="-1" autocomplete="off" aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <div class="toolbar" style="margin-top:14px">
+          <button type="submit" class="primary" id="btnSubmit">提交反馈</button>
+          <span id="fbStatus" class="note" style="margin:0;align-self:center"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <span class="lbl">报 Bug 时，这些信息最有帮助</span>
+      <ul style="margin:0;padding-left:20px;font-size:13.5px;line-height:2">
+        <li>哪个工具页面（如 <code>/json/</code>）</li>
+        <li>你做了什么操作、输入了什么内容</li>
+        <li>期望的结果 vs 实际的结果</li>
+        <li>浏览器与设备（如 iPhone Safari / Windows Chrome），方便时附截图</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="lbl">建议新工具时</span>
+      <p style="margin:0;font-size:14px">说说你想解决什么问题就行。我们坚持「小而美」：每个工具只做一件事并做到足够好，好的建议会排进开发计划。</p>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>如何反馈 Bug 或建议新工具？</dt>
+      <dd>在本页表单里选择反馈类型、填写内容与（选填的）联系方式，点「提交反馈」即可。提交后我们会自动收到邮件通知，无需你自己发邮件。</dd>
+      <dt>反馈 Bug 时提供什么信息最有帮助？</dt>
+      <dd>最好包含：使用的工具页面、输入的内容、期望结果与实际结果、浏览器与设备（如 iPhone Safari / Windows Chrome），必要时附截图。</dd>
+      <dt>反馈会公开吗？</dt>
+      <dd>不会。反馈内容仅用于改进工具，不会公开你的邮箱或其他个人信息。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var TYPE_LABEL = {bug:'报告Bug', newtool:'建议新工具', other:'其他建议'};
+var form = $('fbForm'), btn = $('btnSubmit'), status = $('fbStatus');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  var type = $('fType').value;
+  var name = $('fName').value.trim();
+  var contact = $('fContact').value.trim();
+  var msg = $('fMsg').value.trim();
+  var hp = $('fHp').value;
+  // 蜜罐命中：伪装成功，不真正提交
+  if (hp){
+    status.style.color = 'var(--ok)';
+    status.textContent = '✅ 提交成功，感谢你的反馈！';
+    return;
+  }
+  if (!msg){
+    status.style.color = 'var(--err)';
+    status.textContent = '请填写反馈内容';
+    $('fMsg').focus();
+    return;
+  }
+  var old = btn.textContent;
+  btn.disabled = true; btn.textContent = '提交中…';
+  status.style.color = 'var(--muted)'; status.textContent = '正在提交…';
+  fetch('https://util123.cn/api/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type:type, name:name, contact:contact, message:msg, _hp:hp, _ua:navigator.userAgent, _ref:location.href })
+  }).then(function(r){
+    return r.json().then(function(j){ return { ok:r.ok, j:j }; });
+  }).then(function(res){
+    if (res.ok && res.j && res.j.ok){
+      status.style.color = 'var(--ok)';
+      status.textContent = '✅ 提交成功，感谢你的反馈！';
+      form.reset();
+    } else {
+      status.style.color = 'var(--err)';
+      status.textContent = '提交失败：' + ((res.j && res.j.error) || '请稍后重试');
+    }
+  }).catch(function(){
+    status.style.color = 'var(--err)';
+    status.textContent = '网络错误，请稍后重试';
+  }).then(function(){
+    btn.disabled = false; btn.textContent = old;
+  });
+});
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<script>(function(){var n=document.querySelector('.nav')||document.body.firstElementChild;if(!n)return;var b=document.createElement('div');b.setAttribute('data-gh-mirror','1');b.style.cssText='max-width:960px;margin:14px auto 0;padding:9px 14px;border:1px solid #d0d7de;border-left:3px solid #8b5cf6;border-radius:8px;background:#f6f8fa;font:13px/1.65 -apple-system,BlinkMacSystemFont,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;color:#57606a';b.innerHTML='<b style="color:#24292f">GitHub 镜像站</b> · 反馈提交需要服务器后端，请到主站提交（当前镜像站无表单提交能力）。完整版请访问主站 <a href="https://util123.cn/feedback/" style="color:#8250df;text-decoration:none;border-bottom:1px solid currentColor">util123.cn/feedback/</a>';n.insertAdjacentElement('afterend',b);})();</script>
+</body>
+</html>

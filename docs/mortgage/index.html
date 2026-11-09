@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>房贷计算器 · 商贷 / 公积金 / 组合贷款 - util123 工具箱</title>
+<meta name="description" content="免费在线房贷计算器：支持商业贷款、公积金贷款和组合贷款，输入金额与利率，一键算出等额本息或等额本金的月供、总利息与总还款额。纯前端计算。">
+<link rel="canonical" href="https://util123.cn/mortgage/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="房贷计算器,房贷月供,等额本息,等额本金,公积金贷款计算器,组合贷款计算器,房贷利息,月供计算,贷款计算器">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="房贷计算器 · 商贷 / 公积金 / 组合贷款">
+<meta property="og:description" content="支持商业贷款、公积金贷款和组合贷款，算月供、总利息与总还款额。纯前端计算。">
+<meta property="og:url" content="https://util123.cn/mortgage/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="房贷计算器 · 商贷 / 公积金 / 组合贷款">
+<meta name="twitter:description" content="输入金额、利率、年限，算月供与利息。纯前端。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="23" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="20" fill="white">¥</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/mortgage/#app","name":"房贷计算器","url":"https://util123.cn/mortgage/","description":"在线房贷计算器：支持商业贷款、公积金贷款与组合贷款，计算等额本息与等额本金的月供、总利息和总还款额。纯前端计算，数据不上传。","applicationCategory":"FinanceApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["商业贷款月供","公积金贷款月供","组合贷款拆分计算","等额本息","等额本金","总利息","总还款额"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"房贷计算器","item":"https://util123.cn/mortgage/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"等额本息和等额本金有什么区别？","acceptedAnswer":{"@type":"Answer","text":"等额本息每月还款额固定，前期还的利息多、本金少；等额本金每月本金固定、利息递减，所以月供逐月变少，但前期压力大、总利息更少。"}},
+{"@type":"Question","name":"年利率填年化还是月利率？","acceptedAnswer":{"@type":"Answer","text":"填年化利率（比如商贷约 3.5%~4.9%，公积金约 2.6%~3.1%）。工具会自动除以 12 换算成月利率。"}},
+{"@type":"Question","name":"算出来的结果准吗？","acceptedAnswer":{"@type":"Answer","text":"按标准房贷公式精确计算，可作为参考。实际放款以银行最终核算为准，可能因为利率浮动、还款日差异而有细微出入。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="23" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="20" fill="#fff">¥</text>
+      </svg>
+      <span class="name">房贷计算</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 等额本息 / 等额本金</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f2" aria-hidden="true">¥</div>
+    <h1>房贷<span class="grad">计算器</span></h1>
+    <p>支持商业贷款、公积金贷款和组合贷款，填金额和利率立刻算出月供、总利息和总还款。两种还款方式都能算。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">贷款方式</span>
+      <div class="row" style="margin-top:0">
+        <span class="chk on" id="typeCom">商业贷款</span>
+        <span class="chk" id="typeFund">公积金贷款</span>
+        <span class="chk" id="typeCombo">组合贷款</span>
+      </div>
+      <div id="comGroup" style="margin-top:14px">
+        <span class="lbl">商业贷款</span>
+        <div class="row">
+          <div class="field">
+            <label>商贷金额（万元）</label>
+            <input class="ipt" id="amt" type="number" value="100" min="0" step="1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label>商贷年利率（%）</label>
+            <input class="ipt" id="rate" type="number" value="3.95" min="0" step="0.01" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label>贷款年限（年）</label>
+            <input class="ipt" id="years" type="number" value="30" min="1" max="40" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+      <div id="fundGroup" style="margin-top:14px;display:none">
+        <span class="lbl">公积金贷款</span>
+        <div class="row">
+          <div class="field">
+            <label>公积金金额（万元）</label>
+            <input class="ipt" id="famt" type="number" value="60" min="0" step="1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label>公积金年利率（%）</label>
+            <input class="ipt" id="frate" type="number" value="2.85" min="0" step="0.01" inputmode="decimal">
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <span class="chk on" id="chk1">等额本息</span>
+        <span class="chk" id="chk2">等额本金</span>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="btnCalc">计算</button>
+        <button id="btnReset">重置</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">计算结果</span>
+      <div class="grid" id="stat" style="margin-top:0"></div>
+      <div class="status" id="status" style="display:none"></div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>等额本息和等额本金有什么区别？</dt>
+      <dd>等额本息每月还款额固定，前期还的利息多、本金少；等额本金每月本金固定、利息递减，月供逐月变少，但前期压力大、总利息更少。</dd>
+      <dt>年利率填年化还是月利率？</dt>
+      <dd>填年化利率（商贷约 3.5%~4.9%，公积金约 2.85%~3.1%）。工具会自动除以 12 换算成月利率。</dd>
+      <dt>组合贷款怎么算？</dt>
+      <dd>选「组合贷款」后，商贷和公积金两笔贷款按各自的金额和利率分别计算月供，再合并成每月总还款额，利息也是两部分相加。</dd>
+      <dt>算出来的结果准吗？</dt>
+      <dd>按标准房贷公式精确计算，可作参考；实际放款以银行最终核算为准，可能因利率浮动、还款日差异有细微出入。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var method = 'equal';   // equal=等额本息, principal=等额本金
+var loanType = 'com';   // com=商业, fund=公积金, combo=组合
+
+function fmt(n){ return '¥' + (Math.round(n*100)/100).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function setStat(rows){
+  $('stat').innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">'+UY.esc(r[0])+'</div><div class="v sans">'+UY.esc(r[1])+'</div></div>';
+  }).join('');
+}
+function statusBox(ok,msg){ var s=$('status'); s.style.display='block'; s.className='status '+(ok?'ok':'err'); s.textContent=msg; }
+
+/* ---- 贷款方式切换 ---- */
+function setType(t){
+  loanType = t;
+  $('typeCom').classList.toggle('on', t==='com');
+  $('typeFund').classList.toggle('on', t==='fund');
+  $('typeCombo').classList.toggle('on', t==='combo');
+  $('comGroup').style.display  = t==='fund' ? 'none' : '';
+  $('fundGroup').style.display = t==='com'  ? 'none' : '';
+  calc();
+}
+$('typeCom').onclick  = function(){ setType('com'); };
+$('typeFund').onclick = function(){ setType('fund'); };
+$('typeCombo').onclick= function(){ setType('combo'); };
+$('chk1').onclick = function(){ method='equal'; $('chk1').classList.add('on'); $('chk2').classList.remove('on'); calc(); };
+$('chk2').onclick = function(){ method='principal'; $('chk2').classList.add('on'); $('chk1').classList.remove('on'); calc(); };
+
+/* 参与计算的贷款部分（组合贷 = 商贷 + 公积金两笔，同年限分别计算后合并） */
+function collectParts(){
+  var ps = [];
+  if (loanType !== 'fund'){
+    var P = parseFloat($('amt').value) * 10000;
+    var r = parseFloat($('rate').value);
+    if (P > 0 && r >= 0) ps.push({ name:'商贷', P:P, m:r/100/12 });
+  }
+  if (loanType !== 'com'){
+    var F = parseFloat($('famt').value) * 10000;
+    var fr = parseFloat($('frate').value);
+    if (F > 0 && fr >= 0) ps.push({ name:'公积金', P:F, m:fr/100/12 });
+  }
+  return ps;
+}
+
+function calc(){
+  var ps = collectParts();
+  var years = parseInt($('years').value,10);
+  if (!ps.length){ statusBox(false,'请填写有效的贷款金额和利率'); $('stat').innerHTML=''; return; }
+  if (!(years>0)){ statusBox(false,'请填写有效的贷款年限'); return; }
+  var n = years*12;
+  var totalP = ps.reduce(function(s,p){ return s+p.P; },0);
+  var combo = ps.length > 1;
+  var rows = [];
+
+  if (method === 'equal'){
+    var monthlyAll = 0;
+    ps.forEach(function(p){
+      var mm;
+      if (p.m === 0){ mm = p.P/n; }
+      else { var f = Math.pow(1+p.m, n); mm = p.P*p.m*f/(f-1); }
+      p.monthly = Math.round(mm*100)/100;  // 分项先取整，保证「分项相加 = 合计」显示一致
+      monthlyAll += p.monthly;
+    });
+    var total = monthlyAll*n, interest = total - totalP;
+    rows.push([combo ? '每月月供（合计）' : '每月月供', fmt(monthlyAll)]);
+    if (combo) ps.forEach(function(p){ rows.push([p.name+'月供', fmt(p.monthly)]); });
+    rows.push(['还款月数', n + ' 期'], ['支付利息总额', fmt(interest)], ['还款总额', fmt(total)]);
+  } else {
+    var firstAll = 0, decAll = 0, interestAll = 0;
+    ps.forEach(function(p){
+      p.pp = p.P/n;                       // 每月本金
+      p.first = Math.round((p.pp + p.P*p.m)*100)/100;   // 首月（取整保证分项相加=合计）
+      p.dec = Math.round(p.pp*p.m*100)/100;             // 每月递减
+      p.interest = p.P*p.m*(n+1)/2;       // 总利息
+      firstAll += p.first; decAll += p.dec; interestAll += p.interest;
+    });
+    var totalInt = interestAll, total2 = totalP + totalInt;
+    rows.push([combo ? '首月月供（合计）' : '首月月供', fmt(firstAll)]);
+    if (combo) ps.forEach(function(p){ rows.push([p.name+'首月', fmt(p.first)]); });
+    rows.push(['每月递减', fmt(decAll)]);
+    rows.push(['末月月供', fmt(firstAll - decAll*(n-1))]);
+    rows.push(['还款月数', n + ' 期'], ['支付利息总额', fmt(totalInt)], ['还款总额', fmt(total2)]);
+  }
+  setStat(rows);
+  statusBox(true, (loanType==='combo'?'组合贷款':(loanType==='fund'?'公积金贷款':'商业贷款')) + ' · ' + (method==='equal'?'等额本息':'等额本金') + ' 计算完成。');
+}
+
+$('btnCalc').onclick = calc;
+$('btnSample').onclick = function(){ $('amt').value='200'; $('rate').value='4.20'; $('years').value='25'; calc(); };
+['amt','rate','famt','frate','years'].forEach(function(id){ $(id).addEventListener('input', calc); });
+$('btnReset').onclick = function(){
+  $('amt').value='100'; $('rate').value='3.95'; $('famt').value='60'; $('frate').value='2.85'; $('years').value='30';
+  method='equal'; $('chk1').classList.add('on'); $('chk2').classList.remove('on');
+  setType('com');
+};
+calc();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

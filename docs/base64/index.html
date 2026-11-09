@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Base64 编码解码 · 在线转换（支持中文与文件）- util123 工具箱</title>
+<meta name="description" content="免费在线 Base64 编码 / 解码工具：文本与 Base64 互转，完整支持中文等 UTF-8 字符，支持 URL-safe 变体与文件转 Base64。纯前端处理，内容不上传服务器。">
+<link rel="canonical" href="https://util123.cn/base64/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="Base64编码,Base64解码,base64在线转换,base64加密解密,url safe base64,图片转base64,base64转文本">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="Base64 编码解码 · 在线转换（支持中文与文件）">
+<meta property="og:description" content="文本与 Base64 互转，完整支持中文 UTF-8，支持 URL-safe 与文件转 Base64。纯前端处理，内容不上传。">
+<meta property="og:url" content="https://util123.cn/base64/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Base64 编码解码 · 在线转换（支持中文与文件）">
+<meta name="twitter:description" content="文本与 Base64 互转，支持中文 UTF-8、URL-safe 与文件转 Base64。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">B64</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/base64/#app","name":"Base64 编码解码工具","url":"https://util123.cn/base64/","description":"在线 Base64 编码与解码工具：文本与 Base64 互转，完整支持中文等 UTF-8 字符，支持 URL-safe 变体以及文件转 Base64。纯前端处理，内容不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["文本转 Base64","Base64 转文本","完整 UTF-8 / 中文支持","URL-safe Base64 变体","文件转 Base64","一键复制与下载"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"Base64 编解码","item":"https://util123.cn/base64/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Base64 是加密吗？","acceptedAnswer":{"@type":"Answer","text":"不是。Base64 只是一种把二进制数据用 64 个可打印字符表示的编码方式，任何人都能直接还原，不能用来保护隐私，敏感数据请使用加密。"}},
+{"@type":"Question","name":"为什么中文编码后变长了？","acceptedAnswer":{"@type":"Answer","text":"一个中文字符按 UTF-8 占 3 个字节，Base64 再把每 3 个字节编码成 4 个字符，因此中文内容会明显变长，属于正常现象。"}},
+{"@type":"Question","name":"URL-safe Base64 和普通 Base64 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"普通 Base64 用 + 与 /，这两个字符在 URL 里有特殊含义；URL-safe 变体把 + 换成 -、/ 换成 _，并去掉末尾的 = 补位，方便直接放进网址或文件名。"}},
+{"@type":"Question","name":"编码解码会上传内容吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部转换在浏览器本地完成，文本与文件都不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">B64</text>
+      </svg>
+      <span class="name">Base64 编解码</span>
+    </a>
+    <span class="tagline">util123 工具箱 · Base64 编码 / 解码</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">B64</div>
+    <h1>Base64 <span class="grad">编解码</span></h1>
+    <p>文本与 Base64 互转，完整支持中文等 UTF-8 字符，支持 URL-safe 变体，也可以把文件转成 Base64。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入 <span class="tip">（原文或 Base64，均可）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="粘贴要编码的文本，或要解码的 Base64 字符串"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnEnc">编码为 Base64 ↑</button>
+        <button id="btnDec">解码为文本 ↓</button>
+        <button id="btnSwap">结果互换</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <span class="lbl" style="margin-top:18px">结果</span>
+      <div class="out-box" id="out">—</div>
+      <div class="status" id="status">输入内容后点击「编码」或「解码」。</div>
+      <div class="toolbar">
+        <button id="btnCopyOut">复制结果</button>
+        <button id="btnDl">下载为 .txt</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">选项与文件</span>
+      <div class="row">
+        <label class="chk" id="lbUrlSafe"><input type="checkbox" id="ckUrlSafe">URL-safe 变体（+ → - ，/ → _ ，去掉 =）</label>
+        <label class="chk" style="cursor:pointer">
+          <input type="file" id="file" style="display:none">选择文件转 Base64
+        </label>
+        <button id="btnCopyInput" style="height:38px">复制输入框内容</button>
+      </div>
+      <div class="hint" style="margin-top:12px">
+        · 文件转 Base64 常用于把图片、字体等小文件内嵌进 HTML / CSS，注意文件越大字符串越长。<br>
+        · 大文件（>2MB）生成的 Base64 会很长，浏览器可能会卡顿，建议只处理小文件。
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>Base64 是加密吗？</dt>
+      <dd>不是。Base64 只是一种把二进制数据用 64 个可打印字符表示的编码方式，任何人都能直接还原，不能用来保护隐私，敏感数据请使用加密。</dd>
+      <dt>为什么中文编码后变长了？</dt>
+      <dd>一个中文字符按 UTF-8 占 3 个字节，Base64 再把每 3 个字节编码成 4 个字符，因此中文内容会明显变长，属于正常现象。</dd>
+      <dt>URL-safe Base64 和普通 Base64 有什么区别？</dt>
+      <dd>普通 Base64 用 + 与 /，这两个字符在 URL 里有特殊含义；URL-safe 变体把 + 换成 -、/ 换成 _，并去掉末尾的 = 补位，方便直接放进网址或文件名。</dd>
+      <dt>编码解码会上传内容吗？</dt>
+      <dd>不会。全部转换在浏览器本地完成，文本与文件都不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var outText = '';
+
+function setStatus(msg, type){ var s = $('status'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+function setOut(t){ outText = t; $('out').textContent = t || '—'; }
+
+/* ---- 字节 <-> Base64（分块处理，避免超长字符串爆栈） ---- */
+function bytesToB64(bytes, urlSafe){
+  var bin = '';
+  for(var i = 0; i < bytes.length; i += 0x8000){
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  }
+  var s = btoa(bin);
+  if(urlSafe) s = s.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  return s;
+}
+function b64ToBytes(b64){
+  var s = b64.replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  var pad = s.length % 4;
+  if(pad === 2) s += '==';
+  else if(pad === 3) s += '=';
+  else if(pad === 1) s = s.slice(0, -1);          /* 长度非法时丢弃最后一位再试 */
+  var bin = atob(s);
+  var bytes = new Uint8Array(bin.length);
+  for(var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+function encodeText(){
+  var text = $('inp').value;
+  if(!text){ UY.toast('请先输入内容'); return; }
+  var bytes = new TextEncoder().encode(text);
+  var urlSafe = $('ckUrlSafe').checked;
+  setOut(bytesToB64(bytes, urlSafe));
+  setStatus('编码完成 · ' + bytes.length + ' 字节 → ' + outText.length + ' 字符' + (urlSafe ? '（URL-safe）' : ''), 'ok');
+}
+function decodeText(){
+  var raw = $('inp').value.trim();
+  if(!raw){ UY.toast('请先输入 Base64 字符串'); return; }
+  if(!/^[A-Za-z0-9+/\-_=\s]+$/.test(raw)){
+    setOut(''); setStatus('这看起来不是 Base64 字符串（含非法字符），请检查后重试。', 'err'); return;
+  }
+  try{
+    var bytes = b64ToBytes(raw);
+    var text = new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+    setOut(text);
+    setStatus('解码完成 · ' + raw.replace(/\s+/g, '').length + ' 字符 → ' + bytes.length + ' 字节', 'ok');
+  }catch(e){
+    setOut('');
+    setStatus('解码失败：不是合法的 Base64 字符串（可能长度或字符有误）。', 'err');
+  }
+}
+
+/* ---- 事件 ---- */
+$('btnEnc').onclick = encodeText;
+$('btnDec').onclick = decodeText;
+$('btnSwap').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可以互换'); return; }
+  $('inp').value = outText;
+  setOut(''); setStatus('已把结果放回输入框，可继续转换。', '');
+};
+$('btnClear').onclick = function(){ $('inp').value = ''; setOut(''); setStatus('输入内容后点击「编码」或「解码」。', ''); $('inp').focus(); };
+$('btnCopyOut').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可复制'); return; }
+  UY.copyWith(outText, '结果已复制');
+};
+$('btnCopyInput').onclick = function(){
+  if(!$('inp').value){ UY.toast('输入框是空的'); return; }
+  UY.copyWith($('inp').value, '输入框内容已复制');
+};
+$('btnDl').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可下载'); return; }
+  UY.download('base64-util123.txt', URL.createObjectURL(new Blob([outText], { type: 'text/plain;charset=utf-8' })));
+  UY.toast('已下载 txt');
+};
+$('ckUrlSafe').addEventListener('change', function(){
+  $('lbUrlSafe').classList.toggle('on', $('ckUrlSafe').checked);
+});
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0];
+  if(!f) return;
+  if(f.size > 2 * 1024 * 1024 && !confirm('文件较大（' + UY.fmtBytes(f.size) + '），生成的 Base64 会很长且可能卡顿。继续？')) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    var res = String(fr.result);
+    var b64 = res.indexOf(',') > -1 ? res.slice(res.indexOf(',') + 1) : res;
+    setOut(b64);
+    setStatus('文件「' + f.name + '」已转为 Base64 · ' + UY.fmtBytes(f.size) + ' → ' + b64.length + ' 字符', 'ok');
+  };
+  fr.onerror = function(){ setStatus('文件读取失败，请换一个文件再试。', 'err'); };
+  fr.readAsDataURL(f);
+  e.target.value = '';
+});
+
+/* 输入即提示：看起来像 Base64 时给个指引 */
+$('inp').addEventListener('input', function(){
+  var v = $('inp').value.trim();
+  if(v.length >= 8 && /^[A-Za-z0-9+/\-_=\s]+$/.test(v) && v.replace(/\s+/g, '').length % 4 === 0){
+    setStatus('看起来像 Base64（长度是 4 的倍数），可以直接点「解码为文本 ↓」。', '');
+  }else{
+    setStatus('输入内容后点击「编码」或「解码」。', '');
+  }
+});
+$('btnSample').onclick = function(){
+  $('inp').value = 'The quick brown fox jumps over the lazy dog. 快速棕色狐狸跳过懒狗。';
+  encodeText();
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

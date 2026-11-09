@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>User-Agent 解析 · 识别浏览器与设备 - util123 工具箱</title>
+<meta name="description" content="免费在线 User-Agent 解析工具：粘贴一段 UA 字符串，立即识别浏览器（Chrome/Edge/Firefox/Safari 等）及版本、操作系统（Windows/macOS/Android/iOS 等）、设备类型（桌面/手机/平板/爬虫）。排查兼容性问题、分析访问日志随手用。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/ua/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="User-Agent解析,UA解析,浏览器识别,设备识别,UA分析">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="User-Agent 解析 · 识别浏览器与设备">
+<meta property="og:description" content="粘贴 UA 字符串，识别浏览器/系统/设备类型。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/ua/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11h14v10H9z M9 11v3h14"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/ua/#app","name":"User-Agent 解析","url":"https://util123.cn/ua/","description":"在线 User-Agent 解析工具，识别浏览器、操作系统与设备类型，纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["浏览器识别","操作系统识别","设备类型识别"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"User-Agent 解析","item":"https://util123.cn/ua/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"解析准确吗？","acceptedAnswer":{"@type":"Answer","text":"基于常见 UA 特征规则匹配，覆盖主流浏览器与系统；非常见或高度定制的 UA 可能识别不全，仅供参考。"}},
+{"@type":"Question","name":"解析会上传 UA 吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部在浏览器本地完成，不发送任何数据。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11h14v10H9z M9 11v3h14"/></g>
+      </svg>
+      <span class="name">User-Agent 解析</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 设备识别</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11h14v10H9z M9 11v3h14"/></g></svg></div>
+    <h1>User-Agent <span class="grad">解析</span></h1>
+    <p>粘贴一段 UA 字符串，立即识别浏览器、操作系统与设备类型。排查兼容性、看访问日志随手用。纯前端，数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <label class="lbl" for="in">User-Agent 字符串</label>
+      <textarea id="in" class="ipt" style="min-height:84px;resize:vertical" placeholder="粘贴 UA，如 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" aria-label="输入 UA"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button id="btnClear" style="flex:1">清空</button>
+        <button id="btnSample" style="flex:1">示例</button>
+      </div>
+      <div id="res" class="grid" style="gap:10px;margin-top:12px"></div>
+      <pre id="raw" style="margin-top:12px;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px;color:var(--muted);white-space:pre-wrap;word-break:break-all"></pre>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>解析准确吗？</h3><p>基于常见 UA 特征规则匹配，覆盖主流浏览器与系统；非常见或高度定制的 UA 可能识别不全，仅供参考。</p></div>
+    <div class="faq"><h3>解析会上传 UA 吗？</h3><p>不会。全部在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    function parse(ua){
+      var r = {browser:'未知', browserVer:'', engine:'未知', os:'未知', osVer:'', device:'桌面', bot:false};
+      if (!ua) return r;
+      var m;
+      if (/bot|spider|crawl|slurp|mediapartners|bingpreview/i.test(ua)) { r.bot = true; r.device = '爬虫/程序'; }
+      // engine
+      if ((m = ua.match(/AppleWebKit\/([\d.]+)/))) r.engine = 'AppleWebKit ' + m[1];
+      else if ((m = ua.match(/Gecko\/([\d.]+)/))) r.engine = 'Gecko';
+      else if ((m = ua.match(/Trident\/([\d.]+)/))) r.engine = 'Trident ' + m[1];
+      else if ((m = ua.match(/Presto\/([\d.]+)/))) r.engine = 'Presto ' + m[1];
+      // browser
+      if ((m = ua.match(/Edg(?:e|A|iOS)?\/([\d.]+)/))) { r.browser='Edge'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/OPR\/([\d.]+)/)) || (m = ua.match(/Opera\/([\d.]+)/))) { r.browser='Opera'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/Firefox\/([\d.]+)/))) { r.browser='Firefox'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/Chrome\/([\d.]+)/))) { r.browser='Chrome'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/Version\/([\d.]+)\s+.*Safari/))) { r.browser='Safari'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/Safari\/([\d.]+)/))) { r.browser='Safari'; }
+      else if ((m = ua.match(/MSIE ([\d.]+)/))) { r.browser='Internet Explorer'; r.browserVer=m[1]; }
+      else if ((m = ua.match(/Trident.*rv:([\d.]+)/))) { r.browser='Internet Explorer'; r.browserVer=m[1]; }
+      // os
+      if ((m = ua.match(/Windows NT ([\d.]+)/))) { r.os='Windows'; r.osVer={'10.0':'10/11','6.3':'8.1','6.2':'8','6.1':'7','6.0':'Vista','5.1':'XP'}[m[1]] || m[1]; }
+      else if (/iPhone/.test(ua)) { r.os='iOS (iPhone)'; r.device='手机'; if((m=ua.match(/OS ([\d_]+)/))) r.osVer=m[1].replace(/_/g,'.'); }
+      else if (/iPad/.test(ua)) { r.os='iOS (iPad)'; r.device='平板'; if((m=ua.match(/OS ([\d_]+)/))) r.osVer=m[1].replace(/_/g,'.'); }
+      else if (/iPod/.test(ua)) { r.os='iOS (iPod)'; r.device='手机'; }
+      else if ((m = ua.match(/Android ([\d.]+)/))) { r.os='Android'; r.osVer=m[1]; r.device=/Mobile|Android.*;.*Mobile/i.test(ua)?'手机':'平板'; }
+      else if (/Mac OS X/.test(ua)) { r.os='macOS'; if((m=ua.match(/Mac OS X ([\d_]+)/))) r.osVer=m[1].replace(/_/g,'.'); }
+      else if (/CrOS/.test(ua)) { r.os='Chrome OS'; }
+      else if (/Linux/.test(ua)) { r.os='Linux'; }
+      else if (/Windows Phone/.test(ua)) { r.os='Windows Phone'; r.device='手机'; }
+      return r;
+    }
+    function cell(k, v){
+      /* 改用公共 .item 结构（移动端自动获得键值布局）；内容来自用户粘贴的 UA，必须转义 */
+      return '<div class="item"><div class="k">'+UY.esc(k)+'</div><div class="v sans">' + UY.esc(v || '未知') + '</div></div>';
+    }
+    function run(){
+      var ua = $('in').value.trim();
+      $('raw').textContent = ua ? '原始 UA：\n' + ua : '';
+      if (!ua){ $('res').innerHTML=''; return; }
+      var r = parse(ua);
+      $('res').innerHTML = cell('浏览器', r.browser + (r.browserVer?(' '+r.browserVer):''))
+        + cell('渲染引擎', r.engine)
+        + cell('操作系统', r.os + (r.osVer?(' '+r.osVer):''))
+        + cell('设备类型', r.bot ? '🤖 '+r.device : r.device);
+    }
+    $('in').addEventListener('input', run);
+    $('btnSample').onclick = function(){
+      $('in').value = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+      run();
+    };
+    $('btnClear').onclick = function(){ $('in').value=''; run(); };
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

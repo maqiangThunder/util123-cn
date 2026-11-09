@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSS 渐变生成器 · 在线配色渐变 - util123 工具箱</title>
+<meta name="description" content="免费在线 CSS 渐变生成器：挑选两个或三个颜色，拖动调整角度，实时预览线性渐变，一键复制 CSS 代码。内置随机灵感配色，纯前端运行。">
+<link rel="canonical" href="https://util123.cn/gradient/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="CSS渐变,linear-gradient,渐变生成器,配色工具,网页配色">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="CSS 渐变生成器 · 在线配色渐变">
+<meta property="og:description" content="选色、调角度、实时预览，一键复制 linear-gradient CSS 代码。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/gradient/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 渐变生成器 · 在线配色渐变">
+<meta name="twitter:description" content="选色调角度实时预览，一键复制 CSS。纯前端运行。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><path d="M7 22l8-13 4 6.5 2-3 4 9.5z" fill="white"/></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/gradient/#app","name":"CSS 渐变生成器","url":"https://util123.cn/gradient/","description":"在线挑选颜色并调整角度，实时预览 CSS 线性渐变并复制代码，提供随机灵感配色。纯前端运行，数据不上传。","applicationCategory":"DesignApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["双色/三色渐变","角度调节","实时预览","复制 CSS 代码","随机灵感配色"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"CSS 渐变生成器","item":"https://util123.cn/gradient/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"生成的 CSS 兼容哪些浏览器？","acceptedAnswer":{"@type":"Answer","text":"生成的是标准 linear-gradient 语法，Chrome / Firefox / Safari / Edge 及各主流移动浏览器均原生支持，无需加 -webkit- 前缀。"}},
+{"@type":"Question","name":"可以生成超过三种颜色吗？","acceptedAnswer":{"@type":"Answer","text":"当前提供双色与三色两种模式；三色模式中每个色标都可以单独挑选，生成的 CSS 中色标按顺序排列，可直接在复制出的代码里继续手动增删。"}},
+{"@type":"Question","name":"颜色会被上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部计算与预览都在浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <path d="M7 22l8-13 4 6.5 2-3 4 9.5z" fill="#fff"/>
+      </svg>
+      <span class="name">渐变生成器</span>
+    </a>
+    <span class="tagline">util123 工具箱 · CSS 渐变配色</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><rect width="32" height="32" rx="9" fill="none"/><path d="M7 22l8-13 4 6.5 2-3 4 9.5z" fill="currentColor"/></svg></div>
+    <h1>CSS 渐变<span class="grad">生成器</span></h1>
+    <p>挑选颜色、拖动角度，实时预览 linear-gradient，一键复制 CSS 代码。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 12px">
+        <button id="btnTwo" class="primary">双色</button>
+        <button id="btnThree">三色</button>
+        <button id="btnRandom">🎲 随机灵感</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="toolbar" style="margin:0 0 12px" id="colorRow"></div>
+      <span class="lbl">角度 <b id="angVal">135</b>°</span>
+      <input id="ang" type="range" min="0" max="360" value="135" style="width:100%;margin:8px 0 14px">
+      <div id="preview" style="height:150px;border-radius:12px;border:1px solid var(--border)"></div>
+      <span class="lbl" style="margin-top:14px">CSS 代码</span>
+      <textarea id="out" class="ipt mono" rows="3" readonly spellcheck="false"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnCopy">复制 CSS</button>
+      </div>
+      <div class="note" id="note">点击色块即可换色；「随机灵感」会生成一组顺眼的双色/三色渐变。</div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>CSS 里的角度是什么意思？</h3><p>linear-gradient 的角度指渐变方向：0deg 从下到上，90deg 从左到右，135deg 从左上到右下。拖动滑块实时预览最直观。</p></div>
+    <div class="faq"><h3>怎么用到自己的网页里？</h3><p>复制生成的 CSS，粘贴到任意元素的 background 属性即可，例如 <code>background: linear-gradient(...);</code>，按钮、横幅、卡片背景都适用。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。选色、预览、复制全部在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var colors = ['#6366f1', '#a855f7'];
+    var ang = 135;
+    var $ = UY.$;
+
+    function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
+    function css(){
+      var stops = colors.map(function(c,i){ return c + ' ' + Math.round(i*100/(colors.length-1)) + '%'; }).join(', ');
+      return 'linear-gradient(' + ang + 'deg, ' + stops + ')';
+    }
+    function render(){
+      var g = css();
+      $('preview').style.background = g;
+      $('out').value = 'background: ' + g + ';';
+      $('angVal').textContent = ang;
+      var row = $('colorRow'); row.innerHTML = '';
+      colors.forEach(function(c, i){
+        var inp = document.createElement('input');
+        inp.type = 'color'; inp.value = c; inp.style.cssText = 'width:46px;height:38px;border:1px solid var(--border);border-radius:9px;background:none;cursor:pointer;padding:2px';
+        inp.oninput = function(){ colors[i] = inp.value; render(); };
+        row.appendChild(inp);
+        if (i < colors.length - 1){
+          var sep = document.createElement('span');
+          sep.textContent = '→'; sep.style.cssText = 'align-self:center;opacity:.5;padding:0 2px';
+          row.appendChild(sep);
+        }
+      });
+    }
+    function setCount(n){
+      var pool = ['#6366f1','#a855f7','#06b6d4','#f59e0b','#ef4444','#10b981','#ec4899','#8b5cf6'];
+      /* 补色时过滤已有色标，避免渐变里出现两个同色 */
+      while (colors.length < n){
+        var rest = pool.filter(function(c){ return colors.indexOf(c) < 0; });
+        if (!rest.length) break;
+        colors.push(rnd(rest));
+      }
+      colors = colors.slice(0, n);
+      /* 同步切换按钮选中态，否则切到三色后"双色"仍高亮 */
+      $('btnTwo').classList.toggle('primary', n === 2);
+      $('btnThree').classList.toggle('primary', n === 3);
+      render();
+    }
+    $('btnTwo').onclick = function(){ setCount(2); };
+    $('btnThree').onclick = function(){ setCount(3); };
+    $('btnRandom').onclick = function(){
+      var pool = ['#6366f1','#a855f7','#06b6d4','#f59e0b','#ef4444','#10b981','#ec4899','#8b5cf6','#0ea5e9','#f97316'];
+      var a = rnd(pool), b = rnd(pool.filter(function(c){ return c !== a; }));
+      colors = [a, b];
+      if (Math.random() < 0.4){ var c2 = rnd(pool.filter(function(c){ return c !== a && c !== b; })); colors.push(c2); }
+      ang = [0,45,90,135,180,225,270,315][Math.floor(Math.random()*8)];
+      $('ang').value = ang;
+      render();
+    };
+    $('ang').oninput = function(){ ang = +this.value; render(); };
+    $('btnCopy').onclick = function(){ UY.copyWith($('out').value, 'CSS 已复制'); };
+
+    $('btnSample').onclick = function(){
+      colors = ['#3366cc', '#a855f7'];
+      ang = 135;
+      $('ang').value = 135;
+      render();
+    };
+
+    render();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

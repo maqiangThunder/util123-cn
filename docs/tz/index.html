@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>时区转换 · 世界各地时间对照 - util123 工具箱</title>
+<meta name="description" content="免费在线时区转换工具：输入一个本地时间，立刻看到北京、东京、伦敦、纽约、洛杉矶等地对应的当地时间。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/tz/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="时区转换,世界时间,时差计算,各地时间对照,北京时间,纽约时间,伦敦时间,在线时区工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="时区转换 · 世界各地时间对照">
+<meta property="og:description" content="输入一个本地时间，立刻看到北京、东京、伦敦、纽约、洛杉矶等地对应的当地时间。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/tz/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时区转换 · 世界各地时间对照">
+<meta name="twitter:description" content="输入本地时间，对照世界各地时间。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="17" fill="white">T</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/tz/#app","name":"时区转换工具","url":"https://util123.cn/tz/","description":"在线时区转换：输入一个本地时间，立刻看到北京、东京、伦敦、纽约、洛杉矶等地对应的当地时间。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["本地时间转多地时间","北京/东京/伦敦/纽约/洛杉矶等","世界标准时间 UTC","实时换算"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"时区转换","item":"https://util123.cn/tz/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"输入的时间按哪个时区算？","acceptedAnswer":{"@type":"Answer","text":"按你当前设备的本地时区换算。下方结果会显示同一时刻在其它城市对应的当地时间，方便约跨城/跨国会议或联系朋友。"}},
+{"@type":"Question","name":"为什么夏令时有时差对不上？","acceptedAnswer":{"@type":"Answer","text":"本工具使用的是浏览器内置的 IANA 时区数据库，已包含各地夏令时规则，结果就是该城市当下的真实本地时间，无需手动加减。"}},
+{"@type":"Question","name":"转换会上传时间吗？","acceptedAnswer":{"@type":"Answer","text":"不会。换算完全在浏览器本地完成，输入的时间不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="17" fill="#fff">T</text>
+      </svg>
+      <span class="name">时区转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 世界各地时间对照</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f1" aria-hidden="true">T</div>
+    <h1>时区<span class="grad">转换</span></h1>
+    <p>填一个时间，立刻看到北京、东京、伦敦、纽约、洛杉矶等地此刻是几点。跨城约时间不再算错时差。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">你的本地时间 <span class="tip">（按设备时区换算）</span></span>
+      <div class="row">
+        <div class="field"><label for="dt">日期时间</label><input class="ipt" id="dt" type="datetime-local" step="1"></div>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="btnNow">填入现在</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">同一时刻 · 世界各地</span>
+      <div class="grid" id="grid" style="margin-top:0"></div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>输入的时间按哪个时区算？</dt>
+      <dd>按你当前设备的本地时区换算。下方结果会显示同一时刻在其它城市对应的当地时间，方便约跨城 / 跨国会议或联系朋友。</dd>
+      <dt>为什么夏令时有时差对不上？</dt>
+      <dd>本工具使用的是浏览器内置的 IANA 时区数据库，已包含各地夏令时规则，结果就是该城市当下的真实本地时间，无需手动加减。</dd>
+      <dt>转换会上传时间吗？</dt>
+      <dd>不会。换算完全在浏览器本地完成，输入的时间不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var ZONES = [
+  ['Asia/Shanghai', '北京 / 上海'],
+  ['Asia/Tokyo', '东京'],
+  ['Asia/Singapore', '新加坡'],
+  ['Australia/Sydney', '悉尼'],
+  ['Europe/London', '伦敦'],
+  ['Europe/Paris', '巴黎'],
+  ['America/New_York', '纽约'],
+  ['America/Los_Angeles', '洛杉矶']
+];
+var fmtTime = {}, fmtDate = {};
+ZONES.forEach(function(z){
+  fmtTime[z[0]] = new Intl.DateTimeFormat('zh-CN', { timeZone: z[0], hour: '2-digit', minute: '2-digit', hour12: false });
+  fmtDate[z[0]] = new Intl.DateTimeFormat('zh-CN', { timeZone: z[0], month: 'long', day: 'numeric', weekday: 'short' });
+});
+var utcTime = new Intl.DateTimeFormat('zh-CN', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', hour12: false });
+var utcDate = new Intl.DateTimeFormat('zh-CN', { timeZone: 'UTC', month: 'long', day: 'numeric', weekday: 'short' });
+
+function localToUtc(value){
+  if(!value) return null;
+  var d = new Date(value);          /* 无时区后缀 → 按本地解析 */
+  if(isNaN(d.getTime())) return null;
+  return d.getTime();
+}
+
+function render(){
+  var utc = localToUtc($('dt').value);
+  var grid = $('grid');
+  if(utc == null){ grid.innerHTML = '<div class="empty">请选择一个日期时间。</div>'; grid.style.display = 'block'; return; }
+  var rows = ZONES.map(function(z){
+    return '<div class="item"><div class="k">'+UY.esc(z[1])+'</div><div class="v">'+UY.esc(fmtTime[z[0]].format(utc))+
+      '<span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">'+UY.esc(fmtDate[z[0]].format(utc))+'</span></div></div>';
+  });
+  rows.push('<div class="item" style="background:var(--primary-soft);border-color:var(--primary)"><div class="k">UTC 世界标准时间</div><div class="v">'+UY.esc(utcTime.format(utc))+
+    '<span style="font-size:12px;color:var(--muted);font-weight:400;margin-left:6px">'+UY.esc(utcDate.format(utc))+'</span></div></div>');
+  grid.innerHTML = rows.join('');
+  grid.style.display = 'grid';
+}
+
+function nowLocal(){
+  var d = new Date();
+  return d.getFullYear() + '-' + UY.pad2(d.getMonth()+1) + '-' + UY.pad2(d.getDate()) + 'T' +
+    UY.pad2(d.getHours()) + ':' + UY.pad2(d.getMinutes());
+}
+$('dt').addEventListener('input', render);
+$('dt').addEventListener('change', render);
+$('btnNow').onclick = function(){ $('dt').value = nowLocal(); render(); };
+$('btnSample').onclick = function(){ $('dt').value = '2026-10-12T15:30'; render(); };
+$('dt').value = nowLocal();
+render();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

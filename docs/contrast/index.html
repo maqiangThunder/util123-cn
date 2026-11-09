@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>颜色对比度检查器 · WCAG 可读性检测 - util123 工具箱</title>
+<meta name="description" content="免费在线颜色对比度检查：输入前景色与背景色，实时计算 WCAG 对比度比值，判断 AA / AAA 文本可读性是否达标。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/contrast/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="颜色对比度,WCAG,无障碍,对比度检测,可读性,在线工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="颜色对比度检查器 · WCAG 可读性检测">
+<meta property="og:description" content="输入前景色与背景色，实时计算 WCAG 对比度，判断 AA / AAA 是否达标。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/contrast/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="颜色对比度检查器 · WCAG 可读性检测">
+<meta name="twitter:description" content="实时计算 WCAG 对比度，判断 AA / AAA 是否达标，纯前端运行。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="16" r="7"/><path d="M20 9a7 7 0 0 1 0 14" opacity=".65"/><path d="M13 9v14" opacity=".5"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/contrast/#app","name":"颜色对比度检查器","url":"https://util123.cn/contrast/","description":"在线颜色对比度检查工具，计算 WCAG 对比度比值并判断 AA / AAA 文本可读性等级。纯前端运行，数据不上传。","applicationCategory":"DesignApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["WCAG 对比度计算","AA/AAA 等级判定","实时预览","亮度与相对亮度展示"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"颜色对比度检查器","item":"https://util123.cn/contrast/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"WCAG 对比度多少算达标？","acceptedAnswer":{"@type":"Answer","text":"常规文本（小于 18pt）：AA 需 ≥ 4.5:1，AAA 需 ≥ 7:1；大号文本（≥18pt 或 ≥14pt 粗体）：AA 需 ≥ 3:1，AAA 需 ≥ 4.5:1。"}},
+{"@type":"Question","name":"对比度是怎么算的？","acceptedAnswer":{"@type":"Answer","text":"按 WCAG 2.x 公式：先算两色各自的相对亮度 L（对 sRGB 通道做伽马展开后加权），对比度 = (L亮 + 0.05) / (L暗 + 0.05)，结果范围 1:1 到 21:1。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。计算完全在浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="16" r="7"/><path d="M20 9a7 7 0 0 1 0 14" opacity=".65"/><path d="M13 9v14" opacity=".5"/></g>
+      </svg>
+      <span class="name">对比度检查</span>
+    </a>
+    <span class="tagline">util123 工具箱 · WCAG 可读性检测</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="16" r="7"/><path d="M20 9a7 7 0 0 1 0 14" opacity=".65"/><path d="M13 9v14" opacity=".5"/></g></svg></div>
+    <h1>对比度<span class="grad">检查</span></h1>
+    <p>前景色 × 背景色，实时算 WCAG 对比度，AA / AAA 达标一目了然。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <span class="lbl">文字颜色</span>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <input type="color" id="fgC" value="#1f2328" style="width:44px;height:44px;border:none;background:none;cursor:pointer;padding:0">
+            <input id="fgT" class="ipt" style="flex:1;margin:0" type="text" spellcheck="false" value="#1f2328" aria-label="文字颜色 HEX">
+          </div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <span class="lbl">背景颜色</span>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+            <input type="color" id="bgC" value="#ffffff" style="width:44px;height:44px;border:none;background:none;cursor:pointer;padding:0">
+            <input id="bgT" class="ipt" style="flex:1;margin:0" type="text" spellcheck="false" value="#ffffff" aria-label="背景颜色 HEX">
+          </div>
+        </div>
+      </div>
+      <button id="swap" class="ghost" style="margin-top:10px">⇄ 交换前景 / 背景</button>
+      <div class="toolbar" style="margin-top:10px">
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">对比度结果</span>
+      <div id="ratio" style="font-size:44px;font-weight:800;letter-spacing:-1px;margin-top:4px" class="mono">—</div>
+      <div id="levels" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+      <div id="preview" style="margin-top:14px;border-radius:10px;padding:16px;border:1px solid var(--border)">
+        <div style="font-size:18px;font-weight:600" id="pvBig">大号文本预览 Aa</div>
+        <div style="font-size:14px;margin-top:6px" id="pvSmall">常规文本预览 The quick brown fox jumps over the lazy dog. 0123456789</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>WCAG 对比度多少算达标？</h3><p>常规文本：AA ≥ 4.5:1，AAA ≥ 7:1；大号文本（≥18pt 或 ≥14pt 粗体）：AA ≥ 3:1，AAA ≥ 4.5:1。UI 组件与图形元素 AA 要求 ≥ 3:1。</p></div>
+    <div class="faq"><h3>对比度是怎么算的？</h3><p>按 WCAG 2.x 公式：先算两色各自的相对亮度 L（sRGB 通道伽马展开后按 0.2126/0.7152/0.0722 加权），对比度 = (L亮 + 0.05) / (L暗 + 0.05)，范围 1:1 ~ 21:1。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。计算完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    function hex2rgb(h){
+      h = h.replace('#','');
+      if (h.length === 3) h = h.split('').map(function(c){ return c + c; }).join('');
+      if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+      return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+    }
+    // WCAG 相对亮度
+    function lum(rgb){
+      var c = rgb.map(function(v){
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    }
+    function contrast(fg, bg){
+      var l1 = lum(fg), l2 = lum(bg);
+      if (l1 < l2){ var t = l1; l1 = l2; l2 = t; }
+      return (l1 + 0.05) / (l2 + 0.05);
+    }
+    function sync(pickId, txtId){
+      var pick = $(pickId), txt = $(txtId);
+      pick.oninput = function(){ txt.value = pick.value.toUpperCase(); run(); };
+      txt.oninput = function(){
+        var rgb = hex2rgb(txt.value.trim());
+        if (rgb){ pick.value = '#' + txt.value.replace('#','').toLowerCase(); run(); }
+      };
+    }
+    function badge(pass, label){
+      /* 用主题变量，深色模式下自动切换成亮绿/亮红 */
+      var color = pass ? 'var(--ok)' : 'var(--err)';
+      var bg = pass ? 'color-mix(in srgb, var(--ok) 12%, transparent)' : 'color-mix(in srgb, var(--err) 12%, transparent)';
+      return '<span style="display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:600;color:' + color + ';background:' + bg + '">' + (pass ? '✓ ' : '✗ ') + label + '</span>';
+    }
+    function run(){
+      var fg = hex2rgb($('fgT').value.trim()), bg = hex2rgb($('bgT').value.trim());
+      if (!fg || !bg){ $('ratio').textContent = '格式错误'; $('levels').innerHTML = ''; return; }
+      var r = contrast(fg, bg);
+      $('ratio').textContent = r.toFixed(2) + ' : 1';
+      var big = r >= 3, bigAaa = r >= 4.5, small = r >= 4.5, smallAaa = r >= 7;
+      $('levels').innerHTML =
+        badge(smallAaa, '常规文本 AAA') + badge(small, '常规文本 AA') +
+        badge(bigAaa, '大号文本 AAA') + badge(big, '大号文本 AA');
+      var fgc = $('fgT').value.trim(), bgc = $('bgT').value.trim();
+      $('preview').style.background = bgc;
+      $('pvBig').style.color = fgc;
+      $('pvSmall').style.color = fgc;
+    }
+    $('swap').onclick = function(){
+      var f = $('fgT').value, b = $('bgT').value;
+      $('fgT').value = b; $('fgC').value = b.charAt(0) === '#' ? b : '#' + b;
+      $('bgT').value = f; $('bgC').value = f.charAt(0) === '#' ? f : '#' + f;
+      run();
+    };
+    $('btnSample').onclick = function(){
+      $('fgT').value = '#3366cc';
+      $('fgC').value = '#3366cc';
+      $('bgT').value = '#ffffff';
+      $('bgC').value = '#ffffff';
+      run();
+    };
+    sync('fgC', 'fgT');
+    sync('bgC', 'bgT');
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

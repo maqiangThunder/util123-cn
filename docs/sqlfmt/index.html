@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SQL 格式化 · SQL 美化缩进 - util123 工具箱</title>
+<meta name="description" content="免费在线 SQL 格式化工具：把挤在一行的 SQL 按关键字换行、大写主句、缩进对齐，便于阅读和调试。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/sqlfmt/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="SQL格式化,SQL美化,SQL缩进,SQL在线格式化,SQL格式化工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="SQL 格式化 · SQL 美化缩进">
+<meta property="og:description" content="把挤在一行的 SQL 按关键字换行、大写主句、缩进对齐。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/sqlfmt/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL 格式化 · SQL 美化缩进">
+<meta name="twitter:description" content="SQL 一键美化缩进。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><ellipse cx="16" cy="9.5" rx="8" ry="3.2"/><path d="M8 9.5v13c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2v-13"/><path d="M8 16c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/sqlfmt/#app","name":"SQL 格式化工具","url":"https://util123.cn/sqlfmt/","description":"在线把挤在一行的 SQL 按关键字换行、大写主句、缩进对齐，便于阅读和调试。纯前端运行，数据不上传。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["按关键字换行","主句大写","缩进对齐","一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"SQL 格式化","item":"https://util123.cn/sqlfmt/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"支持哪些 SQL 方言？","acceptedAnswer":{"@type":"Answer","text":"本格式化器用语义无关的关键字切分，常见 MySQL / PostgreSQL / SQL Server / Oracle 的 SELECT、INSERT、UPDATE、DELETE、JOIN、WHERE、GROUP BY、ORDER BY 等主句都会被换行并大写，不依赖具体方言。"}},
+{"@type":"Question","name":"会改动我的 SQL 语义吗？","acceptedAnswer":{"@type":"Answer","text":"不会。格式化只调整空白、换行和关键字大小写，不改变字段、表名、条件和字符串内容，请放心用于线上排查。"}},
+{"@type":"Question","name":"SQL 会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。格式化完全在浏览器本地完成，SQL 不会发送到任何服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><ellipse cx="16" cy="9.5" rx="8" ry="3.2"/><path d="M8 9.5v13c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2v-13"/><path d="M8 16c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></g>
+      </svg>
+      <span class="name">SQL 格式化</span>
+    </a>
+    <span class="tagline">util123 工具箱 · SQL 美化缩进</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="16" cy="9.5" rx="8" ry="3.2"/><path d="M8 9.5v13c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2v-13"/><path d="M8 16c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2"/></g></svg></div>
+    <h1>SQL <span class="grad">格式化</span></h1>
+    <p>把挤在一行的 SQL 按关键字换行、大写主句、缩进对齐。读代码、排查慢查询随手就用。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">粘贴 SQL</span>
+      <textarea id="inp" spellcheck="false" placeholder="select id,name,age from users where age>18 and city='北京' order by age desc limit 10"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnFmt">格式化</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="note" id="note">提示：只调整空白与关键字大小写，不改语义。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">格式化结果</span>
+      <textarea id="out" spellcheck="false" class="code" placeholder="结果会出现在这里"></textarea>
+      <div class="toolbar">
+        <button id="btnCopy">复制结果</button>
+      </div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>支持哪些 SQL 方言？</dt>
+      <dd>格式化器用语义无关的关键字切分，常见 MySQL / PostgreSQL / SQL Server / Oracle 的主句（SELECT、INSERT、UPDATE、DELETE、JOIN、WHERE、GROUP BY、ORDER BY 等）都会被换行并大写。</dd>
+      <dt>会改动我的 SQL 语义吗？</dt>
+      <dd>不会。只调整空白、换行和关键字大小写，不改变字段、表名、条件和字符串内容。</dd>
+      <dt>SQL 会上传吗？</dt>
+      <dd>不会。格式化完全在浏览器本地完成，SQL 不会发送到任何服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var CLAUSE = ['SELECT','FROM','WHERE','LEFT JOIN','RIGHT JOIN','INNER JOIN','OUTER JOIN','JOIN','ON','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','INSERT INTO','VALUES','UPDATE','SET','DELETE FROM','CREATE TABLE','ALTER TABLE','DROP TABLE','UNION ALL','UNION','AND','OR'];
+function fmt(sql){
+  var s = sql.replace(/\s+/g, ' ').trim();
+  if (!s) return '';
+  // 保护字符串字面量
+  var strings = [];
+  s = s.replace(/'[^']*'/g, function(m){ strings.push(m); return '\u0001' + (strings.length - 1) + '\u0001'; });
+  // 换行主句：单次扫描、按关键字长度降序交替匹配，避免裸 JOIN 截断 LEFT JOIN
+  var kwRe = new RegExp('\\b(' + CLAUSE.slice().sort(function(a,b){ return b.length - a.length; }).map(function(kw){ return kw.replace(/ /g, '\\s+'); }).join('|') + ')\\b', 'gi');
+  s = s.replace(kwRe, function(m){ return '\n' + m.toUpperCase(); });
+  // 折行后按句首关键字整理缩进
+  var lines = s.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+  var out = [];
+  var MAIN = /^(SELECT|FROM|WHERE|INSERT INTO|UPDATE|DELETE FROM|CREATE TABLE|ALTER TABLE|DROP TABLE|UNION ALL|UNION)/;
+  var SUB  = /^(LEFT JOIN|RIGHT JOIN|INNER JOIN|OUTER JOIN|JOIN|GROUP BY|ORDER BY|HAVING|LIMIT|OFFSET|VALUES|SET)/;
+  var COND = /^(AND|OR|ON)/;
+  for (var i = 0; i < lines.length; i++){
+    var ln = lines[i];
+    if (MAIN.test(ln)) out.push(ln);
+    else if (SUB.test(ln)) out.push('  ' + ln);
+    else if (COND.test(ln)) out.push('    ' + ln);
+    else if (out.length) out[out.length - 1] += ' ' + ln; // 前一句带出的内容接在上一行后
+    else out.push(ln);
+  }
+  var res = out.join('\n');
+  res = res.replace(/\u0001(\d+)\u0001/g, function(m, i){ return strings[+i]; });
+  return res;
+}
+$('btnFmt').onclick = function(){
+  var v = $('inp').value.trim();
+  if (!v){ UY.toast('请输入 SQL'); return; }
+  $('out').value = fmt(v);
+  $('note').textContent = '✅ 已格式化（仅调整空白与大小写，不改语义）。';
+};
+$('btnSample').onclick = function(){
+  $('inp').value = "select u.id,u.name,o.amount from users u left join orders o on u.id=o.uid where u.age>18 and o.status='paid' group by u.id order by o.amount desc limit 10";
+  $('btnFmt').onclick();
+};
+$('btnClear').onclick = function(){ $('inp').value=''; $('out').value=''; $('note').textContent='提示：只调整空白与关键字大小写，不改语义。'; };
+$('btnCopy').onclick = function(){
+  if (!$('out').value){ UY.toast('还没有结果'); return; }
+  UY.copyWith($('out').value, '已复制格式化 SQL');
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

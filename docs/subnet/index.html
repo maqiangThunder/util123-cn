@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>子网计算器 · CIDR 与掩码计算 - util123 工具箱</title>
+<meta name="description" content="免费在线子网计算器：输入 IP 和掩码（CIDR 或点分），一键算出网络地址、广播地址、可用主机范围与主机数。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/subnet/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="子网计算器,子网掩码,CIDR计算,网络地址,广播地址,IP计算">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="子网计算器 · CIDR 与掩码计算">
+<meta property="og:description" content="输入 IP 和掩码，一键算出网络地址、广播地址、可用主机范围。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/subnet/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="子网计算器 · CIDR 与掩码计算">
+<meta name="twitter:description" content="IP 与掩码换算，开发运维随手就用。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="white">IP</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/subnet/#app","name":"子网计算器","url":"https://util123.cn/subnet/","description":"在线根据 IP 与子网掩码（CIDR 或点分）计算网络地址、广播地址、可用主机范围与主机数。纯前端运行，数据不上传。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["CIDR/点分掩码","网络地址","广播地址","可用主机范围","主机数统计"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"子网计算器","item":"https://util123.cn/subnet/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"CIDR 是什么？","acceptedAnswer":{"@type":"Answer","text":"CIDR（无类别域间路由）用「/数字」表示掩码长度，例如 /24 代表前 24 位是网络位、后 8 位是主机位，等价于点分掩码 255.255.255.0。"}},
+{"@type":"Question","name":"可用主机数为什么要减 2？","acceptedAnswer":{"@type":"Answer","text":"每个子网的网络地址（主机位全 0）和广播地址（主机位全 1）不能分配给主机，因此可用主机数 = 2^主机位数 − 2。/31（点对点）和 /32（单 IP）是特例，不减 2。"}},
+{"@type":"Question","name":"IP 会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。计算完全在浏览器本地完成，IP 和掩码不会发送到任何服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="#fff">IP</text>
+      </svg>
+      <span class="name">子网计算器</span>
+    </a>
+    <span class="tagline">util123 工具箱 · CIDR 与掩码计算</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">IP</div>
+    <h1>子网<span class="grad">计算器</span></h1>
+    <p>输入 IP 和掩码（CIDR 或点分十进制），一键算出网络地址、广播地址、可用主机范围与主机数。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">IP 地址</span>
+      <input id="ip" class="ipt" spellcheck="false" placeholder="例如 192.168.1.10" value="192.168.1.10">
+      <span class="lbl" style="margin-top:14px">子网掩码</span>
+      <input id="mask" class="ipt" spellcheck="false" placeholder="例如 /24 或 255.255.255.0" value="/24">
+      <div class="toolbar">
+        <button class="primary" id="btnCalc">计算</button>
+        <button id="btnSample">示例</button>
+        <button id="btnClear">清空</button>
+      </div>
+      <div class="note" id="note">提示：掩码可填 /24 这种 CIDR，也可填 255.255.255.0。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">计算结果</span>
+      <div class="field"><label>网络地址</label><div class="out" id="oNet">—</div></div>
+      <div class="field"><label>广播地址</label><div class="out" id="oBc">—</div></div>
+      <div class="field"><label>可用主机范围</label><div class="out" id="oRange">—</div></div>
+      <div class="field"><label>可用主机数</label><div class="out" id="oCount">—</div></div>
+      <div class="field"><label>地址类别</label><div class="out" id="oClass">—</div></div>
+      <div class="field"><label>掩码（二进制）</label><div class="out" id="oBin">—</div></div>
+      <div class="toolbar">
+        <button id="btnCopy">复制结果</button>
+      </div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>CIDR 是什么？</dt>
+      <dd>CIDR（无类别域间路由）用「/数字」表示掩码长度，例如 /24 代表前 24 位是网络位、后 8 位是主机位，等价于点分掩码 255.255.255.0。</dd>
+      <dt>可用主机数为什么要减 2？</dt>
+      <dd>每个子网的网络地址（主机位全 0）和广播地址（主机位全 1）不能分配给主机，因此可用主机数 = 2^主机位数 − 2。/31（点对点）和 /32（单 IP）是特例，不减 2。</dd>
+      <dt>IP 会上传吗？</dt>
+      <dd>不会。计算完全在浏览器本地完成，IP 和掩码不会发送到任何服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+function ip2int(ip){
+  var p = String(ip).trim().split('.');
+  if (p.length !== 4) return null;
+  var n = 0;
+  for (var i = 0; i < 4; i++){
+    if (!/^\d{1,3}$/.test(p[i])) return null;
+    var v = +p[i];
+    if (v > 255) return null;
+    n = (n << 8) | v;
+  }
+  return n >>> 0;
+}
+function int2ip(n){
+  return [ (n>>>24)&255, (n>>>16)&255, (n>>>8)&255, n&255 ].join('.');
+}
+function parseMask(s){
+  s = String(s).trim();
+  if (s.indexOf('/') === 0) s = s.slice(1);
+  // CIDR 数字
+  if (/^\d{1,2}$/.test(s)){
+    var c = +s;
+    if (c < 0 || c > 32) return null;
+    return { cidr: c, int: c === 0 ? 0 : ((0xFFFFFFFF << (32 - c)) >>> 0) };
+  }
+  // 点分十进制
+  var m = ip2int(s);
+  if (m === null) return null;
+  // 必须是连续 1 后跟连续 0
+  var inv = (~m) >>> 0;
+  if ((inv & (inv + 1)) !== 0) return null; // 非连续
+  var c = 0, t = m;
+  while (t & 0x80000000){ c++; t = (t << 1) >>> 0; }
+  return { cidr: c, int: m >>> 0 };
+}
+function ipClass(n){
+  var f = (n >>> 24) & 255;
+  if (f < 128) return 'A 类';
+  if (f < 192) return 'B 类';
+  if (f < 224) return 'C 类';
+  if (f < 240) return 'D 类（组播）';
+  return 'E 类（保留）';
+}
+function bin32(n){
+  var s = (n >>> 0).toString(2);
+  while (s.length < 32) s = '0' + s;
+  return s.replace(/(\d{8})(?=\d)/g, '$1 ');
+}
+function calc(){
+  var ip = ip2int($('ip').value);
+  var mk = parseMask($('mask').value);
+  if (ip === null){ UY.toast('IP 地址格式不对'); return; }
+  if (mk === null){ UY.toast('子网掩码格式不对'); return; }
+  var net = (ip & mk.int) >>> 0;
+  var bc = (net | (~mk.int >>> 0)) >>> 0;
+  var hosts = Math.pow(2, 32 - mk.cidr);
+  var countTxt, rangeTxt;
+  if (mk.cidr >= 31){
+    countTxt = (mk.cidr === 32) ? '1（单 IP）' : '2（点对点链路）';
+    rangeTxt = (mk.cidr === 32) ? int2ip(net) : int2ip(net) + ' ~ ' + int2ip(bc);
+  } else {
+    countTxt = (hosts - 2).toLocaleString('zh-CN');
+    rangeTxt = int2ip(net + 1) + ' ~ ' + int2ip(bc - 1);
+  }
+  $('oNet').textContent = int2ip(net) + ' /' + mk.cidr;
+  $('oBc').textContent = int2ip(bc);
+  $('oRange').textContent = rangeTxt;
+  $('oCount').textContent = countTxt;
+  $('oClass').textContent = ipClass(ip);
+  $('oBin').textContent = bin32(mk.int);
+  $('note').textContent = '✅ 已算出 ' + int2ip(net) + ' /' + mk.cidr + ' 的子网信息。';
+}
+$('btnCalc').onclick = calc;
+$('btnSample').onclick = function(){
+  $('ip').value = '192.168.1.10'; $('mask').value = '/24'; calc();
+  UY.toast('已载入示例');   // 页面初始已是这组值，给个反馈免得以为按钮没反应
+};
+$('btnClear').onclick = function(){
+  $('ip').value=''; $('mask').value='';
+  ['oNet','oBc','oRange','oCount','oClass','oBin'].forEach(function(id){ $(id).textContent='—'; });
+  $('note').textContent='提示：掩码可填 /24 这种 CIDR，也可填 255.255.255.0。';
+};
+$('btnCopy').onclick = function(){
+  if ($('oNet').textContent === '—'){ UY.toast('请先输入 IP 和掩码并计算'); return; }
+  var txt = '网络地址: '+$('oNet').textContent+'\n广播地址: '+$('oBc').textContent+'\n可用范围: '+$('oRange').textContent+'\n可用主机数: '+$('oCount').textContent+'\n地址类别: '+$('oClass').textContent+'\n掩码二进制: '+$('oBin').textContent;
+  UY.copyWith(txt, '已复制子网信息');
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

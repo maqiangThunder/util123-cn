@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>正则表达式测试 · 在线 RegExp 匹配高亮与替换 - util123 工具箱</title>
+<meta name="description" content="免费在线正则表达式测试工具：实时高亮匹配结果、查看捕获分组与位置、预览替换效果，内置手机号、邮箱、URL、IP、身份证等常用正则。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/regex/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="正则表达式,正则测试,regex,在线正则,正则匹配,正则替换,正则高亮,RegExp,正则表达式在线测试">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="正则表达式测试 · 在线 RegExp 匹配高亮与替换">
+<meta property="og:description" content="实时高亮正则匹配、查看捕获分组、预览替换效果，内置常用正则。纯前端运行，不上传数据。">
+<meta property="og:url" content="https://util123.cn/regex/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式测试 · 在线 RegExp 匹配高亮与替换">
+<meta name="twitter:description" content="实时高亮正则匹配、查看捕获分组、预览替换效果。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="white">.*</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/regex/#app","name":"正则表达式测试工具","url":"https://util123.cn/regex/","description":"在线正则表达式测试工具：实时高亮匹配结果，展示捕获分组与位置，预览替换效果，内置手机号、邮箱、URL、IPv4、身份证、日期、中文等常用正则。纯前端运行，数据不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["实时匹配高亮","捕获分组查看","替换预览","常用正则预设","g/i/m/s/u 修饰符","匹配位置与耗时"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"正则表达式测试","item":"https://util123.cn/regex/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"正则里的 g、i、m、s、u 修饰符分别是什么意思？","acceptedAnswer":{"@type":"Answer","text":"g 表示全局匹配（找出全部结果）；i 表示忽略大小写；m 表示多行模式，让 ^ 和 $ 匹配每一行的开头和结尾；s 表示让点号 . 也能匹配换行符；u 表示按 Unicode 码点处理，用于处理 emoji、生僻字等。本工具在测试匹配时始终按全局方式统计全部匹配。"}},
+{"@type":"Question","name":"在线测试正则会泄露我的数据吗？","acceptedAnswer":{"@type":"Answer","text":"不会。正则匹配、高亮与替换全部在你的浏览器本地完成，输入的文本不会发送到任何服务器。"}},
+{"@type":"Question","name":"为什么匹配结果里会出现空的高亮？","acceptedAnswer":{"@type":"Answer","text":"这通常来自零宽匹配（例如 \\b、^、$、(?=...) 前瞻等），它们匹配到的是位置而不是字符，长度为 0，所以高亮块是空心的，属于正常现象。"}},
+{"@type":"Question","name":"有没有常用的正则表达式可以直接用？","acceptedAnswer":{"@type":"Answer","text":"有。本工具内置了手机号、邮箱、URL、IPv4、身份证、日期、中文字符、整数、小数等常用正则，点击预设按钮即可一键填入并立即测试。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">.*</text>
+      </svg>
+      <span class="name">正则表达式测试</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 在线 RegExp 匹配与替换</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">.*</div>
+    <h1>正则<span class="grad">表达式测试</span></h1>
+    <p>实时高亮匹配结果、查看捕获分组与位置、预览替换效果，内置手机号 / 邮箱 / URL / IP 等常用正则。纯前端运行，数据不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">正则表达式</span>
+      <div class="rx-input">
+        <span class="rx-slash">/</span>
+        <input class="ipt" id="rxPat" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="例如 \d{3}-\d{4}">
+        <span class="rx-slash">/</span>
+        <span class="rx-flags" id="rxFlagDisp">g</span>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <label class="chk on"><input type="checkbox" id="fx_g" checked>g 全局</label>
+        <label class="chk"><input type="checkbox" id="fx_i">i 忽略大小写</label>
+        <label class="chk"><input type="checkbox" id="fx_m">m 多行</label>
+        <label class="chk"><input type="checkbox" id="fx_s">s 点匹配换行</label>
+        <label class="chk"><input type="checkbox" id="fx_u">u Unicode</label>
+      </div>
+      <span class="lbl" style="margin-top:16px">常用正则 <span class="tip">（点击填入）</span></span>
+      <div class="rx-presets" id="rxPresets"></div>
+      <div class="toolbar" style="margin-top:14px">
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">测试文本</span>
+      <textarea id="rxText" spellcheck="false" placeholder="在这里粘贴要测试的文本……">订单号 A1234，手机 13800138000，邮箱 test@example.com
+另一个人手机 13912345678，日期 2026-10-11，价格 19.90 元</textarea>
+      <span class="lbl" style="margin-top:16px">实时匹配预览</span>
+      <div class="out-box rx-preview" id="rxPreview"></div>
+      <div class="status" id="rxStatus"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">匹配详情 <span class="tip">（最多显示前 200 条）</span></span>
+      <div class="rx-detail" id="rxDetail"><div class="empty">输入正则后，这里会列出每个匹配的位置与分组。</div></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">替换 <span class="tip">（替换串里可用 $1、$2 引用分组，$&amp; 表示整个匹配）</span></span>
+      <input class="ipt" id="rxRep" spellcheck="false" placeholder="替换为…… 例如 【$1】">
+      <div class="out-box" id="rxRepOut" style="min-height:60px"></div>
+      <div class="toolbar">
+        <button id="btnRepCopy">复制替换结果</button>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>正则里的 g、i、m、s、u 修饰符分别是什么意思？</dt>
+      <dd>g 表示全局匹配（找出全部结果）；i 表示忽略大小写；m 表示多行模式，让 ^ 和 $ 匹配每一行的开头和结尾；s 表示让点号 . 也能匹配换行符；u 表示按 Unicode 码点处理，用于处理 emoji、生僻字等。本工具在测试匹配时始终按全局方式统计全部匹配。</dd>
+      <dt>在线测试正则会泄露我的数据吗？</dt>
+      <dd>不会。正则匹配、高亮与替换全部在你的浏览器本地完成，输入的文本不会发送到任何服务器。</dd>
+      <dt>为什么匹配结果里会出现空的高亮？</dt>
+      <dd>这通常来自零宽匹配（例如 \b、^、$、(?=...) 前瞻等），它们匹配到的是位置而不是字符，长度为 0，所以高亮块是空心的，属于正常现象。</dd>
+      <dt>有没有常用的正则表达式可以直接用？</dt>
+      <dd>有。本工具内置了手机号、邮箱、URL、IPv4、身份证、日期、中文字符、整数、小数等常用正则，点击预设按钮即可一键填入并立即测试。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+
+var PRESETS = [
+  {name:'手机号', re:'1[3-9]\\d{9}'},
+  {name:'邮箱', re:'[\\w.+-]+@[\\w-]+\\.[\\w.-]+'},
+  {name:'URL', re:'https?://[^\\s]+'},
+  {name:'IPv4', re:'((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)'},
+  {name:'身份证', re:'[1-9]\\d{5}(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[\\dXx]'},
+  {name:'日期', re:'\\d{4}-\\d{2}-\\d{2}'},
+  {name:'时间', re:'\\d{2}:\\d{2}(:\\d{2})?'},
+  {name:'中文', re:'[\\u4e00-\\u9fa5]+'},
+  {name:'整数', re:'-?\\d+'},
+  {name:'小数', re:'-?\\d+\\.\\d+'},
+  {name:'十六进制', re:'0[xX][0-9a-fA-F]+'},
+  {name:'空白行', re:'^\\s*$'}
+];
+
+function setStatus(msg, type){ var s = $('rxStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+/* 渲染常用正则按钮 */
+(function(){
+  $('rxPresets').innerHTML = PRESETS.map(function(p, i){
+    return '<button type="button" class="rx-chip" data-i="' + i + '">' + UY.esc(p.name) + '</button>';
+  }).join('');
+  UY.qsa('#rxPresets .rx-chip').forEach(function(btn){
+    btn.onclick = function(){
+      $('rxPat').value = PRESETS[+btn.dataset.i].re;
+      run();
+      $('rxPat').focus();
+    };
+  });
+})();
+
+function getFlags(){
+  return ['g','i','m','s','u'].filter(function(f){ var el = $('fx_' + f); return el && el.checked; }).join('');
+}
+function flagDisp(){
+  var f = getFlags();
+  $('rxFlagDisp').textContent = f || '—';
+}
+
+/* 高亮：把匹配区间包进 <mark> */
+function highlight(text, matches){
+  if(!matches.length) return '';
+  var html = '', last = 0;
+  matches.forEach(function(m){
+    var s = m.index, e = s + m.text.length;
+    if(s > last) html += UY.esc(text.slice(last, s));
+    html += '<mark class="rx-m"' + (m.text ? '' : ' title="零宽匹配"') + '>' + UY.esc(m.text) + '</mark>';
+    last = Math.max(last, e);
+  });
+  if(last < text.length) html += UY.esc(text.slice(last));
+  return html;
+}
+
+var lastRepOut = '';
+function run(){
+  flagDisp();
+  var pat = $('rxPat').value;
+  var text = $('rxText').value;
+  var preview = $('rxPreview'), detail = $('rxDetail');
+
+  if(!pat){
+    preview.innerHTML = text ? UY.esc(text) : '<span class="empty">输入正则后，这里会实时高亮匹配结果。</span>';
+    detail.innerHTML = '<div class="empty">输入正则后，这里会列出每个匹配的位置与分组。</div>';
+    setStatus('请输入正则表达式。', '');
+    doReplace();
+    return;
+  }
+
+  var flags = getFlags();
+  var re, t0 = performance.now();
+  try{
+    re = new RegExp(pat, flags.indexOf('g') >= 0 ? flags : flags + 'g');
+  }catch(e){
+    preview.innerHTML = '<span class="rx-err">正则语法错误：' + UY.esc((e && e.message) || e) + '</span>';
+    detail.innerHTML = '<div class="empty">请修正正则语法后重试。</div>';
+    setStatus('正则语法错误。', 'err');
+    doReplace();
+    return;
+  }
+
+  var matches = [], truncated = false;
+  try{
+    var it = text.matchAll(re), m;
+    while(!(m = it.next()).done){
+      matches.push({ index: m.value.index, text: m.value[0], groups: m.value.slice(1), named: m.value.groups || null });
+      if(matches.length >= 2000){ truncated = true; break; }
+    }
+  }catch(e){
+    setStatus('匹配出错：' + UY.esc((e && e.message) || e), 'err');
+    return;
+  }
+  var cost = (performance.now() - t0).toFixed(2);
+
+  preview.innerHTML = matches.length
+    ? highlight(text, matches)
+    : '<span class="empty">没有匹配到内容。</span>';
+
+  if(!matches.length){
+    detail.innerHTML = '<div class="empty">没有匹配项。</div>';
+  }else{
+    var show = matches.slice(0, 200);
+    var rows = show.map(function(m, i){
+      var g = '';
+      if(m.groups && m.groups.length){
+        g = '<div class="rx-groups">' + m.groups.map(function(v, gi){
+          return '<span class="rx-g"><i>' + (gi + 1) + '</i>' + UY.esc(v === undefined ? '(未参与)' : v) + '</span>';
+        }).join('') + '</div>';
+      }
+      if(m.named){
+        g += '<div class="rx-groups">' + Object.keys(m.named).map(function(k){
+          return '<span class="rx-g named"><i>' + UY.esc(k) + '</i>' + UY.esc(m.named[k] === undefined ? '' : m.named[k]) + '</span>';
+        }).join('') + '</div>';
+      }
+      return '<div class="rx-row">' +
+        '<span class="rx-no">' + (i + 1) + '</span>' +
+        '<span class="rx-pos">@' + m.index + '</span>' +
+        '<code class="rx-txt">' + (m.text ? UY.esc(m.text) : '<em>（零宽）</em>') + '</code>' +
+        g +
+      '</div>';
+    }).join('');
+    detail.innerHTML = rows;
+  }
+
+  var msg = '匹配到 ' + matches.length + ' 处' + (truncated ? '（已截断，仅统计前 2000 处）' : '') +
+            ' · 耗时 ' + cost + ' ms · 修饰符 ' + (flags || '无');
+  setStatus(msg, matches.length ? 'ok' : '');
+  doReplace();
+}
+
+function doReplace(){
+  var pat = $('rxPat').value, out = $('rxRepOut');
+  if(!pat){ out.textContent = ''; lastRepOut = ''; return; }
+  var flags = getFlags();
+  try{
+    /* 替换遵循用户勾选的修饰符：没勾 g 就只替换第一个，与正则语义一致 */
+    var re = new RegExp(pat, flags);
+    lastRepOut = $('rxText').value.replace(re, $('rxRep').value);
+    out.textContent = lastRepOut;
+  }catch(e){
+    lastRepOut = '';
+    out.textContent = '（正则语法错误）';
+  }
+}
+
+['rxPat','rxText','rxRep'].forEach(function(id){
+  $(id).addEventListener('input', run);
+});
+UY.qsa('#fx_g,#fx_i,#fx_m,#fx_s,#fx_u').forEach(function(ck){
+  ck.addEventListener('change', function(){
+    ck.parentNode.classList.toggle('on', ck.checked);
+    run();
+  });
+  ck.parentNode.classList.toggle('on', ck.checked);
+});
+
+$('btnRepCopy').onclick = function(){
+  if(!lastRepOut){ UY.toast('还没有替换结果'); return; }
+  UY.copyWith(lastRepOut, '已复制替换结果');
+};
+
+$('btnSample').onclick = function(){
+  $('rxPat').value = '1[3-9]\\d{9}';
+  $('rxText').value = '订单号 A1234，手机 13800138000，邮箱 test@example.com\n另一个人手机 13912345678，日期 2026-10-11，价格 19.90 元';
+  run();
+};
+
+run();
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+.rx-input{display:flex;align-items:center;gap:6px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;padding:0 8px 0 12px}
+.rx-input:focus-within{border-color:var(--primary);background:var(--panel);box-shadow:0 0 0 3px var(--primary-soft)}
+.rx-input .ipt{border:0;background:transparent;box-shadow:none;padding-left:0;padding-right:0}
+.rx-input .ipt:focus{box-shadow:none;background:transparent}
+.rx-slash{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--muted);flex:0 0 auto}
+.rx-flags{font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--primary);min-width:14px;text-align:left;
+  flex:0 0 auto;padding-right:4px}
+.rx-presets{display:flex;flex-wrap:wrap;gap:8px}
+.rx-chip{height:32px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel-2);
+  color:var(--text);font-size:13px;font-weight:600;cursor:pointer}
+.rx-chip:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+.rx-preview{min-height:90px;max-height:320px;overflow:auto}
+.rx-preview .rx-m{background:rgba(99,102,241,.24);color:inherit;border-radius:3px;padding:0 1px;box-shadow:inset 0 -2px 0 var(--primary)}
+.rx-preview .rx-m:empty{display:inline-block;width:2px;background:var(--primary);vertical-align:middle;height:1.1em}
+.rx-err{color:var(--err);font-family:var(--mono);font-size:13px}
+.rx-detail{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
+.rx-row{display:flex;align-items:flex-start;gap:10px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:9px;padding:8px 11px;flex-wrap:wrap}
+.rx-row .rx-no{flex:0 0 30px;font-size:12px;font-weight:700;color:var(--muted);font-family:var(--mono);padding-top:1px}
+.rx-row .rx-pos{flex:0 0 62px;font-size:11.5px;color:var(--muted);font-family:var(--mono);padding-top:2px}
+.rx-row .rx-txt{flex:1 1 100px;font-family:var(--mono);font-size:13px;color:var(--primary);word-break:break-all;min-width:0}
+.rx-row .rx-txt em{color:var(--muted);font-style:normal;font-size:12px}
+.rx-groups{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.rx-g{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12px;
+  background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:2px 7px;color:var(--text)}
+.rx-g i{font-style:normal;color:var(--muted);font-size:11px;font-weight:700}
+.rx-g.named i{color:var(--primary)}
+@media(max-width:640px){
+  .rx-row .rx-no{flex-basis:24px}
+  .rx-row .rx-pos{flex-basis:54px}
+  .rx-row .rx-txt{flex-basis:100%}
+  .rx-chip{height:36px}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

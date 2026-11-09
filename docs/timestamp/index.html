@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>时间戳转换 · Unix 时间戳与日期时间互转（秒/毫秒）- util123 工具箱</title>
+<meta name="description" content="免费在线 Unix 时间戳转换工具：时间戳转日期时间、日期时间转时间戳，自动识别秒与毫秒，实时显示当前时间戳，并提供 UTC、ISO 8601 与相对时间。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/timestamp/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="时间戳转换,Unix时间戳,时间戳在线转换,时间戳转日期,日期转时间戳,毫秒时间戳,当前时间戳,unix timestamp,时间戳工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="时间戳转换 · Unix 时间戳与日期时间互转">
+<meta property="og:description" content="时间戳转日期、日期转时间戳，自动识别秒/毫秒，实时显示当前时间戳，并给出 UTC 与 ISO 8601 格式。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/timestamp/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时间戳转换 · Unix 时间戳与日期时间互转">
+<meta name="twitter:description" content="时间戳转日期、日期转时间戳，自动识别秒/毫秒，实时显示当前时间戳。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="white">TS</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/timestamp/#app","name":"时间戳转换工具","url":"https://util123.cn/timestamp/","description":"在线 Unix 时间戳与日期时间互转工具：时间戳转日期、日期转时间戳，自动识别秒与毫秒，实时显示当前时间戳，并提供 UTC、ISO 8601、相对时间等格式。纯前端运行，数据不上传。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["实时当前时间戳（秒/毫秒）","时间戳转日期时间","日期时间转时间戳","自动识别秒与毫秒","UTC 与 ISO 8601 格式","相对时间显示","一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"时间戳转换","item":"https://util123.cn/timestamp/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Unix 时间戳是什么？","acceptedAnswer":{"@type":"Answer","text":"Unix 时间戳是从 1970-01-01 00:00:00 UTC（Unix 纪元）起经过的秒数（或毫秒数），与时区无关，是计算机里表示时间的通用方式。"}},
+{"@type":"Question","name":"怎么区分时间戳是秒还是毫秒？","acceptedAnswer":{"@type":"Answer","text":"看位数：10 位一般是秒（2001-09-09 之后到 2286 年），13 位是毫秒。本工具默认自动识别，也可以手动指定单位。"}},
+{"@type":"Question","name":"时间戳转换会受本地时区影响吗？","acceptedAnswer":{"@type":"Answer","text":"时间戳本身是 UTC 绝对时间，不带时区。转换成本地时间时按你设备的时区展示，页面同时给出 UTC 时间，方便对照。"}},
+{"@type":"Question","name":"转换过程会上传数据吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部换算都在浏览器本地完成，输入的时间或时间戳不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="13" fill="#fff" letter-spacing=".5">TS</text>
+      </svg>
+      <span class="name">时间戳转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · Unix 时间戳 ↔ 日期时间</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f2" aria-hidden="true">TS</div>
+    <h1>时间<span class="grad">戳转换</span></h1>
+    <p>Unix 时间戳与日期时间双向互转，自动识别秒 / 毫秒，实时显示当前时间戳，并给出 UTC 与 ISO 8601 格式。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">当前时间戳 <span class="tip">（每秒刷新，点击数字可复制）</span></span>
+      <div class="big" id="nowSec" title="点击复制秒级时间戳">—</div>
+      <div class="grid" id="nowGrid" style="margin-top:14px"></div>
+      <div class="toolbar">
+        <button class="primary" id="btnCopySec">复制秒级</button>
+        <button id="btnCopyMs">复制毫秒级</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">时间戳 → 日期时间</span>
+      <div class="row">
+        <div class="field" style="flex:2 1 260px">
+          <label for="tsIn">时间戳</label>
+          <input class="ipt" id="tsIn" type="text" inputmode="numeric" autocomplete="off" placeholder="例如 1750000000 或 1750000000000">
+        </div>
+        <div class="field" style="flex:1 1 130px">
+          <label for="tsUnit">单位</label>
+          <select id="tsUnit">
+            <option value="auto">自动识别</option>
+            <option value="s">秒（10 位）</option>
+            <option value="ms">毫秒（13 位）</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="tsGrid" style="margin-top:14px"></div>
+      <div class="status" id="tsStatus">输入时间戳后立即转换（也可粘贴带毫秒的长数字）。</div>
+      <div class="toolbar">
+        <button id="btnNow2Ts">填入当前时间戳</button>
+        <button id="btnCopyTsLocal">复制本地时间</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">日期时间 → 时间戳</span>
+      <div class="row">
+        <div class="field">
+          <label for="dtIn">本地日期时间</label>
+          <input class="ipt" id="dtIn" type="datetime-local" step="1">
+        </div>
+      </div>
+      <div class="grid" id="dtGrid" style="margin-top:14px"></div>
+      <div class="status" id="dtStatus">选择时间后即时换算（按你设备的本地时区计算）。</div>
+      <div class="toolbar">
+        <button id="btnFillNow">填入当前时间</button>
+        <button class="primary" id="btnCopyDtSec">复制秒级时间戳</button>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>Unix 时间戳是什么？</dt>
+      <dd>Unix 时间戳是从 1970-01-01 00:00:00 UTC（Unix 纪元）起经过的秒数（或毫秒数），与时区无关，是计算机里表示时间的通用方式。</dd>
+      <dt>怎么区分时间戳是秒还是毫秒？</dt>
+      <dd>看位数：10 位一般是秒（覆盖 2001-09-09 到 2286 年），13 位是毫秒。本工具默认自动识别，也可以手动指定单位。</dd>
+      <dt>时间戳转换会受本地时区影响吗？</dt>
+      <dd>时间戳本身是 UTC 绝对时间，不带时区。转换成本地时间时按你设备的时区展示，页面同时给出 UTC 时间，方便对照。</dd>
+      <dt>转换过程会上传数据吗？</dt>
+      <dd>不会。全部换算都在浏览器本地完成，输入的时间或时间戳不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+
+function fillGrid(el, rows){
+  el.innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">' + UY.esc(r[0]) + '</div><div class="v">' + UY.esc(r[1] == null ? '—' : r[1]) + '</div></div>';
+  }).join('');
+  el.style.display = rows.length ? 'grid' : 'none';
+}
+function setStatus(el, msg, type){ el.textContent = msg; el.className = 'status' + (type ? ' ' + type : ''); }
+
+/* ---- 当前时间戳（每秒刷新） ---- */
+var lastNow = { sec: 0, ms: 0 };
+function tickNow(){
+  var d = new Date(), ms = d.getTime(), sec = Math.floor(ms / 1000);
+  lastNow = { sec: sec, ms: ms };
+  $('nowSec').textContent = String(sec);
+  fillGrid($('nowGrid'), [
+    ['秒级（10 位）', String(sec)],
+    ['毫秒级（13 位）', String(ms)],
+    ['本地时间', UY.fmtLocal(d) + ' ' + UY.weekday(d)],
+    ['UTC 时间', UY.fmtUtc(d)],
+    ['ISO 8601', d.toISOString()],
+    ['时区', Intl.DateTimeFormat().resolvedOptions().timeZone || '未知']
+  ]);
+}
+
+/* ---- 时间戳 → 日期时间 ---- */
+var lastTsLocal = '';
+function autoUnit(v){
+  var t = v.trim();
+  if(!/^-?\d+$/.test(t)) return null;
+  var neg = t.charAt(0) === '-';
+  var digits = (neg ? t.slice(1) : t).length;
+  return digits >= 12 ? 'ms' : 's';
+}
+function tsConv(){
+  var raw = $('tsIn').value.trim();
+  lastTsLocal = '';
+  if(!raw){ fillGrid($('tsGrid'), []); setStatus($('tsStatus'), '输入时间戳后立即转换（也可粘贴带毫秒的长数字）。', ''); return; }
+  if(!/^-?\d+$/.test(raw)){ fillGrid($('tsGrid'), []); setStatus($('tsStatus'), '只能输入数字（可带负号，表示 1970 年之前）。', 'err'); return; }
+  var unit = $('tsUnit').value;
+  if(unit === 'auto'){ unit = autoUnit(raw); }
+  var num = Number(raw);
+  var ms = unit === 'ms' ? num : num * 1000;
+  var d = new Date(ms);
+  if(isNaN(d.getTime())){
+    fillGrid($('tsGrid'), []); setStatus($('tsStatus'), '这个时间戳超出可表示范围，请检查数值。', 'err'); return;
+  }
+  lastTsLocal = UY.fmtLocal(d);
+  fillGrid($('tsGrid'), [
+    ['识别单位', unit === 'ms' ? '毫秒（13 位）' : '秒（10 位）'],
+    ['本地时间', UY.fmtLocal(d)],
+    ['UTC 时间', UY.fmtUtc(d)],
+    ['星期', UY.weekday(d)],
+    ['ISO 8601', d.toISOString()],
+    ['距今', UY.relTime(d.getTime() - Date.now())]
+  ]);
+  setStatus($('tsStatus'), '转换完成（识别为' + (unit === 'ms' ? '毫秒' : '秒') + '级时间戳）。', 'ok');
+}
+
+/* ---- 日期时间 → 时间戳 ---- */
+function dtConv(){
+  var v = $('dtIn').value;
+  if(!v){ fillGrid($('dtGrid'), []); setStatus($('dtStatus'), '选择时间后即时换算（按你设备的本地时区计算）。', ''); return; }
+  var d = new Date(v);
+  if(isNaN(d.getTime())){ fillGrid($('dtGrid'), []); setStatus($('dtStatus'), '时间格式无法识别。', 'err'); return; }
+  var ms = d.getTime();
+  fillGrid($('dtGrid'), [
+    ['秒级（10 位）', String(Math.floor(ms / 1000))],
+    ['毫秒级（13 位）', String(ms)],
+    ['本地时间', UY.fmtLocal(d)],
+    ['UTC 时间', UY.fmtUtc(d)],
+    ['ISO 8601', d.toISOString()],
+    ['距今', UY.relTime(ms - Date.now())]
+  ]);
+  setStatus($('dtStatus'), '换算完成。', 'ok');
+}
+function toLocalInput(d){
+  return d.getFullYear() + '-' + UY.pad2(d.getMonth() + 1) + '-' + UY.pad2(d.getDate()) + 'T' +
+    UY.pad2(d.getHours()) + ':' + UY.pad2(d.getMinutes()) + ':' + UY.pad2(d.getSeconds());
+}
+
+/* ---- 事件绑定 ---- */
+$('nowSec').onclick = function(){ UY.copyWith(lastNow.sec, '已复制秒级时间戳'); };
+$('btnCopySec').onclick = function(){ UY.copyWith(lastNow.sec, '已复制秒级时间戳'); };
+$('btnCopyMs').onclick = function(){ UY.copyWith(lastNow.ms, '已复制毫秒级时间戳'); };
+$('tsIn').addEventListener('input', tsConv);
+$('tsUnit').addEventListener('change', tsConv);
+$('btnNow2Ts').onclick = function(){ $('tsIn').value = String(lastNow.sec); tsConv(); };
+$('btnCopyTsLocal').onclick = function(){
+  if(!lastTsLocal){ UY.toast('请先输入时间戳'); return; }
+  UY.copyWith(lastTsLocal, '已复制本地时间');
+};
+$('btnSample').onclick = function(){ $('tsIn').value = '1717000000'; tsConv(); };
+$('dtIn').addEventListener('input', dtConv);
+$('dtIn').addEventListener('change', dtConv);
+$('btnFillNow').onclick = function(){ $('dtIn').value = toLocalInput(new Date()); dtConv(); };
+$('btnCopyDtSec').onclick = function(){
+  var v = $('dtIn').value;
+  if(!v){ UY.toast('请先选择时间'); return; }
+  var d = new Date(v);
+  if(isNaN(d.getTime())){ UY.toast('时间格式无法识别'); return; }
+  UY.copyWith(Math.floor(d.getTime() / 1000), '已复制秒级时间戳');
+};
+
+tickNow();
+setInterval(tickNow, 1000);
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

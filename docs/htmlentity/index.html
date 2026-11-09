@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HTML 实体编解码 · 转义与还原 - util123 工具箱</title>
+<meta name="description" content="免费在线 HTML 实体编解码工具：把文本中的 &lt; &gt; &amp; &quot; &#39; 及中文等特殊字符转成 HTML 实体（命名或 &#x 十六进制），也可反向还原，做网页、富文本、邮件模板时防注入随手用。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/htmlentity/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="HTML实体,HTML实体编码,HTML实体解码,字符转义,html encode,html decode">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="HTML 实体编解码 · 转义与还原">
+<meta property="og:description" content="文本与 HTML 实体双向转换，防注入、做模板随手用。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/htmlentity/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9l-4 7 4 7M20 9l4 7-4 7"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/htmlentity/#app","name":"HTML 实体编解码","url":"https://util123.cn/htmlentity/","description":"在线 HTML 实体编解码工具，文本与命名/十六进制实体双向转换，纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["文本转实体","实体转文本","特殊字符转义"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"HTML 实体编解码","item":"https://util123.cn/htmlentity/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"什么时候需要 HTML 实体？","acceptedAnswer":{"@type":"Answer","text":"在 HTML、邮件模板或富文本里出现 < > & 等符号时，浏览器会当成标签或实体解析，转成实体可避免显示错乱或被注入。"}},
+{"@type":"Question","name":"转换会上传我的文本吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部在浏览器本地完成，不发送任何数据。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9l-4 7 4 7M20 9l4 7-4 7"/></g>
+      </svg>
+      <span class="name">HTML 实体编解码</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 字符转义</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9l-4 7 4 7M20 9l4 7-4 7"/></g></svg></div>
+    <h1>HTML <span class="grad">实体编解码</span></h1>
+    <p>文本与 HTML 实体双向转换，防注入、做网页与邮件模板随手用。纯前端，数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label class="lbl" for="mode">转换方向</label>
+          <select id="mode" class="ipt" style="height:42px">
+            <option value="encode">文本 → 实体（编码）</option>
+            <option value="decode">实体 → 文本（解码）</option>
+          </select>
+        </div>
+        <div class="field" style="flex:0 1 200px">
+          <label class="lbl">选项</label>
+          <label class="chk"><input type="checkbox" id="named" checked> 用命名实体（&amp;lt; 等）</label>
+        </div>
+      </div>
+      <label class="lbl" for="in">输入</label>
+      <textarea id="in" class="ipt" style="min-height:130px;resize:vertical" placeholder="输入要转换的文本，如 a < b & c > d" aria-label="输入文本"></textarea>
+      <label class="lbl" for="out" style="margin-top:10px">输出</label>
+      <textarea id="out" class="ipt" style="min-height:130px;resize:vertical" readonly aria-label="转换结果"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopy">复制结果</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+        <span id="msg" style="color:var(--muted);font-size:13px;align-self:center"></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>什么时候需要 HTML 实体？</h3><p>在 HTML、邮件模板或富文本里出现 &lt; &gt; &amp; 等符号时，浏览器会当成标签或实体解析，转成实体可避免显示错乱或被注入。</p></div>
+    <div class="faq"><h3>转换会上传我的文本吗？</h3><p>不会。全部在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    /* 与 /unicode/ 页同一张 16 个命名实体表，能力对齐 */
+    var NAMED = { amp:'&', lt:'<', gt:'>', quot:'"', apos:"'", nbsp:'\u00a0', copy:'\u00a9', reg:'\u00ae', trade:'\u2122', hellip:'\u2026', mdash:'\u2014', ndash:'\u2013', middot:'\u00b7', laquo:'\u00ab', raquo:'\u00bb', times:'\u00d7', divide:'\u00f7' };
+    function encode(t, named){
+      var namedMap = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+      return t.replace(/[&<>"']/g, function(c){
+        if (named && namedMap[c]) return namedMap[c];
+        return '&#' + c.charCodeAt(0) + ';';
+      }).replace(/[^\x00-\x7F]/gu, function(c){
+        /* codePointAt 取完整码点，emoji 不会被拆成代理对 */
+        return '&#x' + c.codePointAt(0).toString(16).toUpperCase() + ';';
+      });
+    }
+    function decode(t){
+      /* 单趟扫描：避免 &#38;lt; 先转出 & 再被 &lt; 规则二次解码 */
+      return t.replace(/&#x([0-9a-fA-F]+);|&#(\d+);|&([a-zA-Z][a-zA-Z0-9]*);/g, function(m, h, d, name){
+        try{
+          if (h !== undefined) return String.fromCodePoint(parseInt(h, 16));
+          if (d !== undefined) return String.fromCodePoint(parseInt(d, 10));
+        }catch(e){ return m; }
+        return Object.prototype.hasOwnProperty.call(NAMED, name) ? NAMED[name] : m;
+      });
+    }
+    function run(){
+      var t = $('in').value;
+      var mode = $('mode').value;
+      var named = $('named').checked;
+      var out = mode === 'encode' ? encode(t, named) : decode(t);
+      $('out').value = out;
+      $('msg').textContent = t.length + ' → ' + out.length + ' 字符';
+    }
+    $('mode').addEventListener('change', run);
+    $('named').addEventListener('change', run);
+    $('in').addEventListener('input', run);
+    $('btnCopy').onclick = function(){ UY.copyWith($('out').value, '已复制'); };
+    $('btnClear').onclick = function(){ $('in').value=''; $('out').value=''; $('msg').textContent=''; };
+    $('btnSample').onclick = function(){
+      $('in').value = 'a < b & c > d "quote" \'apos\'';
+      $('in').dispatchEvent(new Event('input'));
+    };
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

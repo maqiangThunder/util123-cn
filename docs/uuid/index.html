@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>UUID 生成器 · 在线批量生成 UUID v4 - util123 工具箱</title>
+<meta name="description" content="免费在线 UUID 生成器：基于安全随机数批量生成 UUID v4，可自定义数量、大写、去掉横线、加大括号，支持单条或全部复制。纯前端运行，不上传数据。">
+<link rel="canonical" href="https://util123.cn/uuid/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="UUID生成,uuid生成器,GUID,唯一标识,uuid v4,批量uuid,在线生成uuid">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="UUID 生成器 · 在线批量生成 UUID v4">
+<meta property="og:description" content="基于安全随机数批量生成 UUID v4，可大写、去横线、加大括号，一键复制。纯前端运行，不上传数据。">
+<meta property="og:url" content="https://util123.cn/uuid/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UUID 生成器 · 在线批量生成 UUID v4">
+<meta name="twitter:description" content="基于安全随机数批量生成 UUID v4，一键复制。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">ID</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/uuid/#app","name":"UUID 生成器","url":"https://util123.cn/uuid/","description":"在线 UUID 生成器：基于密码学安全随机数批量生成 UUID v4，支持自定义数量、转大写、去掉横线、加大括号，可单条或全部复制。纯前端运行，数据不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["UUID v4 生成","批量生成","大写","去横线","大括号","一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"UUID 生成","item":"https://util123.cn/uuid/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"UUID 和 GUID 是一回事吗？","acceptedAnswer":{"@type":"Answer","text":"基本上是。GUID（全局唯一标识符）是微软对 UUID 的叫法，两者格式与含义一致，都是 128 位、通常写成 8-4-4-4-12 共 32 个十六进制字符加 4 个连字符的形式。"}},
+{"@type":"Question","name":"生成的 UUID 会重复吗？","acceptedAnswer":{"@type":"Answer","text":"UUID v4 有 122 位随机位，理论上可能重复但概率极低，低到实际使用中可以忽略，因此被广泛用作数据库主键、请求 ID、会话 ID 等唯一标识。"}},
+{"@type":"Question","name":"UUID v4 是随机生成的吗？","acceptedAnswer":{"@type":"Answer","text":"是的。UUID v4 几乎全部由随机数构成，本工具使用浏览器的安全随机源（crypto.getRandomValues）生成，而不是普通的伪随机数，因此更适合作为不可预测的标识使用。"}},
+{"@type":"Question","name":"生成会上传我的数据吗？","acceptedAnswer":{"@type":"Answer","text":"不会。UUID 完全在你的浏览器本地生成，不会有任何数据被发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">ID</text>
+      </svg>
+      <span class="name">UUID 生成</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 批量生成 UUID v4</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">ID</div>
+    <h1>UUID<span class="grad"> 生成</span></h1>
+    <p>基于安全随机数批量生成 UUID v4，可自定义数量、转大写、去掉横线、加大括号，支持单条或全部复制。纯前端运行，数据不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">生成选项</span>
+      <div class="row">
+        <div class="field" style="flex:0 1 150px">
+          <label>生成数量</label>
+          <input class="ipt" type="number" id="uuCount" min="1" max="1000" value="5">
+        </div>
+        <div class="field" style="flex:0 1 180px">
+          <label>版本</label>
+          <select id="uuVer"><option value="4">v4（随机，推荐）</option></select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <label class="chk"><input type="checkbox" id="uuUpper">大写</label>
+        <label class="chk"><input type="checkbox" id="uuNoDash">去掉横线</label>
+        <label class="chk"><input type="checkbox" id="uuBraces">加大括号 { }</label>
+        <label class="chk on"><input type="checkbox" id="uuUnique" checked>去重</label>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="btnGen">重新生成</button>
+        <button id="btnCopyAll">复制全部</button>
+      </div>
+      <div class="status" id="uuStatus"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">结果 <span class="tip">（点击任意一行可复制该条）</span></span>
+      <div class="uu-out" id="uuOut"></div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>UUID 和 GUID 是一回事吗？</dt>
+      <dd>基本上是。GUID（全局唯一标识符）是微软对 UUID 的叫法，两者格式与含义一致，都是 128 位、通常写成 8-4-4-4-12 共 32 个十六进制字符加 4 个连字符的形式。</dd>
+      <dt>生成的 UUID 会重复吗？</dt>
+      <dd>UUID v4 有 122 位随机位，理论上可能重复但概率极低，低到实际使用中可以忽略，因此被广泛用作数据库主键、请求 ID、会话 ID 等唯一标识。</dd>
+      <dt>UUID v4 是随机生成的吗？</dt>
+      <dd>是的。UUID v4 几乎全部由随机数构成，本工具使用浏览器的安全随机源（crypto.getRandomValues）生成，而不是普通的伪随机数，因此更适合作为不可预测的标识使用。</dd>
+      <dt>生成会上传我的数据吗？</dt>
+      <dd>不会。UUID 完全在你的浏览器本地生成，不会有任何数据被发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var list = [];
+
+function setStatus(msg, type){ var s = $('uuStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+function uuid4(){
+  var b = UY.randomBytes(16);
+  b[6] = (b[6] & 0x0f) | 0x40;   // version 4
+  b[8] = (b[8] & 0x3f) | 0x80;   // variant 10xx
+  var h = UY.toHex(b);
+  return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+}
+
+function format(u){
+  var s = u;
+  if($('uuNoDash').checked) s = s.replace(/-/g, '');
+  if($('uuUpper').checked) s = s.toUpperCase();
+  if($('uuBraces').checked) s = '{' + s + '}';
+  return s;
+}
+
+function generate(){
+  var n = parseInt($('uuCount').value, 10);
+  if(isNaN(n) || n < 1) n = 1;
+  if(n > 1000){ n = 1000; $('uuCount').value = 1000; }
+  var unique = $('uuUnique').checked;
+  var out = [], seen = {}, guard = 0;
+  while(out.length < n && guard < n * 20){
+    var u = uuid4();
+    guard++;
+    if(unique && seen[u]) continue;
+    seen[u] = 1; out.push(u);
+  }
+  list = out;
+  render();
+  setStatus('已生成 ' + list.length + ' 条 UUID v4 · ' + (unique ? '已去重' : '未去重') +
+             ' · ' + ($('uuUpper').checked ? '大写' : '小写') + ($('uuNoDash').checked ? ' · 无横线' : '') +
+             ($('uuBraces').checked ? ' · 带大括号' : ''), 'ok');
+}
+
+function render(){
+  if(!list.length){ $('uuOut').innerHTML = '<div class="empty">还没有生成结果。</div>'; return; }
+  $('uuOut').innerHTML = list.map(function(u, i){
+    var f = format(u);
+    return '<div class="uu-row" data-v="' + UY.esc(f) + '">' +
+      '<span class="uu-no">' + (i + 1) + '</span>' +
+      '<code class="uu-v">' + UY.esc(f) + '</code>' +
+      '<button class="uu-copy" type="button">复制</button>' +
+    '</div>';
+  }).join('');
+  UY.qsa('#uuOut .uu-copy').forEach(function(btn){
+    btn.onclick = function(){ UY.copyWith(btn.parentNode.getAttribute('data-v'), '已复制第 ' + btn.parentNode.querySelector('.uu-no').textContent + ' 条'); };
+  });
+}
+
+$('btnGen').onclick = generate;
+$('btnCopyAll').onclick = function(){
+  if(!list.length){ UY.toast('还没有生成结果'); return; }
+  UY.copyWith(list.map(format).join('\n'), '已复制全部 ' + list.length + ' 条');
+};
+['uuUpper','uuNoDash','uuBraces','uuUnique'].forEach(function(id){
+  $(id).addEventListener('change', function(){ this.parentNode.classList.toggle('on', this.checked); generate(); });
+});
+$('uuCount').addEventListener('input', generate);
+
+generate();
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+.uu-out{display:flex;flex-direction:column;gap:9px;margin-top:2px;max-height:460px;overflow:auto}
+.uu-out .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
+.uu-row{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;padding:9px 12px}
+.uu-row .uu-no{flex:0 0 34px;font-size:12px;color:var(--muted);font-family:var(--mono);font-weight:700}
+.uu-row .uu-v{flex:1;font-family:var(--mono);font-size:13.5px;color:var(--text);word-break:break-all;line-height:1.5}
+.uu-row .uu-copy{flex:0 0 auto;height:30px;padding:0 11px;border:1px solid var(--border);border-radius:8px;
+  background:var(--panel);color:var(--muted);cursor:pointer;font-size:12.5px}
+.uu-row .uu-copy:hover{border-color:var(--border-strong);color:var(--text)}
+@media(max-width:640px){
+  .uu-row .uu-v{font-size:12px}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

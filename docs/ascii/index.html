@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ASCII 码表 · 字符与十进制/十六进制互查 - util123 工具箱</title>
+<meta name="description" content="免费在线 ASCII 码表：可搜索查询任意字符对应的十进制、十六进制、八进制、二进制、HTML 实体与 URL 编码。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/ascii/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="ASCII码表,ascii表,ascii码,字符编码,十进制,十六进制,字符对照">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="ASCII 码表 · 字符与码值互查">
+<meta property="og:description" content="可搜索查询字符对应的十进制、十六进制、八进制、二进制、HTML 实体与 URL 编码。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/ascii/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ASCII 码表 · 字符与码值互查">
+<meta name="twitter:description" content="可搜索查询字符对应的各进制与编码。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8 11.4 24M16 8 20.6 24M13 18.4h6"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/ascii/#app","name":"ASCII 码表","url":"https://util123.cn/ascii/","description":"在线 ASCII 码表，可搜索查询任意字符对应的十进制、十六进制、八进制、二进制、HTML 实体与 URL 编码。纯前端运行。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["完整 ASCII 码表","字符/码值搜索","十进制/十六进制/八进制/二进制","HTML 实体与 URL 编码","离线可用"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"ASCII 码表","item":"https://util123.cn/ascii/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"ASCII 码表包含哪些字符？","acceptedAnswer":{"@type":"Answer","text":"标准 ASCII 共 128 个码位（0–127）：0–31 与 127 是控制字符（如换行 LF、回车 CR、制表符 TAB），32–126 是可打印字符（空格、标点、数字、大小写字母）。"}},
+{"@type":"Question","name":"怎么查一个字符的编码？","acceptedAnswer":{"@type":"Answer","text":"在搜索框输入该字符（如 @）、十进制数（如 64）、十六进制（如 0x40 或 40）或控制字符名（如 LF），表格会即时过滤定位。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。查询完全在浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+<style>
+@media(max-width:640px){
+  #tbl{min-width:620px;font-size:12px}
+  #tbl th,#tbl td{padding:6px 8px}
+  #tbl th{white-space:nowrap}
+}
+</style>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8 11.4 24M16 8 20.6 24M13 18.4h6"/></g>
+      </svg>
+      <span class="name">ASCII 码表</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 字符与码值互查</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8 11.4 24M16 8 20.6 24M13 18.4h6"/></g></svg></div>
+    <h1>ASCII <span class="grad">码表</span></h1>
+    <p>查任意字符的十进制、十六进制、八进制、二进制与 HTML / URL 编码。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <input id="q" class="ipt" style="margin:0" type="search" placeholder="搜索字符或码值，如 @ / 64 / 0x40 / LF" aria-label="搜索 ASCII">
+      <div class="toolbar" style="margin-top:12px">
+        <button id="btnSample">示例</button>
+      </div>
+      <div id="detail" style="margin-top:12px;min-height:22px;font-size:14px;font-weight:600"></div>
+    </div>
+    <div class="card">
+      <div style="overflow:auto;max-height:62vh;border:1px solid var(--border);border-radius:10px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px" id="tbl">
+          <thead><tr style="position:sticky;top:0;background:var(--panel-2);text-align:left">
+            <th style="padding:9px 10px">字符</th><th style="padding:9px 10px">十进制</th>
+            <th style="padding:9px 10px">十六进制</th><th style="padding:9px 10px">八进制</th>
+            <th style="padding:9px 10px">二进制</th><th style="padding:9px 10px">HTML 实体</th>
+            <th style="padding:9px 10px">URL 编码</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>ASCII 码表包含哪些字符？</h3><p>标准 ASCII 共 128 个码位（0–127）：0–31 与 127 是控制字符（换行 LF、回车 CR、制表符 TAB 等），32–126 是可打印字符（空格、标点、数字、字母）。</p></div>
+    <div class="faq"><h3>怎么查一个字符的编码？</h3><p>在搜索框输入字符（如 @）、十进制（如 64）、十六进制（0x40 或 40）或控制字符名（如 LF），表格会即时过滤定位。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。查询完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var CTRL = {0:'NUL',1:'SOH',2:'STX',3:'ETX',4:'EOT',5:'ENQ',6:'ACK',7:'BEL',8:'BS',9:'TAB',
+      10:'LF',11:'VT',12:'FF',13:'CR',14:'SO',15:'SI',16:'DLE',17:'DC1',18:'DC2',19:'DC3',20:'DC4',
+      21:'NAK',22:'SYN',23:'ETB',24:'CAN',25:'EM',26:'SUB',27:'ESC',28:'FS',29:'GS',30:'RS',31:'US',127:'DEL'};
+    var DATA = [];
+    for (var i = 0; i < 128; i++) DATA.push(i);
+
+    function pad(n, w){ var s = n.toString(); while (s.length < w) s = '0' + s; return s; }
+    function rowHTML(code){
+      var ch = code;
+      var disp = (ch >= 32 && ch !== 127) ? String.fromCharCode(ch) : (CTRL[ch] || '');
+      var isCtrl = !(ch >= 32 && ch !== 127);
+      var htmlEnt = (ch >= 32 && ch !== 127) ? '&#' + ch + ';' : '—';
+      var urlEnc = (ch >= 32 && ch !== 127) ? encodeURIComponent(String.fromCharCode(ch)) : '—';
+      var chDisp = isCtrl ? '<span style="opacity:.5">' + UY.esc(disp) + '</span>' : '<span style="font-family:\'SF Mono\',Menlo,monospace;font-size:15px">' + UY.esc(disp) + '</span>';
+      return '<tr data-code="' + code + '" style="border-bottom:1px solid var(--border)">' +
+        '<td style="padding:7px 10px">' + chDisp + '</td>' +
+        '<td style="padding:7px 10px" class="mono">' + code + '</td>' +
+        '<td style="padding:7px 10px" class="mono">0x' + pad(code.toString(16).toUpperCase(),2) + '</td>' +
+        '<td style="padding:7px 10px" class="mono">' + pad(code.toString(8),3) + '</td>' +
+        '<td style="padding:7px 10px" class="mono">' + pad(code.toString(2),8) + '</td>' +
+        '<td style="padding:7px 10px" class="mono">' + htmlEnt + '</td>' +
+        '<td style="padding:7px 10px" class="mono">' + urlEnc + '</td>' +
+      '</tr>';
+    }
+    function render(){
+      var kw = $('q').value.trim().toLowerCase();
+      var html = '';
+      DATA.forEach(function(code){
+        if (!kw) { html += rowHTML(code); return; }
+        var decMatch = /^\d+$/.test(kw) && code === parseInt(kw, 10);
+        /* 裸 hex 仅在不与十进制/字符混淆时启用：带 0x 一定按 hex，否则要求含 a-f 字母（"1f"→31，而 "10"/"a" 交给十进制与字符匹配） */
+        var hexMatch = /^0x[0-9a-f]+$/i.test(kw) ? code === parseInt(kw.slice(2),16)
+              : (/^(?=.*[a-f])[0-9a-f]+$/i.test(kw)) ? code === parseInt(kw,16) : false;
+        var chMatch = (code >= 32 && code !== 127) && String.fromCharCode(code).toLowerCase() === kw;
+        var nameMatch = CTRL[code] && CTRL[code].toLowerCase().indexOf(kw) >= 0;
+        if (decMatch || hexMatch || chMatch || nameMatch) html += rowHTML(code);
+      });
+      $('tbody').innerHTML = html || '<tr><td colspan="7" style="padding:14px;text-align:center;opacity:.5">没有匹配，换个关键词</td></tr>';
+    }
+    $('tbody').addEventListener('click', function(e){
+      var tr = e.target.closest('tr'); if (!tr || !tr.dataset.code) return;
+      var code = parseInt(tr.dataset.code, 10);
+      UY.qsa('#tbody tr').forEach(function(r){ r.style.background = ''; });
+      tr.style.background = 'var(--panel-2)';
+      var isCtrl = !(code >= 32 && code !== 127);
+      var ch = isCtrl ? (CTRL[code] || '') : '「' + String.fromCharCode(code) + '」';
+      $('detail').textContent = '字符 ' + ch + ' → 十进制 ' + code + ' · 十六进制 0x' + pad(code.toString(16).toUpperCase(),2) +
+        ' · 八进制 ' + pad(code.toString(8),3) + ' · 二进制 ' + pad(code.toString(2),8);
+    });
+    $('q').oninput = render;
+    render();
+    $('btnSample').onclick = function(){
+      $('q').value = '@';
+      $('q').dispatchEvent(new Event('input'));
+    };
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

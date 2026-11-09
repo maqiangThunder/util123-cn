@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HTTP 状态码速查 · 含义与排查方向 - util123 工具箱</title>
+<meta name="description" content="免费在线 HTTP 状态码速查表：1xx/2xx/3xx/4xx/5xx 全分类，支持搜索，每个状态码附含义与常见排查方向。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/httpstatus/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="HTTP状态码,404,500,301,状态码含义,速查表">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="HTTP 状态码速查 · 含义与排查方向">
+<meta property="og:description" content="全分类 HTTP 状态码速查，支持搜索，附含义与排查方向。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/httpstatus/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP 状态码速查 · 含义与排查方向">
+<meta name="twitter:description" content="全分类 HTTP 状态码速查，支持搜索，附排查方向。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="16" r="9"/><path d="M7 16h18M16 7c-3.5 3.5-3.5 14.5 0 18M16 7c3.5 3.5 3.5 14.5 0 18" opacity=".85"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/httpstatus/#app","name":"HTTP 状态码速查","url":"https://util123.cn/httpstatus/","description":"在线 HTTP 状态码速查表，覆盖 1xx 至 5xx 全分类，支持搜索，每个状态码附含义与常见排查方向。纯前端运行。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["状态码全分类速查","关键词搜索","含义与排查方向","离线可用"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"HTTP 状态码速查","item":"https://util123.cn/httpstatus/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"HTTP 状态码分几类？","acceptedAnswer":{"@type":"Answer","text":"五类：1xx 信息提示、2xx 成功、3xx 重定向、4xx 客户端错误、5xx 服务端错误。常见的 200 成功、301 永久重定向、404 未找到、500 服务器内部错误分属其中。"}},
+{"@type":"Question","name":"404 和 502 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"404 是服务器明确告诉你「这个资源不存在」，属于客户端请求路径问题；502 是网关/反代后面的服务挂了或没响应，属于服务端问题，要查后端进程和上游日志。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。搜索与浏览完全在浏览器本地完成。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="16" r="9"/><path d="M7 16h18M16 7c-3.5 3.5-3.5 14.5 0 18M16 7c3.5 3.5 3.5 14.5 0 18" opacity=".85"/></g>
+      </svg>
+      <span class="name">HTTP 状态码</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 含义与排查方向</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="16" r="9"/><path d="M7 16h18M16 7c-3.5 3.5-3.5 14.5 0 18M16 7c3.5 3.5 3.5 14.5 0 18" opacity=".85"/></g></svg></div>
+    <h1>HTTP 状态码<span class="grad">速查</span></h1>
+    <p>常用状态码速查，搜一下就懂含义、知道往哪查。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <input id="q" class="ipt" style="margin:0" type="search" placeholder="搜索状态码或关键词，如 404 / 重定向 / 超时" aria-label="搜索状态码">
+      <div class="toolbar" style="margin:12px 0 0" id="catBar">
+        <button class="primary" data-cat="all">全部</button>
+        <button data-cat="1">1xx 信息</button>
+        <button data-cat="2">2xx 成功</button>
+        <button data-cat="3">3xx 重定向</button>
+        <button data-cat="4">4xx 客户端错误</button>
+        <button data-cat="5">5xx 服务端错误</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="list"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>HTTP 状态码分几类？</h3><p>五类：1xx 信息提示、2xx 成功、3xx 重定向、4xx 客户端错误、5xx 服务端错误。常见的 200 成功、301 永久重定向、404 未找到、500 服务器内部错误分属其中。</p></div>
+    <div class="faq"><h3>404 和 502 有什么区别？</h3><p>404 是服务器明确告知「资源不存在」，先查请求路径；502 是网关/反代后面的服务无有效响应，要查后端进程是否存活、上游日志报什么错。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。搜索与浏览完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var DATA = [
+      // 1xx
+      [100,'1','Continue','继续','客户端应继续发送请求体（大文件上传时的「先问后发」）。'],
+      [101,'1','Switching Protocols','切换协议','服务器同意切换协议，如升级 WebSocket 时返回。'],
+      // 2xx
+      [200,'2','OK','成功','请求成功。排查接口问题时的「基准线」，返回它说明链路本身通。'],
+      [201,'2','Created','已创建','POST/PUT 成功且创建了新资源，响应常带 Location 头。'],
+      [204,'2','No Content','无内容','成功但不返回体。DELETE 成功常用它；前端若解析 body 会拿到空。'],
+      [206,'2','Partial Content','部分内容','Range 断点续传/视频拖动播放时返回，配合 Content-Range。'],
+      // 3xx
+      [301,'3','Moved Permanently','永久重定向','资源永久搬家。浏览器/SEO 会缓存，改回要谨慎（清缓存才生效）。'],
+      [302,'3','Found','临时重定向','临时跳转，不缓存。登录后回跳常用。'],
+      [304,'3','Not Modified','未修改','协商缓存命中（If-None-Match/If-Modified-Since），不发 body，省流量。'],
+      [307,'3','Temporary Redirect','临时重定向（保持方法）','同 302 但不改变请求方法：POST 跳转后仍是 POST。'],
+      [308,'3','Permanent Redirect','永久重定向（保持方法）','同 301 但不改变请求方法。'],
+      // 4xx
+      [400,'4','Bad Request','请求错误','参数格式不对/缺字段。先看请求体是否合法 JSON、必填项是否齐全。'],
+      [401,'4','Unauthorized','未认证','没登录或 token 失效。查 Authorization 头、token 是否过期。'],
+      [403,'4','Forbidden','已认证但无权限','服务器认识你但拒绝。查账号权限、IP 白名单、WAF 拦截。'],
+      [404,'4','Not Found','资源不存在','路径写错/资源被删/路由没注册。核对 URL 与方法（GET vs POST）。'],
+      [405,'4','Method Not Allowed','方法不允许','路径对但 HTTP 方法不对，如对只读接口发了 POST。'],
+      [408,'4','Request Timeout','请求超时','客户端发太慢，服务器等不及断开。弱网/大 body 上传常见。'],
+      [409,'4','Conflict','冲突','与当前状态冲突，如重复创建同名资源、乐观锁版本不一致。'],
+      [413,'4','Payload Too Large','请求体过大','超过服务器限制（nginx client_max_body_size 等），上传大文件常见。'],
+      [415,'4','Unsupported Media Type','不支持的媒体类型','Content-Type 不对，如该发 application/json 却发了 text/plain。'],
+      [429,'4','Too Many Requests','请求过多','触发限流。看 Retry-After 头，加退避重试，别硬刚。'],
+      // 5xx
+      [500,'5','Internal Server Error','服务器内部错误','服务端代码抛异常。直接看后端堆栈日志，别盯着请求猜。'],
+      [501,'5','Not Implemented','未实现','服务器不支持该功能，接口还没实现时会返回。'],
+      [502,'5','Bad Gateway','网关错误','反代后面的服务挂了/没响应/超时。查上游进程存活与 upstream 日志。'],
+      [503,'5','Service Unavailable','服务不可用','过载或维护中。看负载、健康检查、是否被限流保护拦住。'],
+      [504,'5','Gateway Timeout','网关超时','上游响应太慢，反代等到超时。查慢查询、慢接口，调 proxy_read_timeout 前先优化根因。'],
+      [521,'5','Web Server Is Down','源站拒绝（CDN 特有）','Cloudflare 等 CDN 连不上源站。查源站防火墙是否把 CDN IP 拦了、端口是否开放。']
+    ];
+    var CATS = { '1':'#6b7280', '2':'#1a7f37', '3':'#9a6700', '4':'#cf222e', '5':'#8250df' };
+    var cat = 'all';
+
+    function row(d){
+      var code = d[0], c = d[1], en = d[2], cn = d[3], tip = d[4];
+      var color = CATS[c];
+      return '<div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--border);align-items:flex-start">' +
+        '<span class="mono" style="flex:none;width:52px;font-weight:800;font-size:17px;color:' + color + '">' + code + '</span>' +
+        '<div style="min-width:0">' +
+          '<div style="font-weight:600;font-size:14px">' + cn + ' <span class="mono" style="opacity:.55;font-weight:400;font-size:12px">' + en + '</span></div>' +
+          '<div style="font-size:13px;opacity:.75;margin-top:3px;line-height:1.6">' + tip + '</div>' +
+        '</div></div>';
+    }
+    function render(){
+      var kw = $('q').value.trim().toLowerCase();
+      var html = '';
+      var n = 0;
+      DATA.forEach(function(d){
+        if (cat !== 'all' && d[1] !== cat) return;
+        if (kw && (d[0] + ' ' + d[2] + ' ' + d[3] + ' ' + d[4]).toLowerCase().indexOf(kw) < 0) return;
+        html += row(d); n++;
+      });
+      $('list').innerHTML = n ? html : '<div style="opacity:.5;padding:8px 0">没有匹配的状态码，换个关键词试试</div>';
+    }
+    $('q').oninput = render;
+    $('catBar').querySelectorAll('button').forEach(function(b){
+      b.onclick = function(){
+        cat = b.dataset.cat;
+        $('catBar').querySelectorAll('button').forEach(function(x){ x.classList.remove('primary'); });
+        b.classList.add('primary');
+        render();
+      };
+    });
+    $('btnSample').onclick = function(){ $('q').value = '404'; render(); };
+    render();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

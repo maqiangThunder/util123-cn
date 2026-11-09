@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>全角半角转换 · 中英符号互转 - util123 工具箱</title>
+<meta name="description" content="免费在线全角半角转换工具：把英文、数字、标点及空格在半角（ASCII）与全角（全宽）之间互转，处理中英文混排、表单录入、日系系统数据随手用。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/fullhalf/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="全角半角转换,全角转半角,半角转全角,全角字符,字符宽度转换">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="全角半角转换 · 中英符号互转">
+<meta property="og:description" content="英文字母、数字、标点、空格在半角与全角之间互转。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/fullhalf/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h7v8H9z M19 15h7v5h-7z"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/fullhalf/#app","name":"全角半角转换","url":"https://util123.cn/fullhalf/","description":"在线全角半角转换工具，英文字母、数字、标点与空格在半角全角间互转，纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["半角转全角","全角转半角"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"全角半角转换","item":"https://util123.cn/fullhalf/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"全角和半角有什么区别？","acceptedAnswer":{"@type":"Answer","text":"半角是标准 ASCII 宽度（如 A、1、(），全角是占两个半角宽度的全宽字符（如 Ａ、１、（），常见于中文排版与日系系统。"}},
+{"@type":"Question","name":"转换会上传我的文本吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部在浏览器本地完成，不发送任何数据。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h7v8H9z M19 15h7v5h-7z"/></g>
+      </svg>
+      <span class="name">全角半角转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 字符宽度</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h7v8H9z M19 15h7v5h-7z"/></g></svg></div>
+    <h1>全角<span class="grad">半角转换</span></h1>
+    <p>英文字母、数字、标点与空格在半角 / 全角之间互转，处理中英混排随手用。纯前端，数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label class="lbl" for="mode">转换方向</label>
+          <select id="mode" class="ipt" style="height:42px">
+            <option value="toFull">半角 → 全角</option>
+            <option value="toHalf">全角 → 半角</option>
+          </select>
+        </div>
+      </div>
+      <label class="lbl" for="in">输入</label>
+      <textarea id="in" class="ipt" style="min-height:120px;resize:vertical" placeholder="输入要转换的文本，如 Hello, 世界！(ABC123)" aria-label="输入文本"></textarea>
+      <label class="lbl" for="out" style="margin-top:10px">输出</label>
+      <textarea id="out" class="ipt" style="min-height:120px;resize:vertical" readonly aria-label="转换结果"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopy">复制结果</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+        <span id="msg" style="color:var(--muted);font-size:13px;align-self:center"></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>全角和半角有什么区别？</h3><p>半角是标准 ASCII 宽度（如 A、1、(），全角是占两个半角宽度的全宽字符（如 Ａ、１、（），常见于中文排版与日系系统。</p></div>
+    <div class="faq"><h3>转换会上传我的文本吗？</h3><p>不会。全部在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    function toFull(t){
+      var r = '';
+      for (var i=0; i<t.length; i++){
+        var c = t.charCodeAt(i);
+        if (c === 0x20) r += String.fromCharCode(0x3000);
+        else if (c >= 0x21 && c <= 0x7E) r += String.fromCharCode(c + 0xFEE0);
+        else r += t[i];
+      }
+      return r;
+    }
+    function toHalf(t){
+      var r = '';
+      for (var i=0; i<t.length; i++){
+        var c = t.charCodeAt(i);
+        if (c === 0x3000) r += ' ';
+        else if (c >= 0xFF01 && c <= 0xFF5E) r += String.fromCharCode(c - 0xFEE0);
+        else r += t[i];
+      }
+      return r;
+    }
+    function run(){
+      var t = $('in').value;
+      var out = $('mode').value === 'toFull' ? toFull(t) : toHalf(t);
+      $('out').value = out;
+      $('msg').textContent = t.length + ' → ' + out.length + ' 字符';
+    }
+    $('mode').addEventListener('change', run);
+    $('in').addEventListener('input', run);
+    $('btnCopy').onclick = function(){ UY.copyWith($('out').value, '已复制'); };
+    $('btnClear').onclick = function(){ $('in').value=''; $('out').value=''; $('msg').textContent=''; };
+    $('btnSample').onclick = function(){
+      $('in').value = 'Hello, World! (ABC-123) 测试：中文＋符号。';
+      $('in').dispatchEvent(new Event('input'));
+    };
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>随机数 · 掷骰子 · 抽奖 - util123 工具箱</title>
+<meta name="description" content="免费在线随机数工具：生成指定范围内的随机整数、掷骰子，或把名单粘进来随机抽一个。纯前端运行，结果用安全随机数生成。">
+<link rel="canonical" href="https://util123.cn/random/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="随机数生成器,在线随机数,掷骰子,随机抽奖,随机抽一个,抽签,随机数工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="随机数 · 掷骰子 · 抽奖">
+<meta property="og:description" content="生成指定范围内的随机整数、掷骰子，或把名单粘进来随机抽一个。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/random/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随机数 · 掷骰子 · 抽奖">
+<meta name="twitter:description" content="生成随机数、掷骰子、名单随机抽一个。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="17" fill="white">R</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/random/#app","name":"随机数 · 抽奖工具","url":"https://util123.cn/random/","description":"在线随机数生成：在指定范围内生成随机整数、掷骰子，或从名单中随机抽一个。纯前端运行，使用浏览器安全随机数。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["指定范围生成随机整数","掷骰子（1-6）","列表随机抽一个","安全随机数"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"随机数 · 抽奖","item":"https://util123.cn/random/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"这个随机数是真随机吗？","acceptedAnswer":{"@type":"Answer","text":"本工具使用浏览器内置的 crypto 安全随机数接口生成，足够用于抽签、决定、游戏等日常场景；但不适用于密码学密钥或赌博等对随机性要求极高的用途。"}},
+{"@type":"Question","name":"抽奖会重复抽中同一个人吗？","acceptedAnswer":{"@type":"Answer","text":"每点一次都是从当前名单里等概率抽取一个，可能和上次重复。如果希望不重复，抽完把抽中的那行删掉再抽即可。"}},
+{"@type":"Question","name":"生成过程会上传名单吗？","acceptedAnswer":{"@type":"Answer","text":"不会。名单和结果都在浏览器本地处理，不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="17" fill="#fff">R</text>
+      </svg>
+      <span class="name">随机数 · 抽奖</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 随机数 / 掷骰子 / 抽奖</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f1" aria-hidden="true">R</div>
+    <h1>随机数 · <span class="grad">抽奖</span></h1>
+    <p>要个数字、掷个骰子、还是从名单里抽一个？三种常用场景，一个页面搞定。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">随机整数</span>
+      <div class="row">
+        <div class="field"><label for="rMin">最小值</label><input class="ipt" id="rMin" type="number" value="1"></div>
+        <div class="field"><label for="rMax">最大值</label><input class="ipt" id="rMax" type="number" value="100"></div>
+        <div class="field" style="flex:1 1 120px"><label for="rCnt">个数</label><input class="ipt" id="rCnt" type="number" value="1" min="1" max="50"></div>
+      </div>
+      <div class="big hint" id="rOut" style="margin-top:14px" title="点击「生成」看看手气">点击「生成」出数</div>
+      <div class="toolbar">
+        <button class="primary" id="btnGen">生成</button>
+        <button id="btnDice" title="掷一个 1-6 的骰子">🎲 掷骰子</button>
+        <button id="btnCopyR">复制</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">从名单随机抽一个 <span class="tip">（每行一项）</span></span>
+      <textarea id="pool" spellcheck="false" placeholder="把候选名单粘进来，一行一个：&#10;张三&#10;李四&#10;王五"></textarea>
+      <div class="big hint" id="pickOut" style="margin-top:12px">点击下方按钮开始抽签</div>
+      <div class="toolbar">
+        <button class="primary" id="btnPick">随机抽一个</button>
+        <button id="btnCopyPick">复制结果</button>
+      </div>
+      <div class="status" id="pickStatus">共 0 个候选项。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>这个随机数是真随机吗？</dt>
+      <dd>本工具使用浏览器内置的 crypto 安全随机数接口生成，足够用于抽签、决定、游戏等日常场景；但不适用于密码学密钥或赌博等对随机性要求极高的用途。</dd>
+      <dt>抽奖会重复抽中同一个人吗？</dt>
+      <dd>每点一次都是从当前名单里等概率抽取一个，可能和上次重复。如果希望不重复，抽完把抽中的那行删掉再抽即可。</dd>
+      <dt>生成过程会上传名单吗？</dt>
+      <dd>不会。名单和结果都在浏览器本地处理，不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var lastRand = '';
+
+function rndInt(min, max){
+  if(max < min) { var t = min; min = max; max = t; }
+  var range = max - min + 1;
+  if(range <= 0) return min;
+  var limit = Math.floor(0x100000000 / range) * range;
+  var buf = new Uint32Array(1);
+  var x;
+  do {
+    /* http:// 或旧 WebView 下 crypto 可能不存在，兜底 Math.random 保证按钮有反应 */
+    if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(buf);
+    else buf[0] = Math.floor(Math.random() * 0x100000000);
+    x = buf[0];
+  } while(x >= limit);
+  return min + (x % range);
+}
+
+function gen(){
+  var min = parseInt($('rMin').value, 10);
+  var max = parseInt($('rMax').value, 10);
+  var cnt = parseInt($('rCnt').value, 10);
+  if(isNaN(min) || isNaN(max)){ UY.toast('请填写有效的数字范围'); return; }
+  if(isNaN(cnt) || cnt < 1) cnt = 1;
+  if(cnt > 50) cnt = 50;
+  if(max === min){ lastRand = String(min); $('rOut').textContent = String(min); $('rOut').className = 'big'; UY.toast('范围上下限相同'); return; }
+  var arr = [];
+  for(var i = 0; i < cnt; i++) arr.push(rndInt(min, max));
+  lastRand = arr.join(', ');
+  $('rOut').textContent = lastRand;
+  $('rOut').className = 'big';
+}
+
+$('btnGen').onclick = gen;
+$('rOut').onclick = gen;
+$('btnDice').onclick = function(){ $('rMin').value = 1; $('rMax').value = 6; gen(); };
+$('btnCopyR').onclick = function(){
+  if(!lastRand){ UY.toast('请先生成'); return; }
+  UY.copyWith(lastRand, '已复制');
+};
+
+function updatePool(){
+  var items = $('pool').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+  $('pickStatus').textContent = '共 ' + items.length + ' 个候选项。';
+  $('pickStatus').className = 'status';
+}
+$('pool').addEventListener('input', updatePool);
+
+$('btnPick').onclick = function(){
+  var items = $('pool').value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+  if(!items.length){ UY.toast('名单是空的'); return; }
+  var pick = items[rndInt(0, items.length - 1)];
+  $('pickOut').textContent = pick;
+  $('pickOut').className = 'big';
+  $('pickStatus').textContent = '抽中：' + pick + '（共 ' + items.length + ' 个候选）';
+  $('pickStatus').className = 'status ok';
+};
+$('btnCopyPick').onclick = function(){
+  if(!$('pickOut').textContent || $('pickOut').classList.contains('hint')){ UY.toast('还没抽签'); return; }
+  UY.copyWith($('pickOut').textContent, '已复制');
+};
+
+updatePool();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

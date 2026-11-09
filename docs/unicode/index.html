@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Unicode 转换 · 中文与 \u 转义 / HTML 实体互转 - util123 工具箱</title>
+<meta name="description" content="免费在线 Unicode 编码转换工具：中文、符号与 \uXXXX 转义序列互转，支持 HTML 实体（&#NNNN; / &#xHHHH;）编解码，可只转非 ASCII 字符。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/unicode/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="Unicode编码转换,中文转Unicode,Unicode转中文,\\u转义,HTML实体,编码转换,Unicode在线转换">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="Unicode 转换 · 中文与 \\u 转义 / HTML 实体互转">
+<meta property="og:description" content="中文、符号与 \\uXXXX 转义、HTML 实体互转，可只转非 ASCII 字符。纯前端运行，不上传数据。">
+<meta property="og:url" content="https://util123.cn/unicode/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unicode 转换 · 中文与 \\u 转义 / HTML 实体互转">
+<meta name="twitter:description" content="中文、符号与 \\uXXXX 转义、HTML 实体互转。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="11" fill="white">U+</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/unicode/#app","name":"Unicode 编码转换工具","url":"https://util123.cn/unicode/","description":"在线 Unicode 编码转换工具：中文、符号与 \\uXXXX 转义序列互转，并支持 HTML 实体（&#NNNN; 十进制 / &#xHHHH; 十六进制）的编码与解码，可选择只转换非 ASCII 字符。纯前端运行，数据不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["中文 → Unicode","Unicode → 中文","\\u 转义/反转义","HTML 实体编解码","只转非 ASCII","结果复制/下载"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"Unicode 转换","item":"https://util123.cn/unicode/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"\\uXXXX 这种写法是什么？","acceptedAnswer":{"@type":"Answer","text":"这是 Unicode 转义序列，常见于 JavaScript、JSON、Java 等语言的字符串里。其中 XXXX 是该字符码点的十六进制表示，例如「中」是 \\u4e2d、「A」是 \\u0041。本工具可以把中文转成这种写法，也能把这种写法还原成中文。"}},
+{"@type":"Question","name":"Unicode 和 UTF-8 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"Unicode 是「字符到码点」的编号标准，给每个字符分配一个唯一编号（如 U+4E2D）；UTF-8 则是把这个编号存成字节的具体编码方式。本工具处理的是码点层面的 Unicode 表示，与文件的 UTF-8 编码是两回事。"}},
+{"@type":"Question","name":"HTML 实体又是什么？","acceptedAnswer":{"@type":"Answer","text":"HTML 实体是用 &# 开头的引用方式，用来在网页里表示特殊字符，例如 &#20013;（十进制）或 &#x4E2D;（十六进制）都表示「中」。本工具可以在中文与 HTML 实体之间双向转换。"}},
+{"@type":"Question","name":"转换会上传我的内容吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有编码解码都在浏览器本地完成，输入的内容不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="11" fill="#fff" letter-spacing=".5">U+</text>
+      </svg>
+      <span class="name">Unicode 转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 中文 ↔ \u 转义 / HTML 实体</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">U+</div>
+    <h1>Unicode<span class="grad"> 转换</span></h1>
+    <p>中文、符号与 \uXXXX 转义序列互转，支持 HTML 实体（十进制 / 十六进制）编解码，可只转换非 ASCII 字符。纯前端运行，数据不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">转换模式</span>
+      <div class="seg" id="uniMode">
+        <button type="button" class="on" data-mode="u">\uXXXX 转义</button>
+        <button type="button" data-mode="h">HTML 实体</button>
+      </div>
+      <div class="row" style="margin-top:14px" id="uniOpts">
+        <label class="chk on" id="lbOnly"><input type="checkbox" id="ckOnly" checked>仅转换非 ASCII 字符（保留英文与标点可读）</label>
+        <label class="chk" id="lbHex"><input type="checkbox" id="ckHex">HTML 实体用十六进制（&amp;#x…;）</label>
+        <label class="chk" id="lbSpecial"><input type="checkbox" id="ckSpecial">同时转义 &amp; &lt; &gt; 等特殊符号</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">输入</span>
+      <textarea id="uniIn" spellcheck="false" placeholder="在这里输入要转换的内容……">util123 工具箱 · 中文转 Unicode 示例</textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnEnc">编码 →</button>
+        <button id="btnDec">← 解码</button>
+        <button id="btnSwapUni">↑↓ 互换</button>
+        <button id="btnUniClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">输出</span>
+      <textarea id="uniOut" spellcheck="false" placeholder="转换结果显示在这里……"></textarea>
+      <div class="toolbar">
+        <button id="btnUniCopy">复制结果</button>
+        <button id="btnUniDl">下载 .txt</button>
+      </div>
+      <div class="status" id="uniStatus">选择模式后点击「编码」或「解码」。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>\uXXXX 这种写法是什么？</dt>
+      <dd>这是 Unicode 转义序列，常见于 JavaScript、JSON、Java 等语言的字符串里。其中 XXXX 是该字符码点的十六进制表示，例如「中」是 \u4e2d、「A」是 \u0041。本工具可以把中文转成这种写法，也能把这种写法还原成中文。</dd>
+      <dt>Unicode 和 UTF-8 有什么区别？</dt>
+      <dd>Unicode 是「字符到码点」的编号标准，给每个字符分配一个唯一编号（如 U+4E2D）；UTF-8 则是把这个编号存成字节的具体编码方式。本工具处理的是码点层面的 Unicode 表示，与文件的 UTF-8 编码是两回事。</dd>
+      <dt>HTML 实体又是什么？</dt>
+      <dd>HTML 实体是用 &amp;# 开头的引用方式，用来在网页里表示特殊字符，例如 &amp;#20013;（十进制）或 &amp;#x4E2D;（十六进制）都表示「中」。本工具可以在中文与 HTML 实体之间双向转换。</dd>
+      <dt>转换会上传我的内容吗？</dt>
+      <dd>不会。所有编码解码都在浏览器本地完成，输入的内容不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var mode = 'u';
+
+function setStatus(msg, type){ var s = $('uniStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+/* ---- Unicode \u 转义 ---- */
+function encUnicode(str, onlyNonAscii){
+  var out = '';
+  for(var i = 0; i < str.length; i++){
+    var code = str.charCodeAt(i), ch = str.charAt(i);
+    if(onlyNonAscii && code < 128) out += ch;
+    else out += '\\u' + ('0000' + code.toString(16)).slice(-4);
+  }
+  return out;
+}
+function decUnicode(str){
+  return str
+    .replace(/\\u\{([0-9a-fA-F]{1,6})\}/g, function(m, h){ try{ return String.fromCodePoint(parseInt(h, 16)); }catch(e){ return m; } })
+    .replace(/\\u([0-9a-fA-F]{4})/g, function(m, h){ try{ return String.fromCharCode(parseInt(h, 16)); }catch(e){ return m; } })
+    .replace(/\\x([0-9a-fA-F]{2})/g, function(m, h){ try{ return String.fromCharCode(parseInt(h, 16)); }catch(e){ return m; } });
+}
+
+/* ---- HTML 实体 ---- */
+function encHtml(str, hex, special){
+  var out = '';
+  for(var i = 0; i < str.length; i++){
+    var code = str.charCodeAt(i), ch = str.charAt(i);
+    if(code < 128){
+      if(special && '&<>"\'\u00a0'.indexOf(ch) >= 0){
+        if(ch === '&') out += '&amp;';
+        else if(ch === '<') out += '&lt;';
+        else if(ch === '>') out += '&gt;';
+        else if(ch === '"') out += '&quot;';
+        else if(ch === "'") out += '&#39;';
+      }else out += ch;
+    }else{
+      out += hex ? ('&#x' + code.toString(16).toUpperCase() + ';') : ('&#' + code + ';');
+    }
+  }
+  return out;
+}
+function decHtml(str){
+  var named = { amp:'&', lt:'<', gt:'>', quot:'"', apos:"'", nbsp:'\u00a0', copy:'\u00a9', reg:'\u00ae', trade:'\u2122', hellip:'\u2026', mdash:'\u2014', ndash:'\u2013', middot:'\u00b7', laquo:'\u00ab', raquo:'\u00bb', times:'\u00d7', divide:'\u00f7' };
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, function(m, h){ try{ return String.fromCodePoint(parseInt(h, 16)); }catch(e){ return m; } })
+    .replace(/&#(\d+);/g, function(m, d){ try{ return String.fromCodePoint(parseInt(d, 10)); }catch(e){ return m; } })
+    .replace(/&([a-zA-Z]+);/g, function(m, name){ return Object.prototype.hasOwnProperty.call(named, name) ? named[name] : m; });
+}
+
+function doEncode(){
+  var v = $('uniIn').value;
+  if(!v){ UY.toast('请先输入内容'); return; }
+  var out, unit;
+  if(mode === 'u'){
+    out = encUnicode(v, $('ckOnly').checked);
+    unit = '\\u 转义';
+  }else{
+    out = encHtml(v, $('ckHex').checked, $('ckSpecial').checked);
+    unit = 'HTML 实体';
+  }
+  $('uniOut').value = out;
+  setStatus('已编码为 ' + unit + ' · 输出 ' + out.length + ' 字符', 'ok');
+}
+function doDecode(){
+  var v = $('uniIn').value;
+  if(!v){ UY.toast('请先输入内容'); return; }
+  var out = mode === 'u' ? decUnicode(v) : decHtml(v);
+  $('uniOut').value = out;
+  setStatus('已解码 · 输出 ' + out.length + ' 字符', 'ok');
+}
+
+/* 模式切换 */
+function applyMode(m){
+  // 只转非 ASCII 仅对 \u 模式有意义；十六进制/特殊符号仅对实体模式有意义
+  $('lbOnly').style.display = m === 'u' ? '' : 'none';
+  $('lbHex').style.display = m === 'h' ? '' : 'none';
+  $('lbSpecial').style.display = m === 'h' ? '' : 'none';
+}
+UY.qsa('#uniMode button').forEach(function(btn){
+  btn.onclick = function(){
+    UY.qsa('#uniMode button').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    mode = btn.dataset.mode;
+    applyMode(mode);
+    setStatus('当前模式：' + btn.textContent.trim() + '，点击「编码」或「解码」。', '');
+  };
+});
+applyMode(mode);   // 首屏按默认模式显隐，避免实体专属选项在 \u 模式下露出
+
+$('btnEnc').onclick = doEncode;
+$('btnDec').onclick = doDecode;
+$('btnSample').onclick = function(){
+  $('uniIn').value = 'Hello, 世界！这是一个 Unicode 转换示例。';
+  $('btnEnc').onclick();
+};
+$('btnSwapUni').onclick = function(){
+  var t = $('uniIn').value; $('uniIn').value = $('uniOut').value; $('uniOut').value = t;
+};
+$('btnUniClear').onclick = function(){ $('uniIn').value = ''; $('uniOut').value = ''; setStatus('已清空。', ''); };
+$('btnUniCopy').onclick = function(){
+  if(!$('uniOut').value){ UY.toast('还没有输出内容'); return; }
+  UY.copyWith($('uniOut').value, '已复制结果');
+};
+$('btnUniDl').onclick = function(){
+  if(!$('uniOut').value){ UY.toast('还没有输出内容'); return; }
+  var blob = new Blob([$('uniOut').value], { type: 'text/plain;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  UY.download('unicode.txt', url);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+};
+
+['ckOnly','ckHex','ckSpecial'].forEach(function(id){
+  $(id).addEventListener('change', function(){ this.parentNode.classList.toggle('on', this.checked); });
+});
+
+/* 初始展示编码效果 */
+doEncode();
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+#uniIn,#uniOut{min-height:150px}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

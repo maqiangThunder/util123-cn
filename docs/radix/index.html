@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>进制转换 · 二 / 八 / 十 / 十六进制在线互转 - util123 工具箱</title>
+<meta name="description" content="免费在线进制转换工具：二进制、八进制、十进制、十六进制（2~36 任意进制）实时互转，支持大数（BigInt）、负数与 0x / 0b / 0o 前缀自动识别。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/radix/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="进制转换,二进制转十进制,十进制转十六进制,16进制转10进制,在线进制转换,八进制,BigInt">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="进制转换 · 二 / 八 / 十 / 十六进制在线互转">
+<meta property="og:description" content="二进制、八进制、十进制、十六进制实时互转，支持大数与任意 2~36 进制。纯前端运行，不上传数据。">
+<meta property="og:url" content="https://util123.cn/radix/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进制转换 · 二 / 八 / 十 / 十六进制在线互转">
+<meta name="twitter:description" content="二进制、八进制、十进制、十六进制实时互转，支持大数。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">0x</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/radix/#app","name":"进制转换工具","url":"https://util123.cn/radix/","description":"在线进制转换工具：二进制、八进制、十进制、十六进制以及 2~36 任意进制实时互转，支持大数（BigInt）、负数，可自动识别 0x / 0b / 0o 前缀。纯前端运行，数据不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["二/八/十/十六进制互转","任意 2~36 进制","大数支持 BigInt","负数与前缀识别","实时转换","结果复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"进制转换","item":"https://util123.cn/radix/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"怎么把 16 进制转成 10 进制？","acceptedAnswer":{"@type":"Answer","text":"在输入框里填入十六进制数（例如 FF 或 0xFF），源进制选择「16」，结果区会实时显示对应的十进制值（255）。也可以直接粘贴带 0x 前缀的字符串，工具会自动识别为十六进制。"}},
+{"@type":"Question","name":"能转换很大的数字吗？","acceptedAnswer":{"@type":"Answer","text":"可以。本工具基于 JavaScript 的 BigInt，不受 64 位浮点数精度限制，几百位的大整数也能精确转换，不会出现末位变 0 的精度丢失。"}},
+{"@type":"Question","name":"什么是 0x、0b、0o 前缀？","acceptedAnswer":{"@type":"Answer","text":"它们是编程语言里表示进制的常见写法：0x 表示十六进制、0b 表示二进制、0o 表示八进制。本工具会自动识别这些前缀并采用对应进制，无需手动选择。"}},
+{"@type":"Question","name":"支持哪些进制？","acceptedAnswer":{"@type":"Answer","text":"支持 2 到 36 之间的任意进制。常见的二进制、八进制、十进制、十六进制会直接列出，你还可以在「更多进制」里填写任意目标进制查看结果。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">0x</text>
+      </svg>
+      <span class="name">进制转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 二 / 八 / 十 / 十六进制互转</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">0x</div>
+    <h1>进制<span class="grad">转换</span></h1>
+    <p>二进制、八进制、十进制、十六进制以及 2~36 任意进制实时互转，支持大数与负数，自动识别 0x / 0b / 0o 前缀。纯前端运行，数据不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入数值</span>
+      <div class="row">
+        <div class="field" style="flex:2 1 260px">
+          <label>数值 <span class="hint">（可带 0x / 0b / 0o 前缀）</span></label>
+          <input class="ipt" id="rdVal" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="例如 255、0xFF、1010">
+        </div>
+        <div class="field" style="flex:0 1 150px">
+          <label>源进制</label>
+          <select id="rdFrom">
+            <option value="10">10 十进制</option>
+            <option value="16">16 十六进制</option>
+            <option value="2">2 二进制</option>
+            <option value="8">8 八进制</option>
+            <option value="custom">自定义…</option>
+          </select>
+        </div>
+        <div class="field" id="rdFromCustomWrap" style="flex:0 1 110px;display:none">
+          <label>自定义源进制</label>
+          <input class="ipt" type="number" id="rdFromCustom" min="2" max="36" value="36">
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <label class="chk on"><input type="checkbox" id="rdUpper" checked>十六进制用大写</label>
+        <label class="chk"><input type="checkbox" id="rdGroup">每 4 位加空格</label>
+        <button id="btnRdClear" style="height:38px">清空</button>
+      </div>
+      <div class="toolbar" style="margin-top:10px">
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="rdStatus">输入数值后实时转换。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">转换结果</span>
+      <div class="rd-res" id="rdOut"><div class="empty">输入数值后，这里会列出各进制结果。</div></div>
+      <span class="lbl" style="margin-top:16px">更多进制 <span class="tip">（填写 2~36 的任意目标进制）</span></span>
+      <div class="row">
+        <div class="field" style="flex:0 1 160px">
+          <label>目标进制</label>
+          <input class="ipt" type="number" id="rdToCustom" min="2" max="36" placeholder="例如 32">
+        </div>
+        <div class="field" style="flex:3 1 240px">
+          <label>结果</label>
+          <input class="ipt" id="rdToCustomOut" readonly placeholder="填写目标进制后显示">
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>怎么把 16 进制转成 10 进制？</dt>
+      <dd>在输入框里填入十六进制数（例如 FF 或 0xFF），源进制选择「16」，结果区会实时显示对应的十进制值（255）。也可以直接粘贴带 0x 前缀的字符串，工具会自动识别为十六进制。</dd>
+      <dt>能转换很大的数字吗？</dt>
+      <dd>可以。本工具基于 JavaScript 的 BigInt，不受 64 位浮点数精度限制，几百位的大整数也能精确转换，不会出现末位变 0 的精度丢失。</dd>
+      <dt>什么是 0x、0b、0o 前缀？</dt>
+      <dd>它们是编程语言里表示进制的常见写法：0x 表示十六进制、0b 表示二进制、0o 表示八进制。本工具会自动识别这些前缀并采用对应进制，无需手动选择。</dd>
+      <dt>支持哪些进制？</dt>
+      <dd>支持 2 到 36 之间的任意进制。常见的二进制、八进制、十进制、十六进制会直接列出，你还可以在「更多进制」里填写任意目标进制查看结果。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var DIGITS = '0123456789abcdefghijklmnopqrstuvwxyz';
+var RADIX_NAME = { 2:'2 进制', 8:'8 进制', 10:'10 进制', 16:'16 进制' };
+var lastResults = '';
+
+function setStatus(msg, type){ var s = $('rdStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+/* 手写任意进制大数解析（BigInt 原生只支持字面量，这里支持 2~36 字符串） */
+function parseBig(raw, radix){
+  var str = String(raw).trim().replace(/[\s_,]/g, '');
+  if(!str) throw new Error('请输入数值');
+  var neg = false, sign = '';
+  if(str[0] === '-'){ neg = true; str = str.slice(1); sign = '-'; }
+  else if(str[0] === '+'){ str = str.slice(1); }
+  // 前缀识别
+  if(/^0[xX]/.test(str)){ radix = 16; str = str.slice(2); }
+  else if(/^0[bB]/.test(str)){ radix = 2; str = str.slice(2); }
+  else if(/^0[oO]/.test(str)){ radix = 8; str = str.slice(2); }
+  if(!str) throw new Error('数值为空');
+  var R = BigInt(radix), n = 0n;
+  str = str.toLowerCase();
+  for(var i = 0; i < str.length; i++){
+    var d = DIGITS.indexOf(str[i]);
+    if(d < 0 || d >= radix) throw new Error('包含不属于 ' + radix + ' 进制的字符「' + str[i] + '」');
+    n = n * R + BigInt(d);
+  }
+  return { value: neg ? -n : n, radix: radix };
+}
+
+function group(s){
+  // 从右往左每 4 位加空格（仅用于展示）
+  return s.replace(/\B(?=(.{4})+$)/g, ' ');
+}
+
+function fmtOut(big, radix, upper, grouped){
+  var s = big.toString(radix);
+  if(upper) s = s.toUpperCase();
+  return grouped ? group(s) : s;
+}
+
+function currentFromRadix(){
+  var v = $('rdFrom').value;
+  if(v === 'custom') return Math.min(36, Math.max(2, parseInt($('rdFromCustom').value, 10) || 10));
+  return parseInt(v, 10);
+}
+
+function render(){
+  var raw = $('rdVal').value;
+  var upper = $('rdUpper').checked;
+  var grouped = $('rdGroup').checked;
+  var out = $('rdOut');
+
+  if(!raw.trim()){
+    out.innerHTML = '<div class="empty">输入数值后，这里会列出各进制结果。</div>';
+    setStatus('输入数值后实时转换。', '');
+    lastResults = '';
+    $('rdToCustomOut').value = '';
+    return;
+  }
+
+  var parsed;
+  try{
+    parsed = parseBig(raw, currentFromRadix());
+  }catch(e){
+    out.innerHTML = '<div class="empty">' + UY.esc((e && e.message) || e) + '</div>';
+    setStatus('无法解析该数值。', 'err');
+    lastResults = '';
+    $('rdToCustomOut').value = '';
+    return;
+  }
+
+  var big = parsed.value;
+  var targets = [2, 8, 10, 16];
+  var rows = targets.map(function(r){
+    var val = fmtOut(big, r, r === 16 && upper, r === 2 && grouped);
+    return { radix: r, name: RADIX_NAME[r], val: val };
+  });
+
+  out.innerHTML = rows.map(function(row){
+    return '<div class="rd-row" data-val="' + UY.esc(big.toString(row.radix)) + '">' +
+      '<span class="rd-name">' + row.name + '</span>' +
+      '<code class="rd-val">' + UY.esc(row.val) + '</code>' +
+      '<button class="rd-copy" type="button">复制</button>' +
+    '</div>';
+  }).join('');
+  UY.qsa('#rdOut .rd-copy').forEach(function(btn){
+    btn.onclick = function(){
+      var row = btn.parentNode;
+      UY.copyWith(row.querySelector('.rd-val').textContent.replace(/\s/g, ''), '已复制 ' + row.querySelector('.rd-name').textContent + ' 结果');
+    };
+  });
+
+  lastResults = rows.map(function(r){ return r.name + '：' + r.val; }).join('\n');
+
+  var detail = '源进制 ' + (parsed.radix !== currentFromRadix() ? (parsed.radix + '（由前缀识别）') : parsed.radix);
+  setStatus('转换完成 · ' + detail + ' · 十进制值 ' + big.toString(10), 'ok');
+
+  renderCustom(big, upper);
+}
+
+function renderCustom(big, upper){
+  var t = parseInt($('rdToCustom').value, 10);
+  if(!t || t < 2 || t > 36){ $('rdToCustomOut').value = ''; return; }
+  $('rdToCustomOut').value = fmtOut(big, t, upper);
+}
+
+$('rdVal').addEventListener('input', render);
+$('rdFrom').addEventListener('change', function(){
+  $('rdFromCustomWrap').style.display = $('rdFrom').value === 'custom' ? '' : 'none';
+  render();
+});
+$('rdFromCustom').addEventListener('input', render);
+$('rdUpper').addEventListener('change', function(){ $('rdUpper').parentNode.classList.toggle('on', $('rdUpper').checked); render(); });
+$('rdGroup').addEventListener('change', function(){ this.parentNode.classList.toggle('on', this.checked); render(); });
+$('rdToCustom').addEventListener('input', function(){
+  var raw = $('rdVal').value;
+  if(!raw.trim()) return;
+  try{ var p = parseBig(raw, currentFromRadix()); $('rdToCustomOut').value = ''; renderCustom(p.value, $('rdUpper').checked); }
+  catch(e){ $('rdToCustomOut').value = ''; }
+});
+$('btnRdClear').onclick = function(){
+  $('rdVal').value = '';
+  render();
+};
+
+$('btnSample').onclick = function(){
+  $('rdVal').value = '1010';
+  $('rdFrom').value = '2';
+  render();
+};
+
+/* 初始示例，便于直接看到效果 */
+$('rdVal').value = '255';
+render();
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+.rd-res{display:flex;flex-direction:column;gap:10px;margin-top:2px}
+.rd-res .empty{color:var(--muted);font-size:13.5px;padding:8px 0}
+.rd-row{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px}
+.rd-row .rd-name{flex:0 0 84px;font-weight:700;font-size:13px;color:var(--primary);font-family:var(--mono)}
+.rd-row .rd-val{flex:1;font-family:var(--mono);font-size:13.5px;color:var(--text);word-break:break-all;line-height:1.5}
+.rd-row .rd-copy{flex:0 0 auto;height:32px;padding:0 12px;border:1px solid var(--border);border-radius:8px;
+  background:var(--panel);color:var(--muted);cursor:pointer;font-size:12.5px}
+.rd-row .rd-copy:hover{border-color:var(--border-strong);color:var(--text)}
+@media(max-width:640px){
+  .rd-row .rd-name{flex-basis:66px;font-size:12px}
+  .rd-row .rd-val{font-size:12.5px}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

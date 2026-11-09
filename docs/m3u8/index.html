@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>m3u8 在线播放器 · HLS 视频流播放 - util123 工具箱</title>
+<meta name="description" content="免费在线 m3u8 / HLS 视频流播放器，粘贴播放地址即可在浏览器播放直播或点播流。支持 Chrome / Firefox / Edge（hls.js）与 Safari 原生 HLS，可全屏、调速、调音量，纯前端运行。">
+<!-- ── GEO / 传统 SEO ── -->
+<link rel="canonical" href="https://util123.cn/m3u8/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="m3u8播放器,m3u8在线播放,HLS播放器,视频流播放,直播播放器,在线视频播放">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="m3u8 在线播放器 · HLS 视频流播放">
+<meta property="og:description" content="粘贴 m3u8 播放地址即可在浏览器播放直播或点播流，支持全屏与调速，纯前端运行。">
+<meta property="og:url" content="https://util123.cn/m3u8/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="m3u8 在线播放器 · HLS 视频流播放">
+<meta name="twitter:description" content="粘贴 m3u8 播放地址即可在浏览器播放直播或点播流，支持全屏与调速。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><path d="M12 9.5v13l11-6.5z" fill="white"/></svg>'>
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<script src="/util123-cn/assets/vendor/hls.min.js"></script>
+<style>
+  /* ===== 播放器专属样式（外壳沿用 tool.css） ===== */
+  .player{position:relative;background:#000;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:6px}
+  .player video{display:block;width:100%;height:auto;max-height:62vh;background:#000}
+  .player .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#9aa4b2;font-size:13.5px;text-align:center;padding:20px}
+  .player .ph .ico{width:54px;height:54px;opacity:.5}
+  .ipt-url{font-size:14px}
+  .note{font-size:12.5px;color:var(--muted);line-height:1.75;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+  .note b{color:var(--text)}
+  @media(max-width:640px){
+    .player video{max-height:48vh}
+    .ipt-url{font-size:16px}
+  }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/m3u8/#app","name":"m3u8 在线播放器","url":"https://util123.cn/m3u8/","description":"免费在线 m3u8 / HLS 视频流播放器，粘贴播放地址即可在浏览器播放直播或点播流，支持全屏与调速，纯前端运行。","applicationCategory":"MultimediaApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["m3u8 / HLS 播放","直播与点播流","全屏播放","播放速度调节","音量控制","Chrome/Firefox/Edge/Safari 支持"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"m3u8 在线播放器","item":"https://util123.cn/m3u8/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"m3u8 是什么？","acceptedAnswer":{"@type":"Answer","text":"m3u8 是 HLS（HTTP Live Streaming）协议的播放列表文件，常用于直播和点播视频流。本工具粘贴 m3u8 地址即可在浏览器直接播放，无需下载客户端。"}},
+{"@type":"Question","name":"为什么有的视频加载失败？","acceptedAnswer":{"@type":"Answer","text":"多是因为视频源站禁止跨域（CORS）或需要鉴权，浏览器出于安全策略无法拉取视频分片。这属于源站限制，并非工具本身的问题；换一个允许跨域的公开流地址通常即可正常播放。"}},
+{"@type":"Question","name":"支持哪些浏览器？","acceptedAnswer":{"@type":"Answer","text":"Chrome、Edge、Firefox 等通过内置 hls.js 播放；Safari 与大部分 iOS 设备原生支持 HLS，可直接播放。主流现代浏览器均可使用。"}},
+{"@type":"Question","name":"需要安装插件或注册吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。打开网页即可使用，无需注册、登录或安装任何插件；播放所需的 hls.js 随页面一同加载。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+          </linearGradient>
+        </defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <path d="M12 9.5v13l11-6.5z" fill="#fff"/>
+      </svg>
+      <span class="name">m3u8 播放器</span>
+    </a>
+    <span class="tagline">util123 工具箱 · HLS 视频流播放</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" style="width:30px;height:30px" fill="#fff"><path d="M12 9.5v13l11-6.5z"/></svg>
+    </div>
+    <h1>m3u8 <span class="grad">在线播放器</span></h1>
+    <p>粘贴 m3u8 / HLS 播放地址，在浏览器里直接看直播或点播流。支持全屏、调速、调音量，纯前端运行。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">播放地址（m3u8 / HLS）</span>
+      <input id="m3u8url" class="ipt ipt-url" type="url" inputmode="url" spellcheck="false"
+        placeholder="https://example.com/live/index.m3u8" autocomplete="off">
+      <div class="toolbar">
+        <button id="btnLoad" class="primary">播放</button>
+        <button id="btnStop">停止</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="status">输入地址后点「播放」。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">预览</span>
+      <div class="player">
+        <video id="video" controls playsinline preload="none"></video>
+        <div class="ph" id="ph">
+          <svg class="ico" viewBox="0 0 32 32" fill="#9aa4b2"><path d="M12 9.5v13l11-6.5z"/></svg>
+          <span>尚未加载视频</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>小贴士：</b>本工具只负责播放，不下载、不缓存视频内容。部分视频源禁止跨域（CORS）或需要鉴权，会出现「加载失败」，这是源站限制而非工具问题，换一个允许跨域的公开流地址即可。
+    </div>
+
+    <!-- ▼ 广告位·底部横幅 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>m3u8 是什么？</dt>
+      <dd>m3u8 是 HLS（HTTP Live Streaming）协议的播放列表文件，常用于直播和点播视频流。本工具粘贴 m3u8 地址即可在浏览器直接播放，无需下载客户端。</dd>
+      <dt>为什么有的视频加载失败？</dt>
+      <dd>多是因为视频源站禁止跨域（CORS）或需要鉴权，浏览器出于安全策略无法拉取视频分片。这属于源站限制，并非工具本身的问题；换一个允许跨域的公开流地址通常即可正常播放。</dd>
+      <dt>支持哪些浏览器？</dt>
+      <dd>Chrome、Edge、Firefox 等通过内置 hls.js 播放；Safari 与大部分 iOS 设备原生支持 HLS，可直接播放。主流现代浏览器均可使用。</dd>
+      <dt>需要安装插件或注册吗？</dt>
+      <dd>不需要。打开网页即可使用，无需注册、登录或安装任何插件；播放所需的 hls.js 随页面一同加载。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+"use strict";
+var video = UY.$('video');
+var ph = UY.$('ph');
+var hls = null;
+
+function setStatus(msg, type){
+  var s = UY.$('status');
+  s.textContent = msg;
+  s.className = 'status' + (type ? ' ' + type : '');
+}
+function destroyHls(){
+  if(hls){ try{ hls.destroy(); }catch(e){} hls = null; }
+}
+function hidePlaceholder(){ ph.style.display = 'none'; }
+
+function load(){
+  var url = (UY.$('m3u8url').value || '').trim();
+  if(!url){ setStatus('请输入 m3u8 播放地址', 'err'); return; }
+  var u;
+  try{ u = new URL(url); }catch(e){ setStatus('地址格式不正确，请填写完整的 http(s):// 链接', 'err'); return; }
+  if(u.protocol !== 'http:' && u.protocol !== 'https:'){ setStatus('仅支持 http / https 链接', 'err'); return; }
+
+  destroyHls();
+  video.pause();
+  video.removeAttribute('src');
+  try{ video.load(); }catch(e){}
+  hidePlaceholder();
+  setStatus('正在加载播放列表…');
+
+  if(window.Hls && Hls.isSupported()){
+    hls = new Hls({ maxBufferLength: 30, enableWorker: true, lowLatencyMode: false });
+    hls.loadSource(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function(){
+      setStatus('清单解析成功，开始缓冲…', 'ok');
+      video.play().catch(function(){ setStatus('已开始加载，点一下视频即可播放', 'ok'); });
+    });
+    hls.on(Hls.Events.ERROR, function(ev, data){
+      if(!data || !data.fatal) return;
+      if(data.type === Hls.ErrorTypes.NETWORK_ERROR){
+        setStatus('网络错误：无法获取视频分片（多为源站跨域/CORS 限制）', 'err');
+        try{ hls.startLoad(); }catch(e){}
+      }else if(data.type === Hls.ErrorTypes.MEDIA_ERROR){
+        setStatus('媒体解码错误，正在尝试恢复…', 'err');
+        try{ hls.recoverMediaError(); }catch(e){}
+      }else{
+        setStatus('播放出错：' + (data.details || '未知错误'), 'err');
+        destroyHls();
+      }
+    });
+  }else if(video.canPlayType('application/vnd.apple.mpegurl')){
+    // Safari / iOS 原生 HLS：补 error 监听，否则加载失败时状态永远卡在"正在加载"
+    video.onerror = function(){
+      var msgs = { 1:'加载被中止', 2:'网络错误，请检查地址或网络', 3:'解码错误，格式不受支持', 4:'地址无法访问（跨域或 404）' };
+      setStatus('播放出错：' + (msgs[video.error && video.error.code] || '未知错误'), 'err');
+    };
+    video.src = url;
+    video.play().catch(function(){ setStatus('已开始加载，点一下视频即可播放', 'ok'); });
+  }else{
+    setStatus('当前浏览器不支持 HLS 播放', 'err');
+  }
+}
+
+function stop(){
+  destroyHls();
+  video.pause();
+  video.removeAttribute('src');
+  try{ video.load(); }catch(e){}
+  ph.style.display = 'flex';
+  setStatus('已停止。输入新地址后点「播放」。');
+}
+
+UY.$('btnLoad').onclick = load;
+UY.$('btnStop').onclick = stop;
+UY.$('m3u8url').addEventListener('keydown', function(e){ if(e.key === 'Enter') load(); });
+UY.$('btnSample').onclick = function(){ UY.$('m3u8url').value = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'; UY.$('btnLoad').onclick(); };
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

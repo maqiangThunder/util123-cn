@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>罗马数字转换 · 阿拉伯数字与罗马数字互转 - util123 工具箱</title>
+<meta name="description" content="免费在线罗马数字转换：阿拉伯数字与罗马数字双向互转，支持 1–3999，自动校验非法写法。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/roman/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="罗马数字,罗马数字转换,阿拉伯数字转罗马,roman numerals,数字转换">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="罗马数字转换 · 阿拉伯与罗马互转">
+<meta property="og:description" content="阿拉伯数字与罗马数字双向互转，支持 1–3999，自动校验。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/roman/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="罗马数字转换 · 阿拉伯与罗马互转">
+<meta name="twitter:description" content="阿拉伯数字与罗马数字双向互转，自动校验。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 11 16 22M21 11 16 22"/><path d="M25 11v11"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/roman/#app","name":"罗马数字转换","url":"https://util123.cn/roman/","description":"在线罗马数字转换工具，阿拉伯数字与罗马数字双向互转，支持 1–3999 并自动校验非法写法。纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["阿拉伯转罗马数字","罗马转阿拉伯数字","合法性校验","离线可用"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"罗马数字转换","item":"https://util123.cn/roman/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"罗马数字能表示多大范围？","acceptedAnswer":{"@type":"Answer","text":"本工具支持 1–3999。古典罗马数字没有表示零和负数的标准写法，超过 3999 需借助上划线表示千位倍数，本工具不采用该记法。"}},
+{"@type":"Question","name":"为什么我写的罗马数字转换结果不对？","acceptedAnswer":{"@type":"Answer","text":"罗马数字有严格规则：相同符号最多连续三次（III 合法、IIII 不合法），小数在大数左边表示减法（IV=4）但仅限特定组合。工具会校验并提示非法写法。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。转换完全在浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 11 16 22M21 11 16 22"/><path d="M25 11v11"/></g>
+      </svg>
+      <span class="name">罗马数字</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 阿拉伯与罗马互转</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 11 16 22M21 11 16 22"/><path d="M25 11v11"/></g></svg></div>
+    <h1>罗马数字<span class="grad">转换</span></h1>
+    <p>阿拉伯数字与罗马数字双向互转，支持 1–3999，自动校验。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 10px"><span style="font-weight:600">阿拉伯数字 → 罗马数字</span></div>
+      <input id="arabIn" class="ipt" style="margin:0" type="number" min="1" max="3999" placeholder="输入 1 – 3999，如 2024" aria-label="输入阿拉伯数字">
+      <div id="arabWarn" style="color:var(--err);font-size:12px;min-height:16px;margin-top:6px"></div>
+      <textarea id="romanOut" class="ipt" style="min-height:56px;resize:vertical;font-family:'SF Mono',Menlo,monospace;font-size:18px;letter-spacing:2px" readonly aria-label="罗马数字输出"></textarea>
+      <div class="toolbar" style="margin-top:10px"><button class="primary" id="btnCopyR">复制罗马数字</button><button id="btnSample">示例</button></div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 10px"><span style="font-weight:600">罗马数字 → 阿拉伯数字</span></div>
+      <input id="romanIn" class="ipt" style="margin:0;text-transform:uppercase" type="text" placeholder="输入罗马数字，如 MMXXIV" aria-label="输入罗马数字">
+      <div id="romanWarn" style="color:var(--err);font-size:12px;min-height:16px;margin-top:6px"></div>
+      <textarea id="arabOut" class="ipt" style="min-height:56px;resize:vertical;font-family:'SF Mono',Menlo,monospace;font-size:18px" readonly aria-label="阿拉伯数字输出"></textarea>
+      <div class="toolbar" style="margin-top:10px"><button class="primary" id="btnCopyA">复制阿拉伯数字</button></div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>罗马数字能表示多大范围？</h3><p>本工具支持 1–3999。古典罗马数字没有表示零和负数的标准写法，超过 3999 需借助上划线表示千位倍数，本工具不采用该记法。</p></div>
+    <div class="faq"><h3>为什么写的罗马数字转换结果不对？</h3><p>罗马数字有严格规则：相同符号最多连续三次，减法组合仅限特定情形（如 IV=4、IX=9）。工具会校验并提示非法写法。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。转换完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var MAP = [[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],
+      [10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+
+    function toRoman(num){
+      if (!Number.isInteger(num) || num < 1 || num > 3999) return '';
+      var s = '';
+      MAP.forEach(function(p){ while (num >= p[0]) { s += p[1]; num -= p[0]; } });
+      return s;
+    }
+    function fromRoman(s){
+      s = (s || '').toUpperCase().replace(/[^IVXLCDM]/g, '').trim();
+      if (!s) return { ok:false, val:null };
+      var VAL = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 };
+      var total = 0, prev = 0;
+      for (var i = s.length - 1; i >= 0; i--){
+        var v = VAL[s[i]];
+        if (v < prev) total -= v; else total += v;
+        prev = v;
+      }
+      // 合法性校验：可逆回写必须一致
+      var valid = /^[IVXLCDM]+$/.test(s) && toRoman(total) === s;
+      return { ok:valid, val:total };
+    }
+
+    function renderArab(){
+      var raw = $('arabIn').value.trim();
+      if (raw === '') { $('romanOut').value = ''; $('arabWarn').textContent = ''; return; }
+      var n = Number(raw);   // 用 Number 而非 parseInt，避免 12.5 被静默截断成 12
+      if (!Number.isInteger(n) || n < 1 || n > 3999) {
+        $('romanOut').value = ''; $('arabWarn').textContent = '请输入 1 到 3999 之间的整数';
+        return;
+      }
+      $('arabWarn').textContent = '';
+      $('romanOut').value = toRoman(n);
+    }
+    function renderRoman(){
+      var raw = $('romanIn').value.trim();
+      if (raw === '') { $('arabOut').value = ''; $('romanWarn').textContent = ''; return; }
+      var r = fromRoman(raw);
+      if (!r.ok) { $('arabOut').value = ''; $('romanWarn').textContent = '非法罗马数字写法，请检查（如 IIII、VX 不合法）'; return; }
+      $('romanWarn').textContent = '';
+      $('arabOut').value = r.val;
+    }
+
+    $('arabIn').oninput = renderArab;
+    $('romanIn').oninput = renderRoman;
+    $('btnCopyR').onclick = function(){ UY.copyWith($('romanOut').value, '已复制'); };
+    $('btnCopyA').onclick = function(){ UY.copyWith($('arabOut').value, '已复制'); };
+    $('btnSample').onclick = function(){
+      $('arabIn').value = '2024';
+      if ($('arabIn').oninput) $('arabIn').oninput();
+    };
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

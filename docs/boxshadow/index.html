@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CSS 盒阴影生成器 · box-shadow 在线调参 - util123 工具箱</title>
+<meta name="description" content="免费在线 CSS box-shadow 生成器：可视化调节 X/Y 偏移、模糊、扩散、颜色与 inset，实时预览并一键复制 CSS 代码。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/boxshadow/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="box-shadow生成器,CSS阴影,盒阴影,在线CSS工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="CSS 盒阴影生成器 · box-shadow 在线调参">
+<meta property="og:description" content="可视化调节阴影参数，实时预览，一键复制 CSS。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/boxshadow/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 盒阴影生成器 · box-shadow 在线调参">
+<meta name="twitter:description" content="可视化调节阴影参数，实时预览，一键复制 CSS。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linejoin="round"><rect x="7" y="7" width="14" height="14" rx="2.5"/><path d="M11 25h11a4 4 0 0 0 4-4V11" opacity=".55" stroke-linecap="round"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/boxshadow/#app","name":"CSS 盒阴影生成器","url":"https://util123.cn/boxshadow/","description":"在线 CSS box-shadow 生成器，可视化调节偏移、模糊、扩散、颜色与 inset，实时预览并复制代码。纯前端运行。","applicationCategory":"DesignApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["box-shadow 可视化调参","实时预览","常用阴影预设","一键复制 CSS"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"CSS 盒阴影生成器","item":"https://util123.cn/boxshadow/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"box-shadow 各参数是什么意思？","acceptedAnswer":{"@type":"Answer","text":"依次为：X 偏移（正值向右）、Y 偏移（正值向下）、模糊半径（越大越柔和）、扩散半径（正值放大、负值缩小）、颜色（支持透明度）、可选 inset 表示内阴影。"}},
+{"@type":"Question","name":"为什么预览里看不到阴影？","acceptedAnswer":{"@type":"Answer","text":"多为模糊和偏移都为 0，或颜色透明度为 0。把模糊调大、颜色不透明度调高即可看到效果。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。调参与预览完全在浏览器本地完成。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="7" y="7" width="14" height="14" rx="2.5"/><path d="M11 25h11a4 4 0 0 0 4-4V11" opacity=".55" stroke-linecap="round"/></g>
+      </svg>
+      <span class="name">盒阴影生成</span>
+    </a>
+    <span class="tagline">util123 工具箱 · CSS box-shadow</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="7" y="7" width="14" height="14" rx="2.5"/><path d="M11 25h11a4 4 0 0 0 4-4V11" opacity=".55" stroke-linecap="round"/></g></svg></div>
+    <h1>盒阴影<span class="grad">生成器</span></h1>
+    <p>拖滑块、选颜色，实时预览 box-shadow 效果，一键复制 CSS。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">预设样式</span>
+      <div class="toolbar" style="margin:8px 0 16px" id="presets">
+        <button data-p="0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1)">卡片</button>
+        <button data-p="0 4px 12px rgba(0,0,0,.12)">悬浮</button>
+        <button data-p="0 10px 30px rgba(0,0,0,.18)">弹层</button>
+        <button data-p="inset 0 1px 3px rgba(0,0,0,.2)">内凹</button>
+        <button data-p="0 0 0 3px rgba(99,102,241,.35)">光圈</button>
+        <button data-p="4px 4px 0 rgba(0,0,0,.9)">硬投影</button>
+        <button id="btnSample">示例</button>
+      </div>
+
+      <div id="rows"></div>
+
+      <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+        <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer">
+          <input type="checkbox" id="inset"> inset 内阴影
+        </label>
+        <span class="spacer" style="flex:1"></span>
+        <input type="color" id="shC" value="#000000" style="width:44px;height:36px;border:none;background:none;cursor:pointer;padding:0" aria-label="阴影颜色">
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">预览（拖动下方圆点调节）</span>
+      <div id="stage" style="margin-top:10px;border-radius:12px;background:repeating-conic-gradient(var(--border) 0% 25%, transparent 0% 50%) 50%/20px 20px;padding:34px;display:flex;justify-content:center">
+        <div id="box" style="width:140px;height:90px;border-radius:10px;background:var(--panel);border:1px solid var(--border)"></div>
+      </div>
+      <span class="lbl" style="display:block;margin-top:16px">CSS 代码</span>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <input id="css" class="ipt mono" type="text" style="flex:1;margin:0" readonly aria-label="生成的 CSS">
+        <button id="copy" class="primary" style="flex:none">复制</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>box-shadow 各参数是什么意思？</h3><p>依次为：X 偏移（正值向右）、Y 偏移（正值向下）、模糊半径（越大越柔和）、扩散半径（正值放大、负值缩小）、颜色（支持透明度）；前面加 inset 表示内阴影。</p></div>
+    <div class="faq"><h3>可以叠多层阴影吗？</h3><p>可以。box-shadow 支持逗号分隔多层，预设里的「卡片」就是两层叠加。本工具当前生成单层，需要多层可先复制再手动组合。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。调参与预览完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var CFG = [
+      { id:'x',  label:'X 偏移',   min:-40, max:40,  val:0 },
+      { id:'y',  label:'Y 偏移',   min:-40, max:40,  val:4 },
+      { id:'blur', label:'模糊半径', min:0,  max:60,  val:12 },
+      { id:'spread', label:'扩散半径', min:-20, max:30, val:0 },
+      { id:'alpha', label:'不透明度 %', min:0, max:100, val:18 }
+    ];
+    var state = { x:0, y:4, blur:12, spread:0, alpha:18, color:'#000000', inset:false };
+
+    var rows = $('rows');
+    CFG.forEach(function(c){
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 0';
+      row.innerHTML =
+        '<span style="width:76px;font-size:13px;opacity:.75;flex:none">' + c.label + '</span>' +
+        '<input type="range" id="r_' + c.id + '" min="' + c.min + '" max="' + c.max + '" value="' + c.val + '" style="flex:1;accent-color:#6366f1">' +
+        '<span class="mono" id="v_' + c.id + '" style="width:36px;text-align:right;font-size:13px;font-weight:600">' + c.val + '</span>';
+      rows.appendChild(row);
+      row.querySelector('#r_' + c.id).oninput = function(){
+        state[c.id] = +this.value;
+        row.querySelector('#v_' + c.id).textContent = this.value;
+        render();
+      };
+    });
+    $('shC').oninput = function(){ state.color = this.value; render(); };
+    $('inset').onchange = function(){ state.inset = this.checked; render(); };
+
+    $('presets').querySelectorAll('button').forEach(function(b){
+      b.onclick = function(){
+        var p = b.dataset.p;
+        $('css').value = 'box-shadow: ' + p + ';';
+        $('box').style.boxShadow = p;
+        /* 解析第一层参数回填 state 与滑块，避免拖动滑块时预设被旧 state 覆盖 */
+        state.inset = /^inset/i.test(p.trim());
+        var first = p.split(',')[0].trim().replace(/^inset\s+/i, '');
+        var m = /^(-?[\d.]+)px\s+(-?[\d.]+)px\s+(-?[\d.]+)px\s+(-?[\d.]+)px\s+(.+)$/.exec(first);
+        if (m){
+          state.x = +m[1]; state.y = +m[2]; state.blur = +m[3]; state.spread = +m[4];
+          var rm = /rgba?\([^)]*?([\d.]+)\s*\)/.exec(m[5]);
+          if (rm) state.alpha = Math.round(+rm[1] * 100);
+          $('inset').checked = state.inset;
+          ['x','y','blur','spread','alpha'].forEach(function(k){
+            $('r_' + k).value = state[k];
+            var vv = $('v_' + k); if (vv) vv.textContent = state[k];
+          });
+        }
+      };
+    });
+
+    function rgba(){
+      var h = state.color.replace('#','');
+      var r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + (state.alpha / 100) + ')';
+    }
+    function cssText(){
+      var s = (state.inset ? 'inset ' : '') + state.x + 'px ' + state.y + 'px ' + state.blur + 'px ' + state.spread + 'px ' + rgba();
+      return 'box-shadow: ' + s + ';';
+    }
+    function render(){
+      var s = cssText();
+      $('box').style.boxShadow = s.replace(/^box-shadow: |;$/g, '');
+      $('css').value = s;
+      $('copy').textContent = '复制';
+    }
+    $('copy').onclick = function(){ UY.copyWith($('css').value, 'CSS 已复制'); };
+
+    $('btnSample').onclick = function(){
+      state.x = 6; state.y = 8; state.blur = 18; state.spread = 0; state.alpha = 22; state.color = '#3366cc'; state.inset = false;
+      ['x','y','blur','spread','alpha'].forEach(function(k){
+        $('r_' + k).value = state[k];
+        $('v_' + k).textContent = state[k];
+      });
+      $('shC').value = '#3366cc';
+      $('inset').checked = false;
+      render();
+    };
+
+    // 初始
+    render();
+    $('css').value = cssText();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

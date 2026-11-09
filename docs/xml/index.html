@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>XML 格式化 · 美化 / 压缩 / 校验 - util123 工具箱</title>
+<meta name="description" content="免费在线 XML 格式化工具：一键美化（带缩进）、压缩成单行、语法校验并定位错误。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/xml/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="XML格式化,XML美化,XML压缩,XML校验,XML在线格式化,XML格式化工具,XML转义">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="XML 格式化 · 美化 / 压缩 / 校验">
+<meta property="og:description" content="一键美化（带缩进）、压缩成单行、语法校验并定位错误。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/xml/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XML 格式化 · 美化 / 压缩 / 校验">
+<meta name="twitter:description" content="在线美化、压缩、校验 XML，纯前端运行。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="15" fill="white">X</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/xml/#app","name":"XML 格式化工具","url":"https://util123.cn/xml/","description":"在线 XML 格式化：一键美化（带缩进）、压缩成单行、语法校验并定位错误。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["XML 美化（缩进）","XML 压缩（单行）","语法校验","错误定位","纯前端"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"XML 格式化","item":"https://util123.cn/xml/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"这个 XML 格式化工具会把我的数据上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有解析、美化、压缩都在你的浏览器本地完成，XML 文本不会发送到任何服务器。"}},
+{"@type":"Question","name":"美化后的 XML 为什么多了一行声明？","acceptedAnswer":{"@type":"Answer","text":"为了让结果成为标准的 XML 文件，美化时会自动在开头补上 <?xml version=\"1.0\" encoding=\"UTF-8\"?> 声明。如果你不想要，可以手动删掉那一行。"}},
+{"@type":"Question","name":"XML 报错了怎么看？","acceptedAnswer":{"@type":"Answer","text":"点「校验」后，工具会用浏览器解析器检查语法，并在状态栏给出错误信息（多数浏览器会附带出错的大致行号）。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="18" fill="#fff">X</text>
+      </svg>
+      <span class="name">XML 格式化</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 美化 / 压缩 / 校验</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">XML</div>
+    <h1>XML <span class="grad">格式化</span></h1>
+    <p>把挤在一起的 XML 一键整理成带缩进的结构，或压成单行；语法不对会帮你指出错误。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入 XML <span class="tip">（纯本地处理，不上传）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="在这里粘贴 XML，例如：&#10;&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;from&gt;Jani&lt;/from&gt;&lt;body&gt;Hello&lt;/body&gt;&lt;/note&gt;"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnBeauty">美化</button>
+        <button id="btnMinify">压缩</button>
+        <button id="btnCheck">校验</button>
+        <button id="btnSample">示例</button>
+        <button id="btnClear">清空</button>
+        <button id="btnCopy">复制结果</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">结果</span>
+      <div class="out-box" id="out" aria-live="polite"></div>
+      <div class="status" id="status" style="display:none"></div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>这个 XML 格式化工具会把我的数据上传吗？</dt>
+      <dd>不会。所有解析、美化、压缩都在你的浏览器本地完成，XML 文本不会发送到任何服务器。</dd>
+      <dt>美化后的 XML 为什么多了一行声明？</dt>
+      <dd>为了让结果成为标准 XML 文件，美化时会自动在开头补上 <code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code> 声明。不想要可手动删掉那一行。</dd>
+      <dt>XML 报错了怎么看？</dt>
+      <dd>点「校验」后，工具用浏览器解析器检查语法，并在状态栏给出错误信息（多数浏览器会附带出错的大致行号）。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var SAMPLE = '<?xml version="1.0" encoding="UTF-8"?>\n<root><user id="1"><name>张三</name><age>28</age></user><user id="2"><name>李四</name><age>31</age></user></root>';
+var INDENT = '  ';
+
+function esc(s){
+  /* 引号也要转义：属性值里含 " 会破坏 XML 结构 */
+  return String(s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; });
+}
+
+function pretty(node, depth, out){
+  var pad = INDENT.repeat(depth);
+  for (var i = 0; i < node.childNodes.length; i++){
+    var n = node.childNodes[i];
+    if (n.nodeType === 3){ // text
+      var inPre = n.parentNode && (n.parentNode.nodeName === 'pre' || n.parentNode.nodeName === 'textarea');
+      if (!inPre && n.textContent.trim() === '') continue;
+      /* pre/textarea 内空白有意义，原样输出不 trim */
+      out.push(inPre ? n.textContent : pad + esc(n.textContent.trim()));
+    } else if (n.nodeType === 4){ // CDATA
+      out.push(pad + '<![CDATA[' + n.textContent + ']]>');
+    } else if (n.nodeType === 8){ // comment
+      out.push(pad + '<!--' + n.textContent + '-->');
+    } else if (n.nodeType === 7){ // processing instruction（xml 声明由 doBeauty 统一输出，跳过避免重复）
+      if (n.nodeName !== 'xml') out.push(pad + '<?' + n.nodeName + ' ' + n.textContent + '?>');
+    } else if (n.nodeType === 10){ // DOCTYPE
+      out.push(pad + '<!DOCTYPE ' + n.nodeName + '>');
+    } else if (n.nodeType === 1){ // element
+      var nm = n.nodeName;
+      var attrs = [];
+      for (var a = 0; a < n.attributes.length; a++){
+        var at = n.attributes[a];
+        attrs.push(at.name + '="' + esc(at.value) + '"');
+      }
+      var attrStr = attrs.length ? ' ' + attrs.join(' ') : '';
+      var kids = [];
+      for (var k = 0; k < n.childNodes.length; k++){
+        var c = n.childNodes[k];
+        if (c.nodeType === 3 && c.textContent.trim() === '') continue;
+        kids.push(c);
+      }
+      if (kids.length === 0){
+        out.push(pad + '<' + nm + attrStr + '/>');
+      } else if (kids.length === 1 && kids[0].nodeType === 3 && nm !== 'pre' && nm !== 'textarea'){
+        out.push(pad + '<' + nm + attrStr + '>' + esc(kids[0].textContent.trim()) + '</' + nm + '>');
+      } else if (kids.length === 1 && kids[0].nodeType === 3){
+        out.push(pad + '<' + nm + attrStr + '>' + esc(kids[0].textContent) + '</' + nm + '>');
+      } else {
+        out.push(pad + '<' + nm + attrStr + '>');
+        pretty(n, depth + 1, out);
+        out.push(pad + '</' + nm + '>');
+      }
+    }
+  }
+}
+
+function parse(xml){
+  var doc = new DOMParser().parseFromString(xml, 'application/xml');
+  var err = doc.getElementsByTagName('parsererror');
+  if (err && err.length){
+    return { ok:false, msg: err[0].textContent.replace(/\s+/g,' ').slice(0, 240) };
+  }
+  return { ok:true, doc:doc };
+}
+
+function doBeauty(){
+  var xml = $('inp').value;
+  if (!xml.trim()){ UY.toast('请先粘贴 XML'); return; }
+  var r = parse(xml);
+  if (!r.ok){ setStatus(false, '校验未通过：' + r.msg); return; }
+  var out = [];
+  out.push('<?xml version="1.0" encoding="UTF-8"?>');
+  pretty(r.doc, 0, out);
+  $('out').textContent = out.join('\n');
+  setStatus(true, '美化完成，语法正确。');
+}
+
+function doMinify(){
+  var xml = $('inp').value;
+  if (!xml.trim()){ UY.toast('请先粘贴 XML'); return; }
+  var r = parse(xml);
+  if (!r.ok){ setStatus(false, '校验未通过：' + r.msg); return; }
+  var out = [];
+  pretty(r.doc, 0, out);
+  /* 只压掉标签之间的空白（缩进/换行），不再全局折叠 \s+——否则文本节点内的多空格会被静默改写 */
+  var one = out.join('\n').replace(/>\s+</g, '><').trim();
+  $('out').textContent = one;
+  setStatus(true, '已压缩为单行。');
+}
+
+function doCheck(){
+  var xml = $('inp').value;
+  if (!xml.trim()){ UY.toast('请先粘贴 XML'); return; }
+  var r = parse(xml);
+  if (!r.ok){ setStatus(false, '校验未通过：' + r.msg); return; }
+  setStatus(true, '✅ 语法正确，没有发现错误。');
+}
+
+function setStatus(ok, msg){
+  var s = $('status');
+  s.style.display = 'block';
+  s.className = 'status ' + (ok ? 'ok' : 'err');
+  s.textContent = msg;
+  /* 校验失败或载入新示例时清掉上一次的结果，避免旧结果留着误导用户 */
+  if (!ok) $('out').textContent = '';
+}
+
+$('btnBeauty').onclick = doBeauty;
+$('btnMinify').onclick = doMinify;
+$('btnCheck').onclick = doCheck;
+$('btnSample').onclick = function(){ $('inp').value = SAMPLE; setStatus(false, ''); $('status').style.display='none'; };
+$('btnClear').onclick = function(){ $('inp').value=''; $('out').textContent=''; $('status').style.display='none'; $('inp').focus(); };
+$('btnCopy').onclick = function(){
+  if (!$('out').textContent.trim()){ UY.toast('还没有结果'); return; }
+  UY.copyWith($('out').textContent, '已复制结果');
+};
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>随机密码生成器 · 在线生成强密码（可指定长度字符）- util123 工具箱</title>
+<meta name="description" content="免费在线随机密码生成器：自定义长度与字符类型（大小写字母、数字、符号），可选排除易混字符，实时显示密码强度与预估破解时间。浏览器本地随机生成，密码不上传。">
+<link rel="canonical" href="https://util123.cn/password/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="密码生成器,随机密码生成,强密码生成,在线密码生成,随机密码,密码强度,复杂密码">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="随机密码生成器 · 在线生成强密码">
+<meta property="og:description" content="自定义长度与字符类型，一键生成随机强密码，并显示密码强度与预估破解时间。本地生成，密码不上传。">
+<meta property="og:url" content="https://util123.cn/password/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随机密码生成器 · 在线生成强密码">
+<meta name="twitter:description" content="自定义长度与字符类型，一键生成随机强密码，显示密码强度与预估破解时间。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">***</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/password/#app","name":"随机密码生成器","url":"https://util123.cn/password/","description":"免费在线随机密码生成器：自定义密码长度与字符类型（大写字母、小写字母、数字、符号），可排除易混字符，实时显示密码强度与预估暴力破解时间。使用浏览器安全随机数在本地生成，密码不上传服务器。","applicationCategory":"SecurityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["随机强密码生成","自定义长度 4~64 位","大小写字母/数字/符号组合","排除易混字符 0O1lI","密码强度与信息熵","预估暴力破解时间","一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"密码生成","item":"https://util123.cn/password/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"密码多长算安全？","acceptedAnswer":{"@type":"Answer","text":"在包含大小写字母、数字和符号的前提下，12 位以上比较稳妥，重要账号建议 16 位以上；长度比复杂度更重要。"}},
+{"@type":"Question","name":"生成的密码会被记录吗？","acceptedAnswer":{"@type":"Answer","text":"不会。密码由浏览器内置的密码学安全随机数（crypto.getRandomValues）在本地生成，不经过服务器，刷新页面即消失。"}},
+{"@type":"Question","name":"为什么要排除「易混字符」？","acceptedAnswer":{"@type":"Answer","text":"0 与 O、1 与 l 与 I 在手写或某些字体下很难区分，抄写或手工输入密码时容易出错，排除后可以少犯错。"}},
+{"@type":"Question","name":"预估破解时间是怎么算的？","acceptedAnswer":{"@type":"Answer","text":"按信息熵 密码长度 × log2(字符集大小) 估算组合数，再假设攻击者每秒尝试 1000 亿次（离线暴力破解的高强度假设），取平均值即尝试一半组合所需的时间。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">***</text>
+      </svg>
+      <span class="name">密码生成</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 随机强密码生成</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">***</div>
+    <h1>密码<span class="grad">生成器</span></h1>
+    <p>一键生成随机强密码，可选长度与字符类型，并给出强度评级与预估暴力破解时间。密码在本地生成，不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">你的密码 <span class="tip">（点击密码即可复制）</span></span>
+      <div class="big" id="pwd" title="点击复制">生成中…</div>
+      <div class="bar" id="bar"><i></i></div>
+      <div class="status" id="pwdStatus">正在生成…</div>
+      <div class="toolbar">
+        <button class="primary" id="btnCopy">复制密码</button>
+        <button id="btnRegen">重新生成</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">生成选项</span>
+      <div class="field" style="margin-bottom:14px">
+        <label for="len">密码长度：<span id="lenVal">16</span> 位</label>
+        <input type="range" id="len" min="4" max="64" step="1" value="16">
+      </div>
+      <div class="row">
+        <label class="chk" id="lbUpper"><input type="checkbox" id="ckUpper" checked>大写字母 A-Z</label>
+        <label class="chk" id="lbLower"><input type="checkbox" id="ckLower" checked>小写字母 a-z</label>
+        <label class="chk" id="lbDigit"><input type="checkbox" id="ckDigit" checked>数字 0-9</label>
+        <label class="chk" id="lbSymbol"><input type="checkbox" id="ckSymbol" checked>符号 !@#$</label>
+        <label class="chk" id="lbNoConfuse"><input type="checkbox" id="ckNoConfuse">排除易混字符 0O1lI</label>
+      </div>
+      <div class="hint" style="margin-top:12px">提示：长度越长越安全；符号会让某些老旧系统不认，可按需取消。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">强度分析</span>
+      <div class="grid" id="anaGrid"></div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>密码多长算安全？</dt>
+      <dd>在包含大小写字母、数字和符号的前提下，12 位以上比较稳妥，重要账号建议 16 位以上。长度比复杂度更重要。</dd>
+      <dt>生成的密码会被记录吗？</dt>
+      <dd>不会。密码由浏览器内置的密码学安全随机数（crypto.getRandomValues）在本地生成，不经过服务器，刷新页面即消失。</dd>
+      <dt>为什么要排除「易混字符」？</dt>
+      <dd>0 与 O、1 与 l 与 I 在手写或某些字体下很难区分，抄写或手工输入密码时容易出错，排除后可以少犯错。</dd>
+      <dt>预估破解时间是怎么算的？</dt>
+      <dd>按信息熵「密码长度 × log2(字符集大小)」估算组合数，再假设攻击者每秒尝试 1000 亿次（离线暴力破解的高强度假设），取平均值即尝试一半组合所需的时间。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+
+var SETS = {
+  upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  lower: 'abcdefghijklmnopqrstuvwxyz',
+  digit: '0123456789',
+  symbol: '!@#$%^&*()-_=+[]{};:,.?/~'
+};
+var CONFUSE = '0O1lI|`\'"';
+
+/* 均匀随机（拒绝采样，避免取模偏差） */
+function randInt(max){
+  var limit = Math.floor(256 / max) * max;
+  for(;;){
+    var b = UY.randomBytes(1)[0];
+    if(b < limit) return b % max;
+  }
+}
+function pick(str){ return str.charAt(randInt(str.length)); }
+function shuffle(arr){
+  for(var i = arr.length - 1; i > 0; i--){
+    var j = randInt(i + 1);
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function selectedGroups(){
+  var g = [];
+  if($('ckUpper').checked) g.push(SETS.upper);
+  if($('ckLower').checked) g.push(SETS.lower);
+  if($('ckDigit').checked) g.push(SETS.digit);
+  if($('ckSymbol').checked) g.push(SETS.symbol);
+  var noConfuse = $('ckNoConfuse').checked;
+  if(noConfuse){
+    g = g.map(function(s){
+      return s.split('').filter(function(c){ return CONFUSE.indexOf(c) === -1; }).join('');
+    });
+  }
+  return g;
+}
+
+function fmtCrack(entropy){
+  var sec = Math.pow(2, entropy) / 1e11 / 2;   /* 假设每秒 1000 亿次，取平均一半组合 */
+  if(!isFinite(sec)) return '远超宇宙年龄';
+  if(sec < 1) return '瞬间';
+  if(sec < 60) return Math.round(sec) + ' 秒';
+  if(sec < 3600) return Math.round(sec / 60) + ' 分钟';
+  if(sec < 86400) return Math.round(sec / 3600) + ' 小时';
+  var y = sec / 31536000;
+  if(y < 1000) return Math.round(y) + ' 年';
+  if(y < 1e4) return (y / 1e4).toFixed(1) + ' 万年';
+  if(y < 1e8) return (y / 1e8).toFixed(1) + ' 亿年';
+  return '远超宇宙年龄（' + Math.round(Math.log2(sec) / 1) + ' 次方秒）';
+}
+
+/* 组合数按科学计数法展示，例如 3.40 × 10^28 */
+function fmtBig(n){
+  if(!isFinite(n) || n > 1e308) return '极大';
+  var e = Math.floor(Math.log10(n));
+  var m = n / Math.pow(10, e);
+  return m.toFixed(2) + ' × 10^' + e;
+}
+
+function grade(entropy){
+  if(entropy < 45) return { txt: '弱', cls: 'weak', pct: Math.max(12, entropy / 128 * 100) };
+  if(entropy < 70) return { txt: '一般', cls: 'mid', pct: entropy / 128 * 100 };
+  if(entropy < 100) return { txt: '强', cls: '', pct: entropy / 128 * 100 };
+  return { txt: '很强', cls: '', pct: 100 };
+}
+
+function fillGrid(el, rows){
+  el.innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">' + UY.esc(r[0]) + '</div><div class="v' + (r[2] ? ' sans' : '') + '">' + UY.esc(r[1]) + '</div></div>';
+  }).join('');
+}
+
+function generate(){
+  var groups = selectedGroups();
+  var all = groups.join('');
+  var len = parseInt($('len').value, 10);
+  $('lenVal').textContent = len;
+  ['Upper','Lower','Digit','Symbol','NoConfuse'].forEach(function(k){
+    $('lb' + k).classList.toggle('on', $('ck' + k).checked);
+  });
+
+  if(!all){
+    $('pwd').textContent = '请至少选择一种字符集';
+    $('pwd').classList.add('hint');
+    $('bar').className = 'bar';
+    $('bar').firstElementChild.style.width = '0';
+    $('pwdStatus').className = 'status err';
+    $('pwdStatus').textContent = '没有可用字符：请至少勾选「大写字母 / 小写字母 / 数字 / 符号」中的一项。';
+    fillGrid($('anaGrid'), []);
+    return;
+  }
+
+  var out = [];
+  if(len >= groups.length) out = groups.map(pick);   /* 保证每类字符至少出现一次 */
+  while(out.length < len) out.push(pick(all));
+  shuffle(out);
+  var pwd = out.join('');
+
+  $('pwd').classList.remove('hint');
+  $('pwd').textContent = pwd;
+
+  var entropy = len * (Math.log(all.length) / Math.LN2);
+  var g = grade(entropy);
+  var bar = $('bar');
+  bar.className = 'bar' + (g.cls ? ' ' + g.cls : '');
+  bar.firstElementChild.style.width = Math.min(100, g.pct) + '%';
+
+  $('pwdStatus').className = 'status ok';
+  $('pwdStatus').textContent = '强度：' + g.txt + ' · 约 ' + entropy.toFixed(1) + ' bit 信息熵';
+
+  fillGrid($('anaGrid'), [
+    ['密码长度', len + ' 位'],
+    ['可用字符数', String(all.length) + ' 种'],
+    ['信息熵', entropy.toFixed(1) + ' bit'],
+    ['强度评级', g.txt, true],
+    ['组合数量级', '约 ' + fmtBig(Math.pow(all.length, len))],
+    ['预估暴力破解', fmtCrack(entropy), true]
+  ]);
+}
+
+/* ---- 事件 ---- */
+$('len').addEventListener('input', generate);
+['ckUpper','ckLower','ckDigit','ckSymbol','ckNoConfuse'].forEach(function(id){
+  $(id).addEventListener('change', generate);
+});
+$('btnRegen').onclick = generate;
+$('btnCopy').onclick = function(){
+  var t = $('pwd').textContent;
+  if(!t || $('pwd').classList.contains('hint')){ UY.toast('还没有生成密码'); return; }
+  UY.copyWith(t, '密码已复制');
+};
+$('pwd').onclick = function(){
+  if($('pwd').classList.contains('hint')) return;
+  UY.copyWith($('pwd').textContent, '密码已复制');
+};
+
+generate();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

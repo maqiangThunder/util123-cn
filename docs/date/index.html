@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>日期计算 · 相差天数 / 日期加减 - util123 工具箱</title>
+<meta name="description" content="免费在线日期计算工具：计算两个日期相差多少天，或给某个日期加上 / 减去若干天得到新日期。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/date/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="日期计算,相差天数,日期加减,两个日期相差多少天,日期计算器,在线日期工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="日期计算 · 相差天数 / 日期加减">
+<meta property="og:description" content="计算两个日期相差多少天，或给某个日期加减若干天。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/date/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="日期计算 · 相差天数 / 日期加减">
+<meta name="twitter:description" content="计算两个日期相差多少天，或日期加减。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="18" fill="white">D</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/date/#app","name":"日期计算工具","url":"https://util123.cn/date/","description":"在线日期计算：计算两个日期相差多少天，或给某个日期加上 / 减去若干天得到新日期。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["两个日期相差天数","日期加 N 天","日期减 N 天"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"日期计算","item":"https://util123.cn/date/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"相差天数算头算尾吗？","acceptedAnswer":{"@type":"Answer","text":"本工具按自然日计算，两个日期相减得到「间隔天数」。例如 10 月 1 日到 10 月 2 日相差 1 天；如果想知道「包含首尾共几天」，请在结果上加 1。"}},
+{"@type":"Question","name":"日期加减会考虑月份天数吗？","acceptedAnswer":{"@type":"Answer","text":"会。直接按真实日历加减，比如 1 月 31 日加 1 天会得到 2 月 1 日，闰年 2 月也能正确进位。"}},
+{"@type":"Question","name":"计算会上传日期吗？","acceptedAnswer":{"@type":"Answer","text":"不会。计算完全在浏览器本地完成，日期不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="18" fill="#fff">D</text>
+      </svg>
+      <span class="name">日期计算</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 相差天数 / 日期加减</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f1" aria-hidden="true">D</div>
+    <h1>日期<span class="grad">计算</span></h1>
+    <p>两个日期差几天？某个日期加 30 天是几号？常用又容易算错，交给它。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">两个日期相差</span>
+      <div class="row">
+        <div class="field"><label for="d1">开始日期</label><input class="ipt" id="d1" type="date"></div>
+        <div class="field"><label for="d2">结束日期</label><input class="ipt" id="d2" type="date"></div>
+      </div>
+      <div class="grid" id="diffOut" style="margin-top:14px"></div>
+      <div class="toolbar">
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">日期加减</span>
+      <div class="row">
+        <div class="field"><label for="d0">起始日期</label><input class="ipt" id="d0" type="date"></div>
+        <div class="field" style="flex:1 1 120px"><label for="off">加减天数（负数为减）</label><input class="ipt" id="off" type="number" value="30"></div>
+      </div>
+      <div class="grid" id="addOut" style="margin-top:14px"></div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>相差天数算头算尾吗？</dt>
+      <dd>本工具按自然日计算，两个日期相减得到「间隔天数」。例如 10 月 1 日到 10 月 2 日相差 1 天；如果想知道「包含首尾共几天」，请在结果上加 1。</dd>
+      <dt>日期加减会考虑月份天数吗？</dt>
+      <dd>会。直接按真实日历加减，比如 1 月 31 日加 1 天会得到 2 月 1 日，闰年 2 月也能正确进位。</dd>
+      <dt>计算会上传日期吗？</dt>
+      <dd>不会。计算完全在浏览器本地完成，日期不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+
+function fillGrid(el, rows){
+  el.innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">'+UY.esc(r[0])+'</div><div class="v'+(r[2]?' sans':'')+'">'+UY.esc(r[1])+'</div></div>';
+  }).join('');
+  el.style.display = rows.length ? 'grid' : 'none';
+}
+function parseYMD(s){
+  if(!s) return null;
+  var p = s.split('-');
+  if(p.length !== 3) return null;
+  return Date.UTC(+p[0], +p[1]-1, +p[2]);
+}
+function fmtYMD(ms){
+  var d = new Date(ms);
+  var w = '日一二三四五六'.charAt(d.getUTCDay());
+  return d.getUTCFullYear() + '-' + UY.pad2(d.getUTCMonth()+1) + '-' + UY.pad2(d.getUTCDate()) + ' 星期' + w;
+}
+
+function diff(){
+  var a = parseYMD($('d1').value), b = parseYMD($('d2').value);
+  if(a == null || b == null){ fillGrid($('diffOut'), []); return; }
+  var days = Math.round((b - a) / 86400000);
+  var abs = Math.abs(days);
+  var weeks = (abs / 7).toFixed(1);
+  fillGrid($('diffOut'), [
+    ['相差天数', (days > 0 ? '+' : '') + days + ' 天', true],
+    ['约', weeks + ' 周', true],
+    ['开始', fmtYMD(a), true],
+    ['结束', fmtYMD(b), true]
+  ]);
+}
+function add(){
+  var a = parseYMD($('d0').value);
+  var off = parseInt($('off').value, 10);
+  if(a == null || isNaN(off)){ fillGrid($('addOut'), []); return; }
+  var res = a + off * 86400000;
+  /* 加减天数过大时 Date 会溢出成 Invalid Date，提前拦一道给出可读提示 */
+  if(!isFinite(res) || Math.abs(res) > 8.64e15){
+    fillGrid($('addOut'), [['提示', '加减天数超出可表示范围（约 ±1 亿年）', true]]);
+    return;
+  }
+  fillGrid($('addOut'), [
+    ['起始', fmtYMD(a), true],
+    ['加减', (off > 0 ? '+' : '') + off + ' 天', true],
+    ['结果', fmtYMD(res), true]
+  ]);
+}
+
+['d1','d2'].forEach(function(id){ $(id).addEventListener('change', diff); });
+['d0','off'].forEach(function(id){ $(id).addEventListener('input', add); $(id).addEventListener('change', add); });
+
+$('btnSample').onclick = function(){ $('d1').value='2026-01-01'; $('d2').value='2026-12-31'; diff(); };
+
+/* 默认值：今天 / 30 天后 */
+(function init(){
+  var t = new Date();
+  var iso = function(d){ return d.getFullYear()+'-'+UY.pad2(d.getMonth()+1)+'-'+UY.pad2(d.getDate()); };
+  $('d1').value = iso(t);
+  $('d2').value = iso(new Date(t.getTime() + 7*86400000));
+  $('d0').value = iso(t);
+  diff(); add();
+})();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

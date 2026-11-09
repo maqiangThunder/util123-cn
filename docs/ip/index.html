@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>我的 IP · 公网 IP / 位置 / 运营商查询 - util123 工具箱</title>
+<meta name="description" content="免费在线查询公网 IP 与归属地：自动显示你的 IP、地理位置、运营商，也支持查询任意 IP 的归属地、运营商与 ASN。纯前端检测，数据不上传服务器。">
+<!-- ── GEO / 传统 SEO：规范链接、抓取指令、分享卡片 ── -->
+<link rel="canonical" href="https://util123.cn/ip/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="IP查询,我的IP,公网IP,IP地址查询,IP归属地,IP定位,运营商查询,ASN查询,IPv6查询">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="我的 IP · 公网 IP / 位置 / 运营商查询">
+<meta property="og:description" content="打开即显示你的公网 IP、地理位置、网络运营商与设备信息，支持 IPv4 / IPv6。纯前端检测，数据不上传。">
+<meta property="og:url" content="https://util123.cn/ip/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我的 IP · 公网 IP / 位置 / 运营商查询">
+<meta name="twitter:description" content="打开即显示你的公网 IP、地理位置、网络运营商与设备信息，纯前端检测，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="15" fill="white">IP</text></svg>'>
+<style>
+  :root{
+    --bg:#f6f8fa; --panel:#ffffff; --panel-2:#f6f8fa;
+    --text:#1f2328; --muted:#59636e;
+    --border:#d8dee4; --border-strong:#c9d1d9;
+    --radius:14px;
+    --primary:#4f46e5; --primary-soft:#eef1fe;
+    --ok:#1a7f37; --err:#cf222e;
+    --grad:linear-gradient(135deg,#6366f1,#8b5cf6 55%,#a855f7);
+    --shadow-sm:0 1px 2px rgba(31,35,40,.06);
+    --shadow-md:0 8px 28px rgba(31,35,40,.1),0 2px 6px rgba(31,35,40,.05);
+    --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  body.dark{
+    --bg:#0d1117; --panel:#161b22; --panel-2:#0d1117;
+    --text:#e6edf3; --muted:#9198a1;
+    --border:#30363d; --border-strong:#3d444d;
+    --primary:#7c86f5; --primary-soft:rgba(110,118,245,.16);
+    --ok:#3fb950; --err:#f85149;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    --shadow-md:0 10px 32px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;font-size:15px;
+    min-height:100vh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);
+    -webkit-tap-highlight-color:transparent}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(128,138,155,.32);border-radius:8px;border:3px solid transparent;background-clip:content-box}
+
+  /* ===== 顶栏：与首页完全一致 ===== */
+  .nav{display:flex;align-items:center;gap:11px;padding:0 24px;height:60px;background:var(--panel);
+    border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
+  .nav .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;min-width:0}
+  .nav .logo{width:30px;height:30px;flex:0 0 auto;display:block;filter:drop-shadow(0 2px 5px rgba(99,102,241,.35))}
+  .nav .name{font-weight:700;font-size:15.5px;white-space:nowrap}
+  .nav .tagline{font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .nav .spacer{flex:1}
+  .icon-btn{width:34px;height:34px;flex:0 0 auto;border-radius:8px;border:1px solid var(--border);background:var(--panel);
+    color:var(--muted);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .icon-btn:hover{border-color:var(--border-strong);color:var(--text);background:var(--panel-2)}
+
+  /* ===== Hero：IP 工具自己的 logo ===== */
+  .hero{text-align:center;padding:52px 20px 34px}
+  .hero .mark-ip{width:60px;height:60px;margin:0 auto 18px;border-radius:17px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--grad);color:#fff;font-family:var(--mono);font-weight:800;font-size:21px;letter-spacing:.5px;
+    box-shadow:0 8px 22px rgba(99,102,241,.4)}
+  .hero h1{margin:0 0 10px;font-size:30px;font-weight:800;letter-spacing:.3px}
+  .hero h1 .grad{background:linear-gradient(120deg,#6366f1,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin:0 auto;max-width:480px;color:var(--muted);font-size:14.5px}
+
+  /* ===== 内容 ===== */
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 8px;width:100%}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+  .card .lbl{font-size:12.5px;color:var(--muted);font-weight:600;display:block;margin-bottom:10px;letter-spacing:.2px}
+
+  .ip-hero{font-family:var(--mono);font-size:34px;font-weight:800;color:var(--primary);
+    word-break:break-all;line-height:1.25;letter-spacing:.5px;cursor:pointer}
+  .ip-hero.hint{font-family:var(--sans);font-size:20px;font-weight:600;color:var(--muted);cursor:default}
+  .status{font-size:13px;padding:8px 12px;border-radius:8px;background:var(--panel-2);color:var(--muted);
+    margin-top:12px;word-break:break-all}
+  .status.ok{background:var(--primary-soft);color:var(--primary)}
+  .status.err{background:rgba(207,34,46,.08);color:var(--err)}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  button{font-family:inherit;font-size:14px;font-weight:600;border:1px solid var(--border);background:var(--panel);
+    color:var(--text);border-radius:9px;padding:0 18px;height:40px;cursor:pointer;transition:.15s;
+    touch-action:manipulation}
+  button:hover{border-color:var(--border-strong);color:var(--primary);background:var(--panel-2)}
+  button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  button.primary{background:var(--grad);color:#fff;border-color:transparent;
+    box-shadow:0 2px 10px rgba(99,102,241,.35)}
+  button.primary:hover{color:#fff;filter:brightness(1.07)}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .item{background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;min-width:0}
+  .item .k{font-size:12px;color:var(--muted)}
+  .item .v{font-size:15px;font-weight:600;word-break:break-all;margin-top:2px}
+  .empty{color:var(--muted);font-size:13px;padding:4px 2px 2px}
+
+  /* ===== IP 查询搜索框：一体化容器（图标 + 输入 + 按钮） ===== */
+  .lookup-box{display:flex;align-items:center;gap:9px;background:var(--panel-2);
+    border:1px solid var(--border);border-radius:12px;padding:5px 5px 5px 14px;transition:.15s}
+  .lookup-box:focus-within{background:var(--panel);border-color:var(--primary);
+    box-shadow:0 0 0 3px var(--primary-soft)}
+  .lookup-ico{width:17px;height:17px;flex:0 0 auto;color:var(--muted)}
+  .lookup-box:focus-within .lookup-ico{color:var(--primary)}
+  .lookup-box input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:14.5px;
+    color:var(--text);min-width:0;height:36px}
+  .lookup-box input::placeholder{color:var(--muted)}
+  .lookup-box button{flex:0 0 auto;height:36px;border-radius:9px}
+
+  /* ===== 底部广告（只在底部，728×90 占位） ===== */
+  .ad-slot{display:flex;align-items:center;justify-content:center;padding:6px 24px 18px}
+  .ad-box{width:100%;max-width:728px;height:60px;border:1px dashed var(--border-strong);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11.5px;letter-spacing:1px;
+    opacity:.55;user-select:none;text-align:center}
+  footer{text-align:center;padding:10px 20px 34px;color:var(--muted);font-size:12.5px}
+  footer .mono{font-family:var(--mono)}
+  footer a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border-strong)}
+  footer a:hover{color:var(--primary)}
+
+  /* ===== 手机端适配（很多用户手机上查 IP） ===== */
+  @media(max-width:640px){
+    .nav{padding:0 14px;height:56px;gap:9px}
+    .nav .tagline{display:none}
+    .nav .logo{width:28px;height:28px}
+    .nav .name{font-size:15px}
+    .hero{padding:34px 16px 24px}
+    .hero .mark-ip{width:54px;height:54px;border-radius:15px;font-size:19px;margin-bottom:14px}
+    .hero h1{font-size:25px}
+    .hero p{font-size:13.5px}
+    .wrap{padding:0 14px 6px}
+    .card{padding:15px 14px;border-radius:12px;margin-bottom:13px}
+    .ip-hero{font-size:clamp(23px,7.6vw,30px)}
+    .ip-hero.hint{font-size:17px}
+    .toolbar{gap:9px}
+    .toolbar button{flex:1 1 130px;height:46px;font-size:15px}  /* 大按钮，方便手指点 */
+    .lookup-box{padding:4px 4px 4px 12px}
+    .lookup-box button{height:40px;padding:0 16px}
+    .grid{grid-template-columns:1fr;gap:8px}
+    .item{padding:9px 12px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+    .item .k{flex:0 0 auto;font-size:12.5px}
+    .item .v{font-size:14px;text-align:right;margin-top:0}
+    .ad-slot{padding:4px 14px 14px}
+    .ad-box{height:56px;font-size:10.5px}
+    footer{padding:8px 16px 26px}
+  }
+  .site-foot{margin-top:26px;padding:22px 16px 28px;text-align:center;color:var(--muted);font-size:13px;line-height:1.85;border-top:1px solid var(--border)}
+  .site-foot nav{display:grid;grid-template-columns:repeat(6,1fr);gap:10px 14px;max-width:1100px;margin:12px auto 0;text-align:center}
+  .site-foot a{display:block;color:var(--primary);text-decoration:none;font-weight:600;font-size:13px;padding:7px 8px;border-radius:6px;background:var(--panel-2);border:1px solid var(--border);transition:background .15s,border-color .15s}
+  .site-foot a:hover{text-decoration:none;background:var(--panel);border-color:var(--primary)}
+  /* 备案信息: 工信部要求底部公示备案号并链接 beian.miit.gov.cn(2026-10-29) */
+  .site-foot .site-beian{margin-top:14px;font-size:12.5px;line-height:1.9}
+  .site-foot .site-beian a{display:inline;background:none;border:0;border-radius:0;padding:0;margin:0;font-weight:400;font-size:12.5px;color:var(--muted);text-decoration:none}
+  .site-foot .site-beian a:hover{background:none;border:0;color:var(--primary);text-decoration:underline}
+  @media(max-width:900px){ .site-foot nav{grid-template-columns:repeat(4,1fr)} }
+  @media(max-width:640px){ .site-foot nav{grid-template-columns:repeat(3,1fr);gap:8px 10px} .site-foot a{padding:8px 6px;font-size:12.5px} }
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* ── GEO：常见问题（给 AI 搜索 / 生成式引擎提供可引用的问答内容） ── */
+  .geo-faq{max-width:880px;margin:24px auto 0;padding:0 24px;width:100%}
+  .geo-faq h2{font-size:14px;font-weight:700;margin:0 0 8px;letter-spacing:.3px;color:var(--text)}
+  .geo-faq dl{margin:0;border-top:1px solid var(--border);padding-top:10px}
+  .geo-faq dt{font-weight:600;font-size:13.5px;margin:10px 0 2px;color:var(--text)}
+  .geo-faq dt:first-child{margin-top:0}
+  .geo-faq dd{margin:0;font-size:13px;color:var(--muted);line-height:1.75}
+  .geo-faq code{font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--border);
+    border-radius:4px;padding:1px 4px}
+  @media(max-width:640px){ .geo-faq{padding:0 16px} }
+
+/* 全站浮动反馈按钮（本页为内联独立实现，样式自带，与 /assets/tool.css 同款） */
+.fab-feedback{position:fixed;right:22px;bottom:22px;z-index:90;width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:21px;line-height:1;
+  text-decoration:none;cursor:pointer;color:#fff;background:linear-gradient(135deg,#7c5cff,#4f8cff);
+  box-shadow:0 4px 14px rgba(79,92,255,.38);transition:transform .15s ease,box-shadow .15s ease}
+.fab-feedback:hover{transform:translateY(-2px) scale(1.06);box-shadow:0 7px 18px rgba(79,92,255,.48)}
+@media(max-width:640px){.fab-feedback{right:16px;bottom:16px;width:42px;height:42px;font-size:19px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/ip/#app","name":"我的 IP - 公网 IP 查询","url":"https://util123.cn/ip/","description":"免费在线查询公网 IP 地址、地理位置、网络运营商与浏览器设备信息，支持 IPv4 / IPv6。纯前端检测，数据不上传服务器。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["公网 IP 查询","IPv4 / IPv6 识别","地理位置与运营商","IP 归属地查询","ASN 查询","浏览器与设备信息","IP 一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"我的 IP","item":"https://util123.cn/ip/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"怎么查看自己的公网 IP 地址？","acceptedAnswer":{"@type":"Answer","text":"打开 util123.cn/ip/ 即自动检测，页面顶部会显示你当前的公网 IPv4（或 IPv6）地址，点击 IP 即可一键复制。"}},
+{"@type":"Question","name":"IP 显示的地理位置准确吗？","acceptedAnswer":{"@type":"Answer","text":"基于公开 IP 归属地库定位，一般精确到城市，可能与实际所在地有一定偏差；使用代理、VPN 或公司专线时，显示的是出口 IP 的归属地。"}},
+{"@type":"Question","name":"查询 IP 会被记录或上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。检测由浏览器直接向公开 IP 接口发起，本站服务器不保存、不转发你的 IP 地址与设备信息。"}},
+{"@type":"Question","name":"为什么运营商显示的和我办宽带的运营商不一样？","acceptedAnswer":{"@type":"Answer","text":"若你通过代理、VPN、云主机或企业出口上网，出口 IP 会归属到机房或运营商骨干网络，因此显示的运营商可能与你办理的宽带不同。"}},
+{"@type":"Question","name":"支持 IPv6 吗？","acceptedAnswer":{"@type":"Answer","text":"支持。如果你的网络具备 IPv6 出口，页面会显示 IPv6 地址并标注 IP 版本为 IPv6；否则显示 IPv4。"}},
+{"@type":"Question","name":"能查询任意 IP 的归属地吗？","acceptedAnswer":{"@type":"Answer","text":"可以。在「查任意 IP 归属地」里输入任意一个 IPv4 或 IPv6 地址，即可查询其国家、省份、城市、运营商与 ASN 等归属地信息，基于公开 IP 归属地库，一般精确到城市。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+          </linearGradient>
+        </defs>
+      <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+      <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="13" fill="#fff" letter-spacing=".5">IP</text>
+      </svg>
+      <span class="name">我的 IP</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 公网 IP 查询</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark-ip" aria-hidden="true">IP</div>
+    <h1>我的<span class="grad">IP</span></h1>
+    <p>实时显示你的公网 IP、地理位置与运营商；还能查询任意 IP 的归属地、运营商与 ASN。数据只在你的浏览器本地展示。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">你的公网 IP（点击可复制）</span>
+      <div class="ip-hero hint" id="ip">检测中…</div>
+      <div class="status" id="status">正在获取网络信息…</div>
+      <div class="toolbar">
+        <button id="btnCopyIp" class="primary">复制 IP</button>
+        <button id="btnRefresh">重新检测</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">查任意 IP 归属地</span>
+      <div class="lookup-box">
+        <svg class="lookup-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input id="lookupIp" type="text" spellcheck="false" placeholder="输入 IP 地址，如 8.8.8.8" autocomplete="off">
+        <button id="btnLookup" class="primary">查询</button>
+      </div>
+      <div class="toolbar">
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="lookupStatus">支持 IPv4 / IPv6，例如 8.8.8.8。</div>
+      <div class="grid" id="lookupGrid" style="margin-top:12px;display:none"></div>
+      <div class="empty" id="lookupEmpty" style="display:none"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">网络与地理位置</span>
+      <div class="grid" id="netGrid"></div>
+      <div class="empty" id="netEmpty">检测中…</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">浏览器与设备</span>
+      <div class="grid" id="devGrid"></div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>怎么查看自己的公网 IP 地址？</dt>
+      <dd>打开 util123.cn/ip/ 即自动检测，页面顶部会显示你当前的公网 IPv4（或 IPv6）地址，点击 IP 即可一键复制。</dd>
+      <dt>IP 显示的地理位置准确吗？</dt>
+      <dd>基于公开 IP 归属地库定位，一般精确到城市，可能与你的实际所在地有一定偏差；使用代理、VPN 或公司专线时，显示的是出口 IP 的归属地。</dd>
+      <dt>查询 IP 会被记录或上传吗？</dt>
+      <dd>不会。检测由浏览器直接向公开 IP 接口发起，本站服务器不保存、不转发你的 IP 地址与设备信息。</dd>
+      <dt>为什么运营商显示的和我办宽带的运营商不一样？</dt>
+      <dd>若你通过代理、VPN、云主机或企业出口上网，出口 IP 会归属到机房或运营商骨干网络，因此显示的运营商可能与你办理的宽带不同。</dd>
+      <dt>支持 IPv6 吗？</dt>
+      <dd>支持。如果你的网络具备 IPv6 出口，页面会显示 IPv6 地址并标注「IP 版本 IPv6」；否则显示 IPv4。</dd>
+      <dt>能查询任意 IP 的归属地吗？</dt>
+      <dd>可以。在「查任意 IP 归属地」里输入任意一个 IPv4 或 IPv6 地址，即可查询其国家、省份、城市、运营商与 ASN 等归属地信息，基于公开 IP 归属地库，一般精确到城市。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+/* 本页未引用 tool.js（独立内联实现），自带转义函数 */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+
+/* ---- 主题（与首页共用同一个键，切页不闪） ---- */
+const btnTheme = $('btnTheme');
+function applyTheme(dark){
+  document.body.classList.toggle('dark', dark);
+  btnTheme.textContent = dark ? '☀️' : '🌙';
+  const m = document.querySelector('meta[name="theme-color"]');
+  if(m) m.setAttribute('content', dark ? '#0d1117' : '#f6f8fa');
+  try{ localStorage.setItem('util123_theme', dark ? '1' : '0'); }catch(e){}
+}
+btnTheme.onclick = () => applyTheme(!document.body.classList.contains('dark'));
+try{ applyTheme(localStorage.getItem('util123_theme') === '1'); }catch(e){}
+
+function setStatus(msg, type){
+  const s = $('status'); s.textContent = msg;
+  s.className = 'status' + (type ? ' ' + type : '');
+}
+function fillGrid(el, rows){
+  /* 归属地为第三方接口数据，必须转义后再拼 innerHTML（防 XSS） */
+  el.innerHTML = rows.map(r =>
+    '<div class="item"><div class="k">' + esc(r[0]) + '</div><div class="v">' + esc(r[1] ?? '—') + '</div></div>'
+  ).join('');
+  el.style.display = rows.length ? 'grid' : 'none';
+}
+function setNetEmpty(msg){
+  const e = $('netEmpty');
+  if(msg){ e.textContent = msg; e.style.display = 'block'; } else { e.style.display = 'none'; }
+}
+function setIp(text, ok){
+  const el = $('ip');
+  el.textContent = text;
+  el.classList.toggle('hint', !ok);
+}
+
+/* ---- 浏览器 / 设备信息（纯本地，无需网络） ---- */
+function collectDevice(){
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '未知';
+  const ua = navigator.userAgent;
+  let browser = '未知', os = '未知';
+  if(/Edg\//.test(ua)) browser='Edge'; else if(/Chrome\//.test(ua)) browser='Chrome';
+  else if(/Firefox\//.test(ua)) browser='Firefox'; else if(/Safari\//.test(ua)) browser='Safari';
+  if(/Windows/.test(ua)) os='Windows'; else if(/Mac OS X|Macintosh/.test(ua)) os='macOS';
+  else if(/Android/.test(ua)) os='Android'; else if(/(iPhone|iPad|iPod)/.test(ua)) os='iOS';
+  else if(/Linux/.test(ua)) os='Linux';
+  const mobile = /Mobi|Android|iPhone|iPad/.test(ua);
+  return [
+    ['浏览器', browser],
+    ['操作系统', os],
+    ['设备类型', mobile ? '移动设备' : '桌面设备'],
+    ['屏幕分辨率', screen.width + ' × ' + screen.height],
+    ['视口尺寸', window.innerWidth + ' × ' + window.innerHeight],
+    ['语言', navigator.language || '未知'],
+    ['时区', tz],
+    ['本地时间', new Date().toLocaleString('zh-CN')],
+    ['Cookie 启用', navigator.cookieEnabled ? '是' : '否'],
+    ['是否在线', navigator.onLine ? '在线' : '离线'],
+  ];
+}
+
+/* ---- 公网 IP / 地理位置（需网络） ---- */
+async function detectIp(){
+  setIp('检测中…', false);
+  setStatus('正在获取网络信息…', '');
+  setNetEmpty('检测中…');
+  fillGrid($('netGrid'), []);
+  const apis = ['https://ipwho.is/', 'https://api.ipify.org?format=json'];
+  let data = null, used = null;
+  for(const url of apis){
+    try{
+      const res = await fetch(url, {cache:'no-store'});
+      const j = await res.json();
+      if(url.includes('ipwho')){ if(j && j.success !== false && j.ip){ data = j; used='ipwho.is'; break; } }
+      else if(j && j.ip){ data = {ip:j.ip}; used='ipify'; break; }
+    }catch(e){ /* 尝试下一个 */ }
+  }
+  if(!data || !data.ip){
+    setIp('获取失败', false);
+    setStatus('无法获取公网 IP（可能是网络限制或接口不可用），设备信息仍可用。', 'err');
+    fillGrid($('netGrid'), []);
+    setNetEmpty('IP 信息获取失败，点上方「重新检测」再试一次。');
+    return;
+  }
+  setIp(data.ip, true);
+  setStatus('检测完成 · 数据源 ' + used, 'ok');
+  setNetEmpty(null);
+
+  const netRows = [
+    ['IP 版本', data.ip.indexOf(':') > -1 ? 'IPv6' : 'IPv4'],
+    ['IP 地址', data.ip],
+    ['国家 / 地区', (data.country || '—') + (data.country_code ? ' (' + data.country_code + ')' : '')],
+    ['省份 / 地区', data.region || '—'],
+    ['城市', data.city || '—'],
+    ['网络运营商', (data.connection && data.connection.org) || data.org || '—'],
+    ['ASN', (data.connection && data.connection.asn) || data.asn || '—'],
+    ['时区', (data.timezone && data.timezone.id) || '—'],
+  ];
+  fillGrid($('netGrid'), netRows);
+}
+
+async function copyIp(){
+  const ip = $('ip').textContent;
+  if(!ip || ip === '检测中…' || ip === '获取失败'){ setStatus('还没有获取到 IP，稍等再试', 'err'); return; }
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(ip);
+    }else{
+      const t = document.createElement('textarea');
+      t.value = ip; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    }
+    setStatus('IP 已复制：' + ip, 'ok');
+  }catch(e){ setStatus('复制失败，请长按上方 IP 手动选择', 'err'); }
+}
+
+function refreshAll(){
+  fillGrid($('devGrid'), collectDevice());
+  detectIp();
+}
+$('btnRefresh').onclick = refreshAll;
+$('btnCopyIp').onclick = copyIp;
+$('ip').onclick = copyIp;
+
+/* ---- 查任意 IP 归属地（ipwho.is，HTTPS + CORS，无需密钥） ---- */
+var RE_IPV4 = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+var RE_IPV6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|::([0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(:[0-9a-fA-F]{1,4}){1,6}|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
+function setLookupStatus(msg, type){
+  var s = $('lookupStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : '');
+}
+async function lookupIp(){
+  var ip = ($('lookupIp').value || '').trim();
+  if(!ip){ setLookupStatus('请输入要查询的 IP 地址', 'err'); return; }
+  if(!RE_IPV4.test(ip) && !RE_IPV6.test(ip)){ setLookupStatus('IP 格式不正确，请填写有效的 IPv4 或 IPv6 地址', 'err'); return; }
+  setLookupStatus('查询中…');
+  fillGrid($('lookupGrid'), []);
+  var e = $('lookupEmpty'); e.textContent = '查询中…'; e.style.display = 'block';
+  try{
+    var res = await fetch('https://ipwho.is/' + encodeURIComponent(ip), {cache:'no-store'});
+    var j = await res.json();
+    if(!j || j.success === false){
+      setLookupStatus('未查询到归属地信息（可能是保留地址或接口限制）。', 'err');
+      fillGrid($('lookupGrid'), []);
+      e.textContent = '无结果'; e.style.display = 'block';
+      return;
+    }
+    setLookupStatus('查询完成', 'ok');
+    e.style.display = 'none';
+    fillGrid($('lookupGrid'), [
+      ['IP 版本', j.type || (ip.indexOf(':') > -1 ? 'IPv6' : 'IPv4')],
+      ['IP 地址', j.ip || ip],
+      ['国家 / 地区', (j.country || '—') + (j.country_code ? ' (' + j.country_code + ')' : '')],
+      ['省份 / 地区', j.region || '—'],
+      ['城市', j.city || '—'],
+      ['网络运营商', (j.connection && (j.connection.isp || j.connection.org)) || j.isp || j.org || '—'],
+      ['ASN', (j.connection && j.connection.asn) || j.asn || '—'],
+      ['时区', (j.timezone && j.timezone.id) || '—'],
+    ]);
+  }catch(err){
+    setLookupStatus('查询失败（网络或接口不可用），请稍后重试。', 'err');
+    fillGrid($('lookupGrid'), []);
+    e.textContent = '查询失败'; e.style.display = 'block';
+  }
+}
+$('btnLookup').onclick = lookupIp;
+$('lookupIp').addEventListener('keydown', function(e){ if(e.key === 'Enter') lookupIp(); });
+$('btnSample').onclick = function(){ $('lookupIp').value = '8.8.8.8'; $('btnLookup').onclick(); };
+
+refreshAll();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<a href="https://util123.cn/feedback/" target="_blank" rel="noopener" class="fab-feedback" title="反馈问题 / 建议新工具" aria-label="反馈">💬</a>
+</body>
+</html>

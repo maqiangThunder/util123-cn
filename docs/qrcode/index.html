@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>二维码生成器 · 在线生成二维码并下载 PNG（免费）- util123 工具箱</title>
+<meta name="description" content="免费在线二维码生成器：输入网址、文本、微信号等内容即时生成二维码，可调尺寸、容错等级与颜色，一键下载 PNG 图片。纯前端生成，内容不上传服务器。">
+<link rel="canonical" href="https://util123.cn/qrcode/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="二维码生成,在线二维码生成器,二维码制作,生成二维码,二维码图片下载,免费二维码,QR码生成">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="二维码生成器 · 在线生成并下载 PNG">
+<meta property="og:description" content="输入网址或文本即时生成二维码，可调尺寸、容错等级与颜色，一键下载 PNG。纯前端生成，内容不上传。">
+<meta property="og:url" content="https://util123.cn/qrcode/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二维码生成器 · 在线生成并下载 PNG">
+<meta name="twitter:description" content="输入网址或文本即时生成二维码，可调尺寸、容错等级与颜色，一键下载 PNG。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="white">QR</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/qrcode/#app","name":"在线二维码生成器","url":"https://util123.cn/qrcode/","description":"免费在线二维码生成器：输入网址、文本等内容即时生成二维码，支持自定义尺寸、容错等级与前后景颜色，可一键下载 PNG 图片。纯前端生成，内容不上传服务器。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["文本/网址生成二维码","实时预览","自定义尺寸","容错等级 L/M/Q/H","自定义前景与背景色","下载 PNG 图片","支持中文内容"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"二维码生成","item":"https://util123.cn/qrcode/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"二维码容错等级选哪个好？","acceptedAnswer":{"@type":"Answer","text":"一般选 M（约 15% 容错）即可；二维码会被印在容易磨损或需要贴 logo 的场景，选 Q（25%）或 H（30%）更稳，但同样内容会让二维码更密集。"}},
+{"@type":"Question","name":"生成的二维码会过期吗？","acceptedAnswer":{"@type":"Answer","text":"不会。这里是直接把你的内容编码进二维码图案本身，不含任何跳转短链，扫出来就是原始内容，永久有效。"}},
+{"@type":"Question","name":"扫码扫不出来怎么办？","acceptedAnswer":{"@type":"Answer","text":"常见原因是前景与背景对比度太低（请用深色前景 + 浅色背景），或尺寸太小。建议二维码显示尺寸不小于 200×200 像素，并在四周保留空白。"}},
+{"@type":"Question","name":"生成二维码会上传我的内容吗？","acceptedAnswer":{"@type":"Answer","text":"不会。二维码在浏览器本地由 JavaScript 实时生成，输入的内容不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="13" fill="#fff" letter-spacing=".5">QR</text>
+      </svg>
+      <span class="name">二维码生成</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 在线二维码生成器</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f2" aria-hidden="true">QR</div>
+    <h1>二维码<span class="grad">生成</span></h1>
+    <p>输入网址、文本或微信号，实时生成二维码，可调尺寸、容错等级与颜色，一键下载 PNG 图片。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">二维码内容 <span class="tip">（网址 / 文本 / 联系方式，输入即生成）</span></span>
+      <textarea id="qrText" placeholder="输入要生成二维码的内容，例如 https://util123.cn" style="min-height:104px"></textarea>
+      <div class="row" style="margin-top:14px">
+        <div class="field" style="flex:1 1 220px">
+          <label for="qrSize">显示尺寸：<span id="qrSizeVal">320</span> px</label>
+          <input type="range" id="qrSize" min="128" max="640" step="32" value="320">
+        </div>
+        <div class="field" style="flex:1 1 140px">
+          <label for="qrEc">容错等级</label>
+          <select id="qrEc">
+            <option value="L">L · 约 7%</option>
+            <option value="M" selected>M · 约 15%（推荐）</option>
+            <option value="Q">Q · 约 25%</option>
+            <option value="H">H · 约 30%</option>
+          </select>
+        </div>
+        <div class="field" style="flex:0 1 120px">
+          <label for="qrFg">前景色</label>
+          <input class="ipt" id="qrFg" type="color" value="#000000" style="height:42px;padding:3px">
+        </div>
+        <div class="field" style="flex:0 1 120px">
+          <label for="qrBg">背景色</label>
+          <input class="ipt" id="qrBg" type="color" value="#ffffff" style="height:42px;padding:3px">
+        </div>
+      </div>
+
+      <div class="qr-stage" style="margin-top:18px">
+        <div class="qr-holder"><canvas id="qrCanvas" width="320" height="320" role="img" aria-label="二维码预览"></canvas></div>
+        <div class="status" id="qrStatus" style="margin-top:0">输入内容后立即生成二维码。</div>
+        <div class="toolbar" style="margin-top:0;justify-content:center">
+          <button class="primary" id="btnDl">下载 PNG</button>
+          <button id="btnSample">示例网址</button>
+          <button id="btnClear">清空</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">使用提示</span>
+      <div class="hint">
+        · 二维码内容越短，图案越简单越好扫；网址建议先用短链。<br>
+        · 深色前景 + 浅色背景对比度最高，扫描成功率也最高。<br>
+        · 需要印刷时请下载 PNG 后按原始尺寸放大，或用 ≥ 512px 的显示尺寸导出。
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>二维码容错等级选哪个好？</dt>
+      <dd>一般选 M（约 15% 容错）即可；二维码会印在容易磨损的位置或需要贴 logo 时，选 Q（25%）或 H（30%）更稳，代价是同样内容下图案更密集。</dd>
+      <dt>生成的二维码会过期吗？</dt>
+      <dd>不会。这里是直接把你的内容编码进二维码图案本身，不含任何跳转短链，扫出来就是原始内容，永久有效。</dd>
+      <dt>扫码扫不出来怎么办？</dt>
+      <dd>常见原因是前景与背景对比度太低（请用深色前景 + 浅色背景），或图案太小。建议显示尺寸不小于 200×200 像素，并在四周保留空白。</dd>
+      <dt>生成二维码会上传我的内容吗？</dt>
+      <dd>不会。二维码在浏览器本地由 JavaScript 实时生成，输入的内容不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/vendor/qrcode-generator.js"></script>
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var cv = $('qrCanvas'), ctx = cv.getContext('2d');
+var lastOk = false;
+
+function setStatus(msg, type){ var s = $('qrStatus'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+function render(){
+  var text = $('qrText').value;
+  var size = parseInt($('qrSize').value, 10);
+  var ec = $('qrEc').value;
+  var fg = $('qrFg').value, bg = $('qrBg').value;
+  $('qrSizeVal').textContent = size;
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 3);
+  var px = Math.round(size * dpr);
+
+  if(!text){
+    cv.width = cv.height = px;
+    cv.style.width = cv.style.height = size + 'px';
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, px, px);
+    lastOk = false;
+    setStatus('输入内容后立即生成二维码。', '');
+    return;
+  }
+
+  var qr;
+  try{
+    qr = qrcode(0, ec);          /* typeNumber=0 表示自动选择版本 */
+    qr.addData(text);
+    qr.make();
+  }catch(e){
+    lastOk = false;
+    setStatus('内容太长，无法生成二维码（请缩短内容，或把容错等级调低后再试）。', 'err');
+    return;
+  }
+
+  var count = qr.getModuleCount();
+  var quiet = 4;                          /* 四周静默区（模块数），保证扫码识别率 */
+  var total = count + quiet * 2;
+  var cell = Math.max(1, Math.floor(px / total));
+  var real = cell * total;
+
+  cv.width = cv.height = real;
+  cv.style.width = cv.style.height = size + 'px';
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, real, real);
+  ctx.fillStyle = fg;
+  for(var r = 0; r < count; r++){
+    for(var c = 0; c < count; c++){
+      if(qr.isDark(r, c)) ctx.fillRect((c + quiet) * cell, (r + quiet) * cell, cell, cell);
+    }
+  }
+  lastOk = true;
+  var version = (count - 17) / 4;
+  setStatus('已生成 · 版本 ' + version + ' · ' + count + '×' + count + ' 模块 · 容错 ' + ec + ' · 导出 ' + real + 'px', 'ok');
+}
+
+/* ---- 事件 ---- */
+['qrText','qrSize','qrEc','qrFg','qrBg'].forEach(function(id){
+  var el = $(id);
+  el.addEventListener('input', render);
+  el.addEventListener('change', render);
+});
+$('btnSample').onclick = function(){ $('qrText').value = 'https://util123.cn'; render(); };
+$('btnClear').onclick = function(){ $('qrText').value = ''; render(); $('qrText').focus(); };
+$('btnDl').onclick = function(){
+  if(!lastOk){ UY.toast('请先输入要生成二维码的内容'); return; }
+  try{
+    UY.download('qrcode-util123.png', cv.toDataURL('image/png'));
+    UY.toast('已下载 PNG');
+  }catch(e){ UY.toast('下载失败，请长按图片保存'); }
+};
+cv.onclick = function(){
+  if(!lastOk){ return; }
+  try{
+    cv.toBlob(function(b){
+      if(!b){ UY.toast('请长按图片保存'); return; }
+      var url = URL.createObjectURL(b);
+      UY.download('qrcode-util123.png', url);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);   // 及时释放，避免内存泄漏
+      UY.toast('已下载 PNG');
+    }, 'image/png');
+  }catch(e){ UY.toast('请长按图片保存'); }
+};
+
+render();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

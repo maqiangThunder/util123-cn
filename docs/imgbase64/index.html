@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>图片转 Base64 · 图片与 Base64 在线互转 - util123 工具箱</title>
+<meta name="description" content="免费在线图片 Base64 转换工具：上传或拖拽图片生成 DataURL / Base64 编码，也可把 Base64 还原成图片预览并下载，附带体积对比与 img 标签、CSS 写法。纯前端运行，图片不上传。">
+<link rel="canonical" href="https://util123.cn/imgbase64/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="图片转base64,base64转图片,图片base64编码,dataurl,img标签base64,在线图片转码,base64图片预览">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="图片转 Base64 · 图片与 Base64 在线互转">
+<meta property="og:description" content="上传图片生成 Base64 / DataURL，或把 Base64 还原成图片预览下载。纯前端运行，图片不上传。">
+<meta property="og:url" content="https://util123.cn/imgbase64/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图片转 Base64 · 图片与 Base64 在线互转">
+<meta name="twitter:description" content="上传图片生成 Base64 / DataURL，或把 Base64 还原成图片。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="11" fill="white">IMG</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/imgbase64/#app","name":"图片 Base64 转换工具","url":"https://util123.cn/imgbase64/","description":"在线图片 Base64 转换工具：上传或拖拽图片即可生成 DataURL 与纯 Base64 编码，也可把 Base64 字符串还原成图片预览并下载，附带体积对比以及 img 标签、CSS 背景写法。纯前端运行，图片不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["图片 → DataURL","图片 → 纯 Base64","Base64 → 图片预览","体积对比","img 标签 / CSS 写法","复制与下载"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"图片 Base64","item":"https://util123.cn/imgbase64/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"图片转成 Base64 有什么用？","acceptedAnswer":{"@type":"Answer","text":"把图片编码成 Base64 后，可以直接内嵌进 HTML、CSS 或 JSON 里，无需额外请求图片文件，适合小图标、邮件模板、需要单文件交付的场景。缺点是体积会比原图大约三分之一。"}},
+{"@type":"Question","name":"为什么 Base64 比原图片大？","acceptedAnswer":{"@type":"Answer","text":"Base64 用 4 个可打印字符表示 3 个字节，因此编码后体积约为原始二进制的 1.33 倍。再加上 DataURL 前缀，整体会比原文件更大一些，所以不建议用它来传输大图。"}},
+{"@type":"Question","name":"Base64 转图片支持哪些格式？","acceptedAnswer":{"@type":"Answer","text":"支持常见的图片类型，包括 PNG、JPEG、GIF、WebP、BMP、SVG 等。粘贴可直接识别的图片 Base64 或完整 DataURL 即可预览，工具会自动识别格式。"}},
+{"@type":"Question","name":"图片会上传到服务器吗？","acceptedAnswer":{"@type":"Answer","text":"不会。图片的读取、编码与还原全部在你的浏览器本地完成，图片文件不会被上传。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="11" fill="#fff" letter-spacing=".5">IMG</text>
+      </svg>
+      <span class="name">图片 Base64</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 图片 ↔ Base64 / DataURL</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">IMG</div>
+    <h1>图片<span class="grad"> Base64</span></h1>
+    <p>上传或拖拽图片生成 DataURL / Base64，也可把 Base64 还原成图片预览下载，附带体积对比与 img 标签、CSS 写法。纯前端运行，图片不上传。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">转换方向</span>
+      <div class="seg" id="ibMode">
+        <button type="button" class="on" data-mode="enc">图片 → Base64</button>
+        <button type="button" data-mode="dec">Base64 → 图片</button>
+      </div>
+    </div>
+
+    <!-- 方向一：图片 → Base64 -->
+    <div class="card" id="ibEncCard">
+      <span class="lbl">选择图片</span>
+      <div class="ib-drop" id="ibDrop">
+        <div class="ib-drop-in">
+          <strong>点击选择</strong> 或把图片拖到这里
+          <span class="hint">支持 PNG / JPEG / GIF / WebP / SVG 等，图片不上传</span>
+        </div>
+        <input type="file" id="ibFile" accept="image/*" style="display:none">
+      </div>
+      <div class="ib-preview" id="ibPreviewWrap" style="display:none">
+        <div class="ib-thumb"><img id="ibThumb" alt="预览"></div>
+        <div class="ib-meta" id="ibMeta"></div>
+      </div>
+      <span class="lbl" style="margin-top:16px">DataURL（含 data:image/... 前缀）</span>
+      <textarea id="ibDataUrl" spellcheck="false" readonly placeholder="选择图片后这里显示 DataURL……"></textarea>
+      <div class="toolbar">
+        <button id="btnCopyDataUrl">复制 DataURL</button>
+        <button id="btnCopyB64">复制纯 Base64</button>
+        <button id="btnCopyImgTag">复制 &lt;img&gt; 标签</button>
+        <button id="btnCopyCss">复制 CSS background</button>
+      </div>
+      <span class="lbl" style="margin-top:16px">纯 Base64（不含前缀）</span>
+      <textarea id="ibB64" spellcheck="false" readonly placeholder="……" style="min-height:96px"></textarea>
+      <div class="status" id="ibStatus">选择一张图片开始转换。</div>
+    </div>
+
+    <!-- 方向二：Base64 → 图片 -->
+    <div class="card" id="ibDecCard" style="display:none">
+      <span class="lbl">粘贴 Base64 / DataURL <span class="tip">（可带或不带 data:image 前缀）</span></span>
+      <textarea id="ibDecIn" spellcheck="false" placeholder="粘贴 data:image/png;base64,iVBORw0K... 或纯 Base64 字符串……"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnDecode">解析为图片</button>
+        <button id="btnIbClear">清空</button>
+      </div>
+      <div class="ib-out" id="ibDecOut" style="display:none">
+        <div class="ib-thumb large"><img id="ibDecImg" alt="解析结果"></div>
+        <div class="ib-meta" id="ibDecMeta"></div>
+        <div class="toolbar">
+          <button id="btnDlImg">下载图片</button>
+          <button id="btnCopyDecDataUrl">复制 DataURL</button>
+        </div>
+      </div>
+      <div class="status" id="ibDecStatus">粘贴 Base64 后点击「解析为图片」。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>图片转成 Base64 有什么用？</dt>
+      <dd>把图片编码成 Base64 后，可以直接内嵌进 HTML、CSS 或 JSON 里，无需额外请求图片文件，适合小图标、邮件模板、需要单文件交付的场景。缺点是体积会比原图大约三分之一。</dd>
+      <dt>为什么 Base64 比原图片大？</dt>
+      <dd>Base64 用 4 个可打印字符表示 3 个字节，因此编码后体积约为原始二进制的 1.33 倍。再加上 DataURL 前缀，整体会比原文件更大一些，所以不建议用它来传输大图。</dd>
+      <dt>Base64 转图片支持哪些格式？</dt>
+      <dd>支持常见的图片类型，包括 PNG、JPEG、GIF、WebP、BMP、SVG 等。粘贴可直接识别的图片 Base64 或完整 DataURL 即可预览，工具会自动识别格式。</dd>
+      <dt>图片会上传到服务器吗？</dt>
+      <dd>不会。图片的读取、编码与还原全部在你的浏览器本地完成，图片文件不会被上传。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var state = { dataUrl:'', b64:'', name:'', size:0, mime:'' };
+
+function setStatus(el, msg, type){ var s = $(el); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+
+/* ---------- 方向一：图片 → Base64 ---------- */
+function pickFile(f){
+  if(!f) return;
+  if(!/^image\//.test(f.type)){ setStatus('ibStatus', '请选择图片文件。', 'err'); return; }
+  if(f.size > 20 * 1024 * 1024 && !confirm('图片较大（' + UY.fmtBytes(f.size) + '），编码后体积会更大，继续？')) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    var url = String(fr.result);
+    var comma = url.indexOf(',');
+    state.dataUrl = url;
+    state.b64 = comma >= 0 ? url.slice(comma + 1) : url;
+    state.name = f.name;
+    state.size = f.size;
+    state.mime = f.type || 'image/*';
+
+    $('ibThumb').src = url;
+    $('ibPreviewWrap').style.display = '';
+    $('ibDataUrl').value = state.dataUrl;
+    $('ibB64').value = state.b64;
+    $('ibMeta').innerHTML =
+      '<div class="item"><div class="k">文件名</div><div class="v sans">' + UY.esc(state.name) + '</div></div>' +
+      '<div class="item"><div class="k">类型</div><div class="v sans">' + UY.esc(state.mime) + '</div></div>' +
+      '<div class="item"><div class="k">原图大小</div><div class="v">' + UY.fmtBytes(state.size) + '</div></div>' +
+      '<div class="item"><div class="k">DataURL 大小</div><div class="v">' + UY.fmtBytes(state.dataUrl.length) + '</div></div>';
+    setStatus('ibStatus', '编码完成 · 原始 ' + UY.fmtBytes(state.size) + ' → DataURL ' +
+      UY.fmtBytes(state.dataUrl.length) + '（约 ' + (state.dataUrl.length / Math.max(1, state.size)).toFixed(2) + ' 倍）', 'ok');
+  };
+  fr.onerror = function(){ setStatus('ibStatus', '图片读取失败，请换一张再试。', 'err'); };
+  fr.readAsDataURL(f);
+}
+
+$('ibDrop').addEventListener('click', function(){ $('ibFile').click(); });
+$('ibFile').addEventListener('change', function(e){ pickFile(e.target.files && e.target.files[0]); });
+['dragenter','dragover'].forEach(function(ev){
+  $('ibDrop').addEventListener(ev, function(e){ e.preventDefault(); $('ibDrop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('ibDrop').addEventListener(ev, function(e){ e.preventDefault(); $('ibDrop').classList.remove('over'); });
+});
+$('ibDrop').addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  pickFile(f);
+});
+
+$('btnCopyDataUrl').onclick = function(){ state.dataUrl ? UY.copyWith(state.dataUrl, '已复制 DataURL') : UY.toast('请先选择图片'); };
+$('btnCopyB64').onclick = function(){ state.b64 ? UY.copyWith(state.b64, '已复制纯 Base64') : UY.toast('请先选择图片'); };
+$('btnCopyImgTag').onclick = function(){
+  if(!state.dataUrl){ UY.toast('请先选择图片'); return; }
+  UY.copyWith('<img src="' + state.dataUrl + '" alt="' + (state.name || 'image') + '">', '已复制 <img> 标签');
+};
+$('btnCopyCss').onclick = function(){
+  if(!state.dataUrl){ UY.toast('请先选择图片'); return; }
+  UY.copyWith("background-image: url('" + state.dataUrl + "');", '已复制 CSS background');
+};
+
+/* ---------- 方向二：Base64 → 图片 ---------- */
+function sniffMime(b64){
+  if(/^iVBORw0KGgo/.test(b64)) return 'image/png';
+  if(/^\/9j\//.test(b64)) return 'image/jpeg';
+  if(/^R0lGOD/.test(b64)) return 'image/gif';
+  if(/^UklGR/.test(b64)) return 'image/webp';
+  if(/^Qk/.test(b64)) return 'image/bmp';
+  if(/^PHN2Zy/i.test(b64) || /^PD94bWw/.test(b64)) return 'image/svg+xml';
+  return 'image/png';
+}
+var decUrl = '';
+$('btnDecode').onclick = function(){
+  var raw = $('ibDecIn').value.trim();
+  if(!raw){ UY.toast('请先粘贴 Base64 内容'); return; }
+  var url;
+  if(/^data:image\//i.test(raw)){
+    url = raw;
+  }else{
+    var b64 = raw.replace(/^data:[^,]*,/, '').replace(/\s/g, '');
+    url = 'data:' + sniffMime(b64) + ';base64,' + b64;
+  }
+  var img = new Image();
+  img.onload = function(){
+    decUrl = url;
+    $('ibDecImg').src = url;
+    $('ibDecOut').style.display = '';
+    $('ibDecMeta').innerHTML =
+      '<div class="item"><div class="k">图片尺寸</div><div class="v">' + img.naturalWidth + ' × ' + img.naturalHeight + '</div></div>' +
+      '<div class="item"><div class="k">Base64 长度</div><div class="v">' + url.length.toLocaleString() + ' 字符</div></div>';
+    setStatus('ibDecStatus', '解析成功 · ' + img.naturalWidth + ' × ' + img.naturalHeight + ' · Base64 ' + url.length + ' 字符', 'ok');
+  };
+  img.onerror = function(){
+    $('ibDecOut').style.display = 'none';
+    setStatus('ibDecStatus', '无法解析为图片，请检查 Base64 内容是否完整、是否被截断。', 'err');
+  };
+  img.src = url;
+};
+$('btnIbClear').onclick = function(){
+  $('ibDecIn').value = ''; $('ibDecOut').style.display = 'none'; decUrl = '';
+  setStatus('ibDecStatus', '粘贴 Base64 后点击「解析为图片」。', '');
+};
+$('btnDlImg').onclick = function(){
+  if(!decUrl){ UY.toast('还没有图片'); return; }
+  var ext = (sniffMime(decUrl.replace(/^data:[^,]*,/, ''))).split('/')[1].replace('svg+xml', 'svg').replace('jpeg', 'jpg');
+  UY.download('image.' + ext, decUrl);
+};
+$('btnCopyDecDataUrl').onclick = function(){ decUrl ? UY.copyWith(decUrl, '已复制 DataURL') : UY.toast('还没有图片'); };
+
+/* ---------- 方向切换 ---------- */
+UY.qsa('#ibMode button').forEach(function(btn){
+  btn.onclick = function(){
+    UY.qsa('#ibMode button').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var enc = btn.dataset.mode === 'enc';
+    $('ibEncCard').style.display = enc ? '' : 'none';
+    $('ibDecCard').style.display = enc ? 'none' : '';
+  };
+});
+})();
+</script>
+<style>
+/* 仅本页局部样式（其余沿用 /assets/tool.css） */
+.ib-drop{border:1.5px dashed var(--border-strong);border-radius:12px;background:var(--panel-2);padding:26px 18px;
+  text-align:center;cursor:pointer;transition:.15s}
+.ib-drop:hover,.ib-drop.over{border-color:var(--primary);background:var(--primary-soft)}
+.ib-drop-in{color:var(--muted);font-size:13.5px}
+.ib-drop-in strong{color:var(--primary);font-weight:700}
+.ib-drop-in .hint{display:block;margin-top:6px;font-size:12px}
+.ib-preview{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+.ib-thumb{flex:0 0 150px;border:1px solid var(--border);border-radius:12px;background:
+  repeating-conic-gradient(var(--panel-2) 0% 25%, var(--panel) 0% 50%) 50%/16px 16px;padding:8px;
+  display:flex;align-items:center;justify-content:center;min-height:120px}
+.ib-thumb.large{flex:0 0 auto;max-width:100%}
+.ib-thumb img{max-width:100%;max-height:200px;display:block;border-radius:6px}
+.ib-meta{flex:1 1 240px;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start;min-width:0}
+.ib-out{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+#ibDataUrl{min-height:110px}
+@media(max-width:640px){
+  .ib-thumb{flex-basis:100%}
+  .ib-meta{grid-template-columns:1fr}
+}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

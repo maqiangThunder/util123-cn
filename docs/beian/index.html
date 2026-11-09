@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>备案查询 · 网站 ICP 备案信息 - util123 工具箱</title>
+<meta name="description" content="免费在线 ICP 备案查询工具：输入域名即可查询主办单位名称、主办单位性质、网站名称、ICP 备案号、网站首页与审核通过日期。数据来自第三方公开接口，仅供参考。">
+<link rel="canonical" href="https://util123.cn/beian/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="备案查询,ICP备案查询,网站备案查询,域名备案查询,主办单位查询,备案号查询,工信部备案">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="备案查询 · 网站 ICP 备案信息">
+<meta property="og:description" content="输入域名查主办单位、备案号、审核日期等 ICP 备案信息，仅供参考。">
+<meta property="og:url" content="https://util123.cn/beian/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="备案查询 · 网站 ICP 备案信息">
+<meta name="twitter:description" content="输入域名查 ICP 备案信息，仅供参考。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><path d="M8 14.5 16 7l8 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 8 23.5z" fill="white"/><path d="M12.5 19.5l2.4 2.4 4.6-4.8" fill="none" stroke="%23a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/beian/#app","name":"备案查询工具","url":"https://util123.cn/beian/","description":"在线 ICP 备案查询：输入域名即可查询主办单位名称、主办单位性质、网站名称、ICP 备案号、网站首页与审核通过日期。数据来自第三方公开接口，仅供参考。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 与现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["主办单位名称查询","主办单位性质查询","网站名称查询","ICP备案号查询","审核通过日期"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"备案查询","item":"https://util123.cn/beian/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"这个备案查询工具的数据从哪里来？","acceptedAnswer":{"@type":"Answer","text":"官方接口需要密钥且不支持浏览器跨域，所以主查询由本站服务器把域名转发给第三方公开接口，备源由浏览器直连同一接口；除域名外不上传其它信息。数据来自第三方，结果仅供参考，请以工信部官方（beian.miit.gov.cn）为准。"}},
+{"@type":"Question","name":"为什么有时查不到备案信息？","acceptedAnswer":{"@type":"Answer","text":"可能的原因：①该域名确实没有 ICP 备案；②域名填写的不是一级域名，请填写如 example.com 这样的主域名；③新备案的域名通常需要一段时间才会被第三方数据源收录，本站自身也可能暂时查不到，属正常现象；④第三方接口暂时不可用或网络无法访问，请稍后重试。最准确的结果请以工信部官网公示为准。"}},
+{"@type":"Question","name":"应该填写一级域名还是带 www 的域名？","acceptedAnswer":{"@type":"Answer","text":"填写一级域名（主域名）即可，例如 baidu.com、example.com。工具会自动去掉前面的 www. 与协议头、路径。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <path d="M8 14.5 16 7l8 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 8 23.5z" fill="#fff"/>
+        <path d="M12.5 19.5l2.4 2.4 4.6-4.8" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="name">备案查询</span>
+    </a>
+    <span class="tagline">util123 工具箱 · ICP 备案信息</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">备案</div>
+    <h1>备案<span class="grad">查询</span></h1>
+    <p>输入一个域名，查它的 ICP 备案信息：主办单位、备案号、网站名称与审核日期。点一下就能复制。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">查询</span>
+      <div class="lookup-box">
+        <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input class="ipt" id="domain" type="text" placeholder="输入域名，如 baidu.com" autocomplete="off" spellcheck="false">
+        <button class="primary" id="btnQuery">查询</button>
+      </div>
+      <div class="toolbar">
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="status" style="display:none"></div>
+    </div>
+
+    <div class="card" id="resultCard" style="display:none">
+      <span class="lbl">备案信息</span>
+      <div class="grid" id="grid"></div>
+      <div class="note" id="note">数据来自第三方公开接口，仅供参考，请以工信部官方（beian.miit.gov.cn）公示为准。</div>
+    </div>
+
+    <div class="card" id="emptyCard" style="display:none">
+      <div class="empty" id="empty"></div>
+      <a class="offlink" id="offLink" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" style="display:none;margin-top:10px;font-weight:600;color:var(--primary)">也可前往工信部官网查询 ↗</a>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>这个备案查询工具的数据从哪里来？</dt>
+      <dd>官方接口需要密钥且不支持浏览器跨域，所以主查询由本站服务器把域名转发给第三方公开接口，备源由浏览器直连同一接口；除你填写的域名外不上传其它信息。数据来自第三方，结果仅供参考，请以工信部官方（beian.miit.gov.cn）为准。</dd>
+      <dt>为什么有时查不到备案信息？</dt>
+      <dd>可能的原因：①该域名确实没有 ICP 备案；②域名填写的不是一级域名，请填写如 example.com 这样的主域名；③新备案域名通常要过一段时间才会被第三方数据源收录，本站自身也可能暂时查不到，属正常现象；④第三方接口暂时不可用，请稍后重试。最准确的结果请以工信部官网公示为准。</dd>
+      <dt>应该填写一级域名还是带 www 的域名？</dt>
+      <dd>填写一级域名（主域名）即可，例如 baidu.com、example.com。工具会自动去掉前面的 www. 与协议头、路径。</dd>
+      <dt>查到的备案号代表什么？</dt>
+      <dd>ICP 备案号（如「京ICP备12345678号」）是网站依法在工信部登记的标识，由省级简称（如京、沪、粤）+ ICP备 + 序号 + 号 组成；若带「证」字（如京ICP证……号）通常是经营性备案许可证。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+
+/* 备案查询数据源: 主源走本站 /api/icp/ 同源反代(nginx 转发到 cn.apihz.cn, AI-02 实测可达,
+   同源无 CORS 问题, 最稳); 备源浏览器直连 apihz(若其放行 CORS 则多一层兜底)。
+   历史: vvhan 域名已注销(NXDOMAIN); oioweb icpQuery 已 404; AI-02 对这两家均不通。
+   apihz 公共测试凭证(id/key=88888888)频次共享, 马工可后续注册独享凭证替换。 */
+var SOURCES = [
+  function(d){ return 'https://util123.cn/api/icp/?domain=' + encodeURIComponent(d); },
+  function(d){ return 'https://cn.apihz.cn/api/wangzhan/icp.php?id=88888888&key=88888888&domain=' + encodeURIComponent(d); }
+];
+
+/* 期望字段及其可能的别名（大小写不敏感，递归查找任意层级） */
+var FIELDS = [
+  ['主办单位名称', ['name','unit','unitname','company','orgname','sponsor','主办单位名称','主办单位']],
+  ['主办单位性质', ['nature','naturename','type','unittype','主办单位性质','单位性质']],
+  ['网站名称',     ['webname','sitename','servicename','网站名称','站点名称']],
+  ['备案号 / 许可证号', ['icp','icpno','license','licenseno','beian','备案号','备案许可证号','许可证号']],
+  ['网站首页地址', ['domain','homepage','website','mainpage','网站首页','首页地址']],
+  ['审核通过日期', ['time','date','approvedate','audittime','审核时间','审核通过日期','审核日期']]
+];
+
+/* 在对象里递归查找某个别名对应的值 */
+function deepFind(obj, want){
+  if (obj == null || typeof obj !== 'object') return undefined;
+  var keys = Object.keys(obj);
+  for (var i=0;i<keys.length;i++){
+    var k = keys[i].toLowerCase();
+    if (want.indexOf(k) > -1){
+      var v = obj[keys[i]];
+      if (v !== '' && v !== null && v !== undefined) return v;
+    }
+  }
+  for (var j=0;j<keys.length;j++){
+    var val = obj[keys[j]];
+    if (val && typeof val === 'object'){
+      var r = deepFind(val, want);
+      if (r !== undefined) return r;
+    }
+  }
+  return undefined;
+}
+
+function statusBox(ok,msg){ var s=$('status'); s.style.display='block'; s.className='status '+(ok?'ok':'err'); s.textContent=msg; }
+function normDomain(raw){
+  return raw.trim().toLowerCase()
+    .replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/\.$/,'')
+    .replace(/^www\./,'');
+}
+
+function setResult(data){
+  var rows = [];
+  FIELDS.forEach(function(f){
+    var v = deepFind(data, f[1]);
+    if (v !== undefined){
+      var s = (typeof v === 'object') ? JSON.stringify(v) : String(v);
+      if (s && s.trim()) rows.push([f[0], s]);
+    }
+  });
+  if (!rows.length){
+    $('resultCard').style.display='none';
+    $('emptyCard').style.display='block'; $('offLink').style.display='inline';
+    $('empty').textContent='查询成功，但没有解析到结构化备案信息。该域名可能未备案，或接口返回格式有变动。';
+    return;
+  }
+  $('emptyCard').style.display='none';
+  $('resultCard').style.display='block';
+  $('grid').innerHTML = rows.map(function(r){
+    return '<div class="item"><div class="k">'+UY.esc(r[0])+'</div>'+
+           '<div class="v">'+UY.esc(r[1])+' <button class="copy" data-copy="'+UY.esc(r[1])+'" title="复制">复制</button></div></div>';
+  }).join('');
+  $('grid').querySelectorAll('.copy').forEach(function(b){
+    b.onclick = function(){ UY.copy(b.dataset.copy); UY.toast('已复制'); };
+  });
+}
+
+async function fetchJson(url){
+  var ac = new AbortController();
+  var timer = setTimeout(function(){ ac.abort(); }, 9000);
+  try{
+    var r = await fetch(url, {signal:ac.signal, cache:'no-store'});
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    return await r.json();
+  } finally { clearTimeout(timer); }
+}
+
+/* 依次尝试各数据源, 任一成功即返回; 全部失败抛出最后一个错误 */
+async function fetchWithFallback(d){
+  var lastErr;
+  for (var i=0;i<SOURCES.length;i++){
+    try{ return await fetchJson(SOURCES[i](d)); }
+    catch(e){ lastErr = e; }
+  }
+  throw lastErr || new Error('无可用数据源');
+}
+
+async function query(){
+  var raw = $('domain').value.trim();
+  var d = normDomain(raw);
+  if (!d){ UY.toast('请输入域名'); return; }
+  if (!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){ statusBox(false,'域名格式看起来不太对，请填写如 example.com 的一级域名。'); return; }
+  $('resultCard').style.display='none'; $('emptyCard').style.display='none'; $('offLink').style.display='none';
+  statusBox(true,'正在查询 '+d+' 的备案信息……');
+  try{
+    var j = await fetchWithFallback(d);
+    // apihz 风格错误: {code:400, msg:'...'} → 直接展示其提示(可能为参数/频次问题)
+    if (j && typeof j.code === 'number' && j.code !== 200 && !j.icp && !j.unit){
+      $('emptyCard').style.display='block'; $('offLink').style.display='inline';
+      $('empty').textContent = '第三方数据源暂未查到该域名的备案信息：可能域名确实未备案，也可能是新备案域名还没被第三方收录（同步有延迟）。接口返回：' + (j.msg || '无').replace(/。+$/, '') + '。请以工信部官网公示为准。';
+      statusBox(false,'未查询到备案信息，可点下方链接去工信部官网核对。');
+      return;
+    }
+    // 不依赖具体接口的 code 约定: 有结构化数据就渲染, 无数据(或返回空)按未备案/失败处理
+    var data = (j && j.data !== undefined && j.data !== null && (typeof j.data !== 'object' || Object.keys(j.data).length)) ? j.data : j;
+    if (!data || (typeof data === 'object' && Object.keys(data).length === 0)){
+      $('emptyCard').style.display='block'; $('offLink').style.display='inline';
+      $('empty').textContent = '第三方数据源暂未查到该域名的备案信息：可能域名确实未备案，也可能是新备案域名还没被第三方收录（同步有延迟）。' + (j && j.msg ? '接口返回：'+j.msg.replace(/。+$/, '')+'。' : '') + '请以工信部官网公示为准。';
+      statusBox(false,'未查询到备案信息，可点下方链接去工信部官网核对。');
+      return;
+    }
+    setResult(data);
+    statusBox(true,'✅ 查询完成。结果仅供参考，以工信部官方为准。');
+  }catch(e){
+    $('resultCard').style.display='none';
+    $('emptyCard').style.display='block'; $('offLink').style.display='inline';
+    $('empty').textContent='查询失败：'+(e.name==='AbortError'?'请求超时':(e.message||e))+'。第三方接口可能暂时不可用，请稍后重试。';
+    statusBox(false,'查询失败：'+(e.name==='AbortError'?'请求超时':(e.message||e)));
+  }
+}
+
+$('btnQuery').onclick = query;
+$('domain').addEventListener('keydown', function(e){ if(e.key==='Enter') query(); });
+$('btnSample').onclick = function(){ $('domain').value='baidu.com'; $('btnQuery').onclick(); };
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<script>(function(){var n=document.querySelector('.nav')||document.body.firstElementChild;if(!n)return;var b=document.createElement('div');b.setAttribute('data-gh-mirror','1');b.style.cssText='max-width:960px;margin:14px auto 0;padding:9px 14px;border:1px solid #d0d7de;border-left:3px solid #8b5cf6;border-radius:8px;background:#f6f8fa;font:13px/1.65 -apple-system,BlinkMacSystemFont,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;color:#57606a';b.innerHTML='<b style="color:#24292f">GitHub 镜像站</b> · 备案查询需要服务器转发工信部接口，镜像站上不可用。完整版请访问主站 <a href="https://util123.cn/beian/" style="color:#8250df;text-decoration:none;border-bottom:1px solid currentColor">util123.cn/beian/</a>';n.insertAdjacentElement('afterend',b);})();</script>
+</body>
+</html>

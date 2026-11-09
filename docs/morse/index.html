@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>摩斯电码转换 · 文本与摩斯互转 - util123 工具箱</title>
+<meta name="description" content="免费在线摩斯电码（Morse Code）转换工具：文本与摩斯码双向互转，支持字母、数字与常用符号，可点划可视化并播放电报音。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/morse/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="摩斯电码,Morse Code,摩斯码转换,电报,点划,摩斯翻译">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="摩斯电码转换 · 文本与摩斯互转">
+<meta property="og:description" content="文本与摩斯码双向转换，支持播放电报音。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/morse/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摩斯电码转换 · 文本与摩斯互转">
+<meta name="twitter:description" content="文本与摩斯码双向转换，支持播放电报音。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><circle cx="11" cy="16" r="2.6" fill="white"/><path d="M15 14.7h9" stroke="white" stroke-width="3.2" stroke-linecap="round"/></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/morse/#app","name":"摩斯电码转换","url":"https://util123.cn/morse/","description":"在线摩斯电码转换工具，支持文本与摩斯码双向互转、点划可视化与电报音播放。纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["文本转摩斯码","摩斯码转文本","点划可视化","电报音播放","离线可用"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"摩斯电码转换","item":"https://util123.cn/morse/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"摩斯电码里点和划分别代表什么？","acceptedAnswer":{"@type":"Answer","text":"点（·）是短音，划（—）是长音，时长约为 1:3。同一字母内各符号连续，字母之间留一个字符间隔，单词之间留三个字符间隔。本工具输出时字母间用空格、单词间用三个空格分隔。"}},
+{"@type":"Question","name":"中文也能转摩斯码吗？","acceptedAnswer":{"@type":"Answer","text":"标准摩斯电码基于拉丁字母与数字。本工具处理字母、数字和常用标点；输入中文时会提示先转为拼音或英文再转换。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有转换与播放都在你的浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <circle cx="11" cy="16" r="2.6" fill="#fff"/><path d="M15 14.7h9" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+      </svg>
+      <span class="name">摩斯电码</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 文本与摩斯互转</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><circle cx="11" cy="16" r="2.6" fill="currentColor"/><path d="M15 14.7h9" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg></div>
+    <h1>摩斯电码<span class="grad">转换</span></h1>
+    <p>文本与摩斯码双向互转，点划可视化，还能听电报音。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 10px"><span style="font-weight:600">文本 → 摩斯码</span></div>
+      <div id="txtWarn" style="color:var(--err);font-size:12px;line-height:1.4;margin:0 0 8px;min-height:0"></div>
+      <textarea id="txtIn" class="ipt" style="min-height:88px;resize:vertical" placeholder="输入英文、数字或符号，如 SOS 或 HELLO WORLD" aria-label="输入文本"></textarea>
+      <textarea id="morseOut" class="ipt" style="min-height:88px;resize:vertical;font-family:'SF Mono',Menlo,monospace;letter-spacing:1px" readonly aria-label="摩斯码输出"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopyM">复制摩斯码</button>
+        <button id="btnPlay">▶ 播放电报音</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 10px"><span style="font-weight:600">摩斯码 → 文本</span></div>
+      <textarea id="morseIn" class="ipt" style="min-height:88px;resize:vertical;font-family:'SF Mono',Menlo,monospace;letter-spacing:1px" placeholder="输入摩斯码，字母间空格、单词间三个空格或 /，如 ... --- ..." aria-label="输入摩斯码"></textarea>
+      <textarea id="txtOut" class="ipt" style="min-height:88px;resize:vertical" readonly aria-label="文本输出"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopyT">复制文本</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>摩斯电码里点和划分别代表什么？</h3><p>点（·）是短音，划（—）是长音，时长约为 1:3。本工具输出时字母间用空格、单词间用三个空格分隔。</p></div>
+    <div class="faq"><h3>中文也能转摩斯码吗？</h3><p>标准摩斯电码基于拉丁字母与数字。本工具处理字母、数字和常用标点；输入中文时会提示先转为拼音或英文再转换。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。所有转换与播放都在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var MORSE = {
+      'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..',
+      'J':'.---','K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.',
+      'S':'...','T':'-','U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..',
+      '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....',
+      '7':'--...','8':'---..','9':'----.',
+      '.':'.-.-.-',',':'--..--','?':'..--..',"'":'.----.','!':'-.-.--','/':'-..-.','(':'-.--.',
+      ')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-','+':'.-.-.','-':'-....-',
+      '_':'..--.-','"':'.-..-.','$':'...-..-','@':'.--.-.'
+    };
+
+    function textToMorse(text){
+      var words = text.toUpperCase().split(/\s+/).filter(Boolean);
+      return words.map(function(w){
+        return w.split('').map(function(ch){ return MORSE[ch] !== undefined ? MORSE[ch] : '?'; }).join(' ');
+      }).join('   ');
+    }
+    function morseToText(morse){
+      var words = morse.trim().split(/\s{2,}|\//);
+      return words.map(function(w){
+        return w.trim().split(/\s+/).filter(Boolean).map(function(code){
+          for (var k in MORSE){ if (MORSE[k] === code) return k; }
+          return '?';
+        }).join('');
+      }).join(' ');
+    }
+
+    function renderText(){
+      var v = $('txtIn').value;
+      var hasCJK = /\p{Script=Han}/u.test(v);
+      $('txtWarn').textContent = hasCJK ? '提示：摩斯码基于拉丁字母，中文请先转拼音/英文' : '';
+      $('morseOut').value = v ? textToMorse(v) : '';
+    }
+    function renderMorse(){
+      var v = $('morseIn').value;
+      $('txtOut').value = v.trim() ? morseToText(v) : '';
+    }
+
+    var audioCtx = null;
+    var isPlaying = false;
+    async function play(){
+      var code = $('morseOut').value;
+      if (!code.trim()) { UY.toast('先输入文本生成摩斯码'); return; }
+      if (isPlaying) return;
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) { UY.toast('当前浏览器不支持播放'); return; }
+
+      isPlaying = true;
+      var btn = $('btnPlay');
+      var oldText = btn.textContent;
+      btn.textContent = '⏸ 播放中…';
+      btn.disabled = true;
+
+      try {
+        // 复用同一个 AudioContext：每次 new 会触及浏览器并发上限，后续实例处于 suspended 而静音
+        if (!audioCtx) audioCtx = new Ctx();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+        var ctx = audioCtx;
+        var unit = 0.09, t = ctx.currentTime + 0.06;
+        var total = 0;
+        function beep(start, dur){
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.type = 'sine'; o.frequency.value = 620;
+          g.gain.setValueAtTime(0.0001, start);
+          g.gain.exponentialRampToValueAtTime(0.25, start + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+          o.connect(g); g.connect(ctx.destination);
+          o.start(start); o.stop(start + dur + 0.03);
+        }
+        code.split('').forEach(function(c){
+          if (c === '.') { beep(t, unit); t += unit * 2; total += unit * 2; }
+          else if (c === '-') { beep(t, unit * 3); t += unit * 4; total += unit * 4; }
+          else if (c === ' ' || c === '/') { t += unit * 3; total += unit * 3; }
+        });
+
+        // 等最后一个音放完再恢复按钮
+        var wait = Math.max(0, total * 1000 + 120);
+        await new Promise(function(r){ setTimeout(r, wait); });
+      } catch (e) {
+        UY.toast('播放失败：' + (e && e.message ? e.message : '浏览器音频被阻止'));
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
+        isPlaying = false;
+      }
+    }
+
+    $('txtIn').oninput = renderText;
+    $('morseIn').oninput = renderMorse;
+    $('btnCopyM').onclick = function(){ if(!$('morseOut').value.trim()){ UY.toast('先输入文本生成摩斯码'); return; } UY.copyWith($('morseOut').value, '摩斯码已复制'); };
+    $('btnCopyT').onclick = function(){ UY.copyWith($('txtOut').value, '文本已复制'); };
+    $('btnPlay').onclick = play;
+    $('btnSample').onclick = function(){
+      $('txtIn').value = 'HELLO WORLD';
+      if ($('txtIn').oninput) $('txtIn').oninput();
+    };
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

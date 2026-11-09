@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>DNS 检测 · 多服务器解析测试 - util123 工具箱</title>
+<meta name="description" content="免费在线 DNS 检测工具：从阿里、腾讯、Google、Cloudflare 等多家公共 DNS 分别解析同一域名，对比各地解析结果是否一致，并查看 NS 记录。">
+<link rel="canonical" href="https://util123.cn/dnscheck/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="DNS检测,域名检测,DNS解析测试,全国DNS,多服务器解析,域名生效检测,NS记录查询">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="DNS 检测 · 多服务器解析测试">
+<meta property="og:description" content="从多家公共 DNS 分别解析同一域名，对比各地解析结果是否一致。">
+<meta property="og:url" content="https://util123.cn/dnscheck/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DNS 检测 · 多服务器解析测试">
+<meta name="twitter:description" content="对比多家 DNS 对同一域名的解析结果是否一致。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><path d="M16 5a11 11 0 1 0 .01 0z" fill="none" stroke="white" stroke-width="2"/><path d="M5 16h22M16 5c3 3 3 19 0 22M16 5c-3 3-3 19 0 22" fill="none" stroke="white" stroke-width="2"/></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/dnscheck/#app","name":"DNS 检测工具","url":"https://util123.cn/dnscheck/","description":"在线 DNS 检测：从阿里、腾讯、Google、Cloudflare 等多家公共 DNS 分别解析同一域名的 A 记录，对比各地解析结果是否一致，并展示 NS 记录。基于公共 DNS-over-HTTPS 服务，纯前端发起。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 与现代浏览器，且能访问公共 DoH 服务","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["多地 DNS 解析对比","解析一致性判定","A 记录解析","NS 记录查询"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"DNS 检测","item":"https://util123.cn/dnscheck/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"DNS 检测是做什么的？","acceptedAnswer":{"@type":"Answer","text":"它会从多家不同的公共 DNS 服务器（阿里、腾讯、Google、Cloudflare）分别解析你的域名，把每个服务器返回的 IP 放在一起对比。如果所有服务器返回的 IP 都一样，说明域名解析已经稳定生效；如果不一样，往往意味着 DNS 尚未完全生效，或域名配置了分区域 / 分线解析。国内网络访问 Google、Cloudflare 常出现超时或连接失败，这时只对比成功返回结果的服务器即可，不代表域名解析异常。"}},
+{"@type":"Question","name":"为什么不同 DNS 服务器结果会不一样？","acceptedAnswer":{"@type":"Answer","text":"修改 DNS 记录（A 记录）后，各地 DNS 有缓存，需要等 TTL 过期才会更新，所以会出现一部分服务器还是旧 IP、一部分已经是新 IP 的情况。另外部分域名会按访问来源返回不同 IP（分线 / 智能解析），也会造成差异。"}},
+{"@type":"Question","name":"检测工具的数据从哪来？","acceptedAnswer":{"@type":"Answer","text":"工具在你的浏览器里直接调用各公共 DNS 的 DNS-over-HTTPS（DoH）接口来解析，不经过本站服务器。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <circle cx="16" cy="16" r="10" fill="none" stroke="#fff" stroke-width="2"/>
+        <path d="M6 16h20M16 6c3 3 3 17 0 20M16 6c-3 3-3 17 0 20" fill="none" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <span class="name">DNS 检测</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 多服务器解析测试</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">DNS</div>
+    <h1>DNS <span class="grad">检测</span></h1>
+    <p>从阿里、腾讯、Google、Cloudflare 四家公共 DNS 分别解析同一个域名，对比各地解析结果是否一致，并查看 NS 记录。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">检测</span>
+      <div class="lookup-box">
+        <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input class="ipt" id="domain" type="text" placeholder="输入域名，如 util123.cn" autocomplete="off" spellcheck="false">
+        <button class="primary" id="btnCheck">检测</button>
+      </div>
+      <div class="toolbar">
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="status" style="display:none"></div>
+    </div>
+
+    <div class="card" id="bannerCard" style="display:none">
+      <div class="banner" id="banner"></div>
+    </div>
+
+    <div class="card" id="matrixCard" style="display:none">
+      <span class="lbl">各地解析结果（A 记录）</span>
+      <table class="tbl" id="tbl">
+        <thead><tr><th>解析服务器</th><th>A 记录</th><th>TTL</th><th>耗时</th><th>状态</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="card" id="nsCard" style="display:none">
+      <span class="lbl">NS 记录（权威 DNS）</span>
+      <div class="out-box" id="nsOut"></div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>DNS 检测是做什么的？</dt>
+      <dd>它会从多家不同的公共 DNS 服务器（阿里、腾讯、Google、Cloudflare）分别解析你的域名，把每个服务器返回的 IP 放在一起对比。如果所有服务器返回的 IP 都一样，说明域名解析已经稳定生效；如果不一样，往往意味着 DNS 尚未完全生效，或域名配置了分区域 / 分线解析。国内网络访问 Google、Cloudflare 常出现超时或连接失败，这时只对比成功返回结果的服务器即可，不代表域名解析异常。</dd>
+      <dt>为什么不同 DNS 服务器结果会不一样？</dt>
+      <dd>修改 DNS 记录（A 记录）后，各地 DNS 有缓存，需要等 TTL 过期才会更新，所以会出现一部分服务器还是旧 IP、一部分已经是新 IP 的情况。另外部分域名会按访问来源返回不同 IP（分线 / 智能解析），也会造成差异。</dd>
+      <dt>检测工具的数据从哪来？</dt>
+      <dd>工具在你的浏览器里直接调用各公共 DNS 的 DNS-over-HTTPS（DoH）接口来解析，不经过本站服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var TYPES = {1:'A',28:'AAAA',5:'CNAME',15:'MX',16:'TXT',2:'NS',6:'SOA'};
+/* 公共 DNS 的 DoH（JSON）端点: 阿里/Google/Cloudflare 自带 CORS 头可浏览器直连;
+   腾讯 doh.pub 不返回 Access-Control-Allow-Origin, 走本站 /api/doh/dohpub 同源反代;
+   百度 doh.baidu.com 端点已不可达, 已移除(2026-10-29)。 */
+var SERVERS = [
+  { key:'alidns',    label:'阿里 DNS',     url:function(n,t){ return 'https://dns.alidns.com/resolve?name='+encodeURIComponent(n)+'&type='+t; } },
+  { key:'dohpub',    label:'腾讯 DNS',     url:function(n,t){ return 'https://util123.cn/api/doh/dohpub?name='+encodeURIComponent(n)+'&type='+t; } },
+  { key:'google',    label:'Google',       url:function(n,t){ return 'https://dns.google/resolve?name='+encodeURIComponent(n)+'&type='+t; } },
+  { key:'cloudflare',label:'Cloudflare',   url:function(n,t){ return 'https://cloudflare-dns.com/dns-query?name='+encodeURIComponent(n)+'&type='+t; } }
+];
+
+function statusBox(ok,msg){ var s=$('status'); s.style.display='block'; s.className='status '+(ok?'ok':'err'); s.textContent=msg; }
+function normDomain(raw){
+  return raw.trim().toLowerCase()
+    .replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/\.$/,'');
+}
+async function dohOne(server, name, type){
+  var t0 = performance.now();
+  var ac = new AbortController();
+  var timer = setTimeout(function(){ ac.abort(); }, 6000);
+  try{
+    var r = await fetch(server.url(name,type), {headers:{'Accept':'application/dns-json'}, signal:ac.signal, cache:'no-store'});
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    var j = await r.json();
+    var ms = Math.max(1, Math.round(performance.now()-t0));
+    return { server:server, j:j, ms:ms };
+  } finally { clearTimeout(timer); }
+}
+
+async function run(){
+  var raw = $('domain').value.trim();
+  var d = normDomain(raw);
+  if (!d){ UY.toast('请输入域名'); return; }
+  if (!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){ statusBox(false,'域名格式看起来不太对，请检查。'); return; }
+  ['bannerCard','matrixCard','nsCard'].forEach(function(id){ $(id).style.display='none'; });
+  statusBox(true,'正在从 '+SERVERS.length+' 个公共 DNS 分别解析 '+d+' 的 A 记录……');
+  try{
+    var results = await Promise.all(SERVERS.map(function(s){
+      return dohOne(s, d, 'A').then(function(r){ return {ok:true, r:r, server:s}; })
+        .catch(function(e){ return {ok:false, err:e, server:s}; });
+    }));
+
+    var rows = [], ipSets = [], okCount = 0, nxdomain = false;
+    results.forEach(function(res){
+      if (!res.ok){
+        var reason = (res.err && res.err.name==='AbortError') ? '超时' : '解析失败';
+        rows.push({ label:res.server.label, ips:[], ttl:'—', ms:'—', status:reason, ok:false });
+        return;
+      }
+      var j = res.r.j;
+      if (j.Status === 3){ nxdomain = true; rows.push({ label:res.server.label, ips:[], ttl:'—', ms:res.r.ms, status:'域名不存在', ok:false }); return; }
+      var ans = (j.Answer||[]).filter(function(a){ return (TYPES[a.type]||('TYPE'+a.type)) === 'A'; });
+      var ips = ans.map(function(a){ return a.data; });
+      var ttl = ans.length ? ans[0].TTL : '—';
+      okCount++;
+      rows.push({ label:res.server.label, ips:ips, ttl:ttl, ms:res.r.ms, status: ips.length?'已解析':'无 A 记录', ok:true });
+      if (ips.length) ipSets.push(ips.slice().sort().join('|'));
+    });
+
+    $('matrixCard').style.display='block';
+    $('tbody').innerHTML = rows.map(function(r){
+      var ipHtml = r.ips.length ? r.ips.map(function(ip){ return '<span class="ip">'+UY.esc(ip)+'</span>'; }).join('') : '<span class="muted">—</span>';
+      var statusCls = r.ok ? (r.ips.length? 'ok':'warn') : 'err';
+      return '<tr><td><b>'+UY.esc(r.label)+'</b></td><td class="ips">'+ipHtml+'</td>'+
+             '<td>'+UY.esc(String(r.ttl))+'</td><td>'+(r.ms==='—'?'—':r.ms+' ms')+'</td>'+
+             '<td><span class="pill '+statusCls+'">'+UY.esc(r.status)+'</span></td></tr>';
+    }).join('');
+
+    // 一致性判定
+    var distinct = Array.from(new Set(ipSets));
+    $('bannerCard').style.display='block';
+    var b = $('banner');
+    if (nxdomain){
+      b.className='banner warn'; b.textContent='⚠️ 该域名不存在（NXDOMAIN）。';
+    } else if (okCount === 0){
+      b.className='banner err'; b.textContent='✕ 所有 DNS 服务器都解析失败，请检查网络或稍后重试。';
+    } else if (ipSets.length === 0){
+      b.className='banner warn';
+      b.textContent='⚠️ '+okCount+'/'+SERVERS.length+' 个服务器查询成功，但均未返回 A 记录。';
+    } else if (distinct.length <= 1 && okCount === SERVERS.length){
+      b.className='banner ok';
+      b.textContent='✅ 全部 '+SERVERS.length+' 个 DNS 服务器解析结果一致，域名已稳定生效。';
+    } else if (distinct.length <= 1){
+      /* 只有部分服务器返回结果时，不能据此断言「域名已稳定生效」 */
+      b.className='banner warn';
+      b.textContent='⚠️ '+okCount+'/'+SERVERS.length+' 个服务器返回结果一致，另有 '+(SERVERS.length-okCount)+' 家连接失败或超时（国内网络访问境外 DNS 很常见），不代表域名解析有问题。';
+    } else {
+      b.className='banner warn';
+      b.textContent='⚠️ 各地解析结果不一致（共 '+distinct.length+' 种结果）—— 可能 DNS 尚未完全生效，或域名配置了分区域 / 分线解析。';
+    }
+    if (okCount > 0) statusBox(true,'✅ 检测完成：'+okCount+'/'+SERVERS.length+' 个服务器解析成功。');
+    else statusBox(false,'检测失败：所有 DNS 服务器都解析失败，请检查网络或稍后重试。');
+  }catch(e){
+    statusBox(false,'检测失败：'+(e.message||e));
+  }
+
+  // 顺带取 NS 记录（从第一个可用的服务器）
+  try{
+    var nsRes = await dohOne(SERVERS[0], d, 'NS');
+    var nsList = (nsRes.j.Answer||[]).filter(function(a){ return (TYPES[a.type]||'')==='NS'; })
+                 .map(function(a){ return a.data.replace(/\.$/,''); });
+    if (nsList.length){
+      $('nsCard').style.display='block';
+      $('nsOut').innerHTML = nsList.map(function(n){ return '<div>'+UY.esc(n)+'</div>'; }).join('');
+    }
+  }catch(e){ /* NS 查询失败不影响主结果 */ }
+}
+
+$('btnCheck').onclick = run;
+$('domain').addEventListener('keydown', function(e){ if(e.key==='Enter') run(); });
+$('btnSample').onclick = function(){ $('domain').value='example.com'; $('btnCheck').onclick(); };
+})();
+</script>
+<style>
+  /* DNS 检测专用：解析结果表格里的 IP 与状态药丸 */
+  .tbl td.ips{font-family:var(--mono);color:var(--primary);line-height:1.9}
+  .tbl .ip{display:inline-block;background:var(--primary-soft);border-radius:5px;padding:1px 7px;margin:1px 4px 1px 0;font-size:12.5px}
+  .tbl .muted{color:var(--muted)}
+  .pill{display:inline-block;font-size:12px;font-weight:600;border-radius:20px;padding:2px 10px;white-space:nowrap}
+  .pill.ok{background:var(--primary-soft);color:var(--primary)}
+  .pill.warn{background:rgba(210,153,34,.14);color:#9a6700}
+  .pill.err{background:rgba(207,34,46,.1);color:var(--err)}
+  body.dark .pill.warn{color:#d4a72c}
+  .banner{font-size:14px;font-weight:600;line-height:1.6;padding:13px 15px;border-radius:10px}
+  .banner.ok{background:var(--primary-soft);color:var(--primary)}
+  .banner.warn{background:rgba(210,153,34,.14);color:#9a6700}
+  .banner.err{background:rgba(207,34,46,.1);color:var(--err)}
+  body.dark .banner.warn{color:#d4a72c}
+</style>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<script>(function(){var n=document.querySelector('.nav')||document.body.firstElementChild;if(!n)return;var b=document.createElement('div');b.setAttribute('data-gh-mirror','1');b.style.cssText='max-width:960px;margin:14px auto 0;padding:9px 14px;border:1px solid #d0d7de;border-left:3px solid #8b5cf6;border-radius:8px;background:#f6f8fa;font:13px/1.65 -apple-system,BlinkMacSystemFont,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;color:#57606a';b.innerHTML='<b style="color:#24292f">GitHub 镜像站</b> · 腾讯 DoH 需走主站同源反代，镜像站上这一条线路不可用（其余线路正常）。完整版请访问主站 <a href="https://util123.cn/dnscheck/" style="color:#8250df;text-decoration:none;border-bottom:1px solid currentColor">util123.cn/dnscheck/</a>';n.insertAdjacentElement('afterend',b);})();</script>
+</body>
+</html>

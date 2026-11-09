@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>页面不存在 (404) - util123 工具箱</title>
+<meta name="description" content="这个地址在 util123 工具箱里找不到，可能是链接过期或拼写有误。返回首页挑选需要的在线工具。">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<style>
+/* util123 全局基础样式只在各页内联，404 页单独补一份，保证配色/深色模式与全站一致 */
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.lbl{display:block;font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.3px;margin-bottom:8px}
+a{-webkit-tap-highlight-color:transparent}
+@media(max-width:640px){
+  .toolbar button{height:42px}
+}
+</style>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="11" fill="white">404</text></svg>'>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="11" fill="#fff" letter-spacing=".5">404</text>
+      </svg>
+      <span class="name">页面不存在</span>
+    </a>
+    <span class="tagline">util123 工具箱</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="wrap" style="max-width:720px">
+    <div class="card" style="text-align:center;padding:44px 24px 36px;margin-top:28px">
+      <div style="font-size:64px;font-weight:800;line-height:1;letter-spacing:2px;
+                  background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;
+                  background-clip:text;color:transparent">404</div>
+      <h1 style="font-size:19px;margin:16px 0 8px">这个页面走丢了</h1>
+      <p style="color:var(--muted);font-size:14px;margin:0 auto 24px;max-width:420px;line-height:1.8">
+        地址 <code class="mono" id="badPath" style="font-size:12.5px"></code> 在工具箱里不存在。
+        可能是链接过期、拼写有误，或者工具改过名字。
+      </p>
+      <div class="toolbar" style="justify-content:center">
+        <button class="primary" onclick="location.href='/'">← 返回首页</button>
+        <button onclick="location.href='/json/'">JSON 格式化</button>
+        <button onclick="location.href='/base64/'">Base64</button>
+        <button onclick="location.href='/timestamp/'">时间戳</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">热门工具</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;margin-top:10px">
+        <a href="/util123-cn/qrcode/" style="text-decoration:none;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;font-size:13.5px;font-weight:600">二维码生成</a>
+        <a href="/util123-cn/hash/" style="text-decoration:none;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;font-size:13.5px;font-weight:600">哈希计算</a>
+        <a href="/util123-cn/ip/" style="text-decoration:none;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;font-size:13.5px;font-weight:600">我的 IP</a>
+        <a href="/util123-cn/url/" style="text-decoration:none;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;font-size:13.5px;font-weight:600">URL 编解码</a>
+      </div>
+    </div>
+
+    <footer class="site-foot">
+      <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+      <nav>
+        <a href="/util123-cn/">首页</a>
+        <a href="https://util123.cn/feedback/">反馈建议</a>
+        <a href="/util123-cn/json/">JSON 工具箱</a>
+        <a href="/util123-cn/ip/">我的 IP</a>
+        <a href="/util123-cn/timestamp/">时间戳转换</a>
+        <a href="/util123-cn/qrcode/">二维码生成</a>
+        <a href="/util123-cn/password/">密码生成</a>
+        <a href="/util123-cn/base64/">Base64 编解码</a>
+        <a href="/util123-cn/url/">URL 编解码</a>
+        <a href="/util123-cn/hash/">哈希计算</a>
+        <a href="/util123-cn/regex/">正则表达式测试</a>
+        <a href="/util123-cn/radix/">进制转换</a>
+      </nav>
+      <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+    </footer>
+  </div>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<script>
+try{ document.getElementById('badPath').textContent = location.pathname; }catch(e){}
+</script>
+</body>
+</html>

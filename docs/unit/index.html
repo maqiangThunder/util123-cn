@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>单位换算 · 长度/重量/温度/数据 - util123 工具箱</title>
+<meta name="description" content="免费在线单位换算：长度、重量、温度、数据存储一步换算，输入一个值即显示全部单位结果。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/unit/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="单位换算,长度换算,重量换算,温度换算,GB MB换算,在线换算器">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="单位换算 · 长度/重量/温度/数据">
+<meta property="og:description" content="长度、重量、温度、数据存储一步换算，输入即出全部单位结果。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/unit/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单位换算 · 长度/重量/温度/数据">
+<meta name="twitter:description" content="输入即出全部单位结果，纯前端运行。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M9 22V10l6 12 6-12v12"/><path d="M22.5 9h5M22.5 9v6.5" opacity=".6"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/unit/#app","name":"单位换算","url":"https://util123.cn/unit/","description":"在线单位换算工具，覆盖长度、重量、温度与数据存储，输入一个值即显示全部单位结果。纯前端运行，数据不上传。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["长度换算","重量换算","温度换算","数据存储换算","全单位一览"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"单位换算","item":"https://util123.cn/unit/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"温度换算为什么特殊？","acceptedAnswer":{"@type":"Answer","text":"摄氏、华氏、开尔文之间不是简单的倍数关系，需要用公式换算：°F = °C × 9/5 + 32，K = °C + 273.15。工具已自动处理。"}},
+{"@type":"Question","name":"支持哪些单位？","acceptedAnswer":{"@type":"Answer","text":"长度：千米/米/厘米/毫米/英里/码/英尺/英寸/海里；重量：吨/千克/克/毫克/磅/盎司；温度：℃/℉/K；数据：B/KB/MB/GB/TB（按 1024 进制）。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。换算完全在浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 22V10l6 12 6-12v12"/><path d="M22.5 9h5M22.5 9v6.5" opacity=".6"/></g>
+      </svg>
+      <span class="name">单位换算</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 长度/重量/温度/数据</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 22V10l6 12 6-12v12"/><path d="M22.5 9h5M22.5 9v6.5" opacity=".6"/></g></svg></div>
+    <h1>单位<span class="grad">换算</span></h1>
+    <p>长度、重量、温度、数据存储，输入一个值立刻看到全部单位结果。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar" style="margin:0 0 12px" id="catRow">
+        <button class="primary" data-cat="len">长度</button>
+        <button data-cat="wt">重量</button>
+        <button data-cat="tp">温度</button>
+        <button data-cat="dt">数据存储</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="val" class="ipt" style="flex:1;margin:0" type="text" inputmode="decimal" spellcheck="false" value="1" aria-label="数值">
+        <select id="from" class="ipt" style="width:150px;margin:0;flex:none" aria-label="单位"></select>
+      </div>
+      <div class="note" id="quick" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">换算结果</span>
+      <div id="res" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>温度换算为什么特殊？</h3><p>摄氏、华氏、开尔文之间不是简单倍数关系：℉ = ℃ × 9/5 + 32，K = ℃ + 273.15。工具已自动按公式处理。</p></div>
+    <div class="faq"><h3>数据存储按什么进制？</h3><p>按常见的 1024 进制换算：1 KB = 1024 B，1 MB = 1024 KB，以此类推。硬盘厂商标注的 GB 通常按 1000 进制，会比这里算出的小。</p></div>
+    <div class="faq"><h3>数据会上传吗？</h3><p>不会。换算完全在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var CATS = {
+      len: { name:'长度', units:[
+        { k:'km',  n:'千米 (km)',  f:1000 },
+        { k:'m',   n:'米 (m)',     f:1 },
+        { k:'cm',  n:'厘米 (cm)',  f:0.01 },
+        { k:'mm',  n:'毫米 (mm)',  f:0.001 },
+        { k:'mi',  n:'英里 (mi)',  f:1609.344 },
+        { k:'yd',  n:'码 (yd)',    f:0.9144 },
+        { k:'ft',  n:'英尺 (ft)',  f:0.3048 },
+        { k:'in',  n:'英寸 (in)',  f:0.0254 },
+        { k:'nmi', n:'海里 (nmi)', f:1852 } ] },
+      wt: { name:'重量', units:[
+        { k:'t',  n:'吨 (t)',    f:1000000 },
+        { k:'kg', n:'千克 (kg)', f:1000 },
+        { k:'g',  n:'克 (g)',    f:1 },
+        { k:'mg', n:'毫克 (mg)', f:0.001 },
+        { k:'lb', n:'磅 (lb)',   f:453.59237 },
+        { k:'oz', n:'盎司 (oz)', f:28.349523125 } ] },
+      tp: { name:'温度', units:[
+        { k:'c', n:'摄氏度 (℃)' },
+        { k:'f', n:'华氏度 (℉)' },
+        { k:'k', n:'开尔文 (K)' } ] },
+      dt: { name:'数据存储', units:[
+        { k:'tb', n:'TB', f:1099511627776 },
+        { k:'gb', n:'GB', f:1073741824 },
+        { k:'mb', n:'MB', f:1048576 },
+        { k:'kb', n:'KB', f:1024 },
+        { k:'b',  n:'B',  f:1 } ] }
+    };
+    // 温度：先归一到摄氏
+    function toC(v, u){ return u==='c' ? v : (u==='f' ? (v-32)*5/9 : v-273.15); }
+    function fromC(c, u){ return u==='c' ? c : (u==='f' ? c*9/5+32 : c+273.15); }
+
+    function fmtNum(x){
+      if (!isFinite(x)) return '—';
+      if (x !== 0 && (Math.abs(x) >= 1e9 || Math.abs(x) < 1e-6)) return x.toExponential(6);
+      return parseFloat(x.toPrecision(10)).toLocaleString('zh-CN', { maximumFractionDigits: 8 });
+    }
+
+    var cat = 'len';
+    function convert(){
+      var defs = CATS[cat];
+      var v = parseFloat($('val').value.replace(/,/g, ''));
+      var box = $('res');
+      var from = $('from').value;
+      var def = defs.units.filter(function(u){ return u.k === from; })[0];
+      $('quick').textContent = def ? ('当前单位：' + def.n) : '';
+      if (isNaN(v)){ box.innerHTML = '<div style="opacity:.5;padding:6px 0">请输入数字</div>'; return; }
+      var html = '';
+      defs.units.forEach(function(u){
+        var r;
+        if (cat === 'tp'){ r = fromC(toC(v, from), u.k); }
+        else { r = v * def.f / u.f; }
+        var hl = u.k === from ? 'background:var(--panel-2);border-radius:8px;' : '';
+        html += '<div style="' + hl + 'display:flex;justify-content:space-between;gap:12px;padding:7px 8px;border-bottom:1px dashed var(--border);font-size:14px">' +
+                '<span style="opacity:.65">' + u.n + '</span>' +
+                '<span class="mono" style="font-weight:600">' + fmtNum(r) + '</span></div>';
+      });
+      box.innerHTML = html;
+    }
+
+    function buildFrom(){
+      var defs = CATS[cat];
+      var sel = $('from'); sel.innerHTML = '';
+      defs.units.forEach(function(u, i){
+        var o = document.createElement('option');
+        o.value = u.k; o.textContent = u.n;
+        sel.appendChild(o);
+      });
+      sel.value = defs.units[1] ? defs.units[1].k : defs.units[0].k;
+    }
+
+    $('catRow').querySelectorAll('button').forEach(function(b){
+      b.onclick = function(){
+        cat = b.dataset.cat;
+        $('catRow').querySelectorAll('button').forEach(function(x){ x.classList.remove('primary'); });
+        b.classList.add('primary');
+        buildFrom();
+        convert();
+      };
+    });
+    $('val').oninput = convert;
+    $('from').onchange = convert;
+
+    $('btnSample').onclick = function(){
+      cat = 'len';
+      $('catRow').querySelectorAll('button').forEach(function(x){ x.classList.remove('primary'); });
+      $('catRow').querySelector('button[data-cat="len"]').classList.add('primary');
+      buildFrom();
+      $('val').value = '100';
+      $('from').value = 'cm';
+      convert();
+    };
+
+    buildFrom();
+    convert();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JWT 解析 · 解码 Header / Payload - util123 工具箱</title>
+<meta name="description" content="免费在线 JWT 解析工具：粘贴 JSON Web Token，一键解码 Header 与 Payload（base64url），格式化展示。纯前端运行，数据不上传，不验证签名。">
+<link rel="canonical" href="https://util123.cn/jwt/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="JWT,JSON Web Token,Token 解析,Token 解码,base64,开发调试,Header,Payload">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="JWT 解析 · 解码 Header / Payload">
+<meta property="og:description" content="粘贴 JWT，一键解码 Header 与 Payload 并格式化展示。纯前端运行，数据不上传，不验证签名。">
+<meta property="og:url" content="https://util123.cn/jwt/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JWT 解析 · 解码 Header / Payload">
+<meta name="twitter:description" content="JWT 一键解码 Header / Payload，格式化展示。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="white">JWT</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/jwt/#app","name":"JWT 解析工具","url":"https://util123.cn/jwt/","description":"在线解码 JSON Web Token 的 Header 与 Payload（base64url），格式化展示。纯前端运行，数据不上传，不验证签名。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["解码 JWT Header","解码 JWT Payload","格式化 JSON","自动识别过期时间"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"JWT 解析","item":"https://util123.cn/jwt/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"会验证签名吗？","acceptedAnswer":{"@type":"Answer","text":"不会。本工具只做 base64url 解码，展示 Header 和 Payload 的明文内容，不校验签名真伪，也不依赖密钥。验证签名请在你自己的服务端进行。"}},
+{"@type":"Question","name":"Token 会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有解码都在浏览器本地完成，Token 不会发送到任何服务器，适合粘贴包含敏感声明的测试 Token。"}},
+{"@type":"Question","name":"能识别过期时间吗？","acceptedAnswer":{"@type":"Answer","text":"能。如果 Payload 里有 exp / iat / nbf 等时间字段（Unix 秒），会额外显示可读的本地时间，并提示是否已过期。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="13" fill="#fff">JWT</text>
+      </svg>
+      <span class="name">JWT 解析</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 解码 Header / Payload</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">JWT</div>
+    <h1>JWT <span class="grad">解析</span></h1>
+    <p>粘贴 JSON Web Token，一键解码 Header 与 Payload。纯前端、不上传、不验签。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">粘贴 JWT（三段，用 . 分隔）</span>
+      <textarea id="inp" spellcheck="false" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnParse">解析</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="note" id="note">提示：只解码不验签，适合查看声明内容。</div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Header</span>
+      <pre class="out-box code" id="outH">—</pre>
+    </div>
+
+    <div class="card">
+      <span class="lbl">Payload</span>
+      <pre class="out-box code" id="outP">—</pre>
+      <div class="note" id="expNote"></div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>会验证签名吗？</dt>
+      <dd>不会。本工具只做 base64url 解码，展示 Header 和 Payload 明文，不校验签名真伪，也不依赖密钥。验证签名请在你自己的服务端进行。</dd>
+      <dt>Token 会上传吗？</dt>
+      <dd>不会。所有解码都在浏览器本地完成，Token 不会发送到任何服务器。</dd>
+      <dt>能识别过期时间吗？</dt>
+      <dd>能。如果 Payload 里有 exp / iat / nbf 等时间字段（Unix 秒），会额外显示可读的本地时间并提示是否已过期。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+function b64urlDecode(s){
+  s = s.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  try { return decodeURIComponent(escape(window.atob(s))); }
+  catch (e){ return null; }
+}
+function pretty(obj){
+  try { return JSON.stringify(obj, null, 2); } catch (e){ return String(obj); }
+}
+function showTimeFields(obj){
+  var names = { exp: '过期(exp)', iat: '签发(iat)', nbf: '生效(nbf)' };
+  var lines = [];
+  Object.keys(names).forEach(function(k){
+    if (obj[k] !== undefined && /^\d+$/.test(String(obj[k]))){
+      var d = new Date(obj[k] * 1000);
+      var txt = UY.fmtLocal(d);   // 统一走公共格式化，避免各浏览器 toLocaleString 差异
+      if (k === 'exp'){
+        txt += (Date.now() >= d.getTime()) ? '  ❌ 已过期' : '  ✅ 未过期';
+      }
+      lines.push(names[k] + '：' + txt);
+    }
+  });
+  return lines.join('\n');
+}
+function parse(){
+  var t = $('inp').value.trim();
+  if (!t){ $('outH').textContent = '—'; $('outP').textContent = '—'; $('expNote').textContent = ''; $('expNote').style.display = 'none'; $('note').textContent = '提示：只解码不验签，适合查看声明内容。'; return; }
+  var parts = t.split('.');
+  if (parts.length < 2){ $('note').textContent = '⚠️ 格式不对：JWT 应由 Header.Payload.Signature 三段用点分隔。'; return; }
+  var h = b64urlDecode(parts[0]), p = b64urlDecode(parts[1]);
+  if (h === null || p === null){ $('note').textContent = '⚠️ 解码失败：Header 或 Payload 不是合法的 base64url。'; return; }
+  try { $('outH').textContent = pretty(JSON.parse(h)); } catch (e){ $('outH').textContent = h; }
+  try { $('outP').textContent = pretty(JSON.parse(p)); } catch (e){ $('outP').textContent = p; }
+  var exp = '';
+  try { exp = showTimeFields(JSON.parse(p)); } catch (e){}
+  $('expNote').textContent = exp;
+  $('expNote').style.display = exp ? '' : 'none';   // 无时间字段时不显示空虚线框
+  $('note').textContent = '✅ 解码完成（仅展示明文，未验证签名）。';
+}
+$('btnParse').onclick = parse;
+$('btnSample').onclick = function(){
+  $('inp').value = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+  $('btnParse').onclick();
+};
+$('inp').addEventListener('input', function(){ if ($('inp').value.trim()) parse(); });
+$('btnClear').onclick = function(){ $('inp').value = ''; parse(); };
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

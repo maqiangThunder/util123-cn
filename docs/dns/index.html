@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>域名解析 · DNS 在线查询 - util123 工具箱</title>
+<meta name="description" content="免费在线域名解析（DNS 查询）工具：查询域名的 A、AAAA、CNAME、MX、TXT、NS、SOA 等记录，结果表格展示。基于公共 DNS-over-HTTPS 服务。">
+<link rel="canonical" href="https://util123.cn/dns/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="域名解析,DNS查询,DNS记录查询,域名IP,域名解析工具,A记录,AAAA,CNAME,MX,TXT,NS">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="域名解析 · DNS 在线查询">
+<meta property="og:description" content="查询域名的 A / AAAA / CNAME / MX / TXT / NS / SOA 记录，结果表格展示。">
+<meta property="og:url" content="https://util123.cn/dns/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="域名解析 · DNS 在线查询">
+<meta name="twitter:description" content="查询域名的各种 DNS 记录，结果表格展示。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="13" fill="white">DNS</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/dns/#app","name":"域名解析工具","url":"https://util123.cn/dns/","description":"在线 DNS 查询：一次查出域名的 A、AAAA、CNAME、MX、TXT、NS、SOA 全部记录，也可按类型查询。基于公共 DNS-over-HTTPS 服务（阿里/腾讯/Google/Cloudflare），纯前端发起。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 与现代浏览器，且能访问公共 DoH 服务","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["A 记录查询","AAAA 记录查询","CNAME 查询","MX 查询","TXT 查询","NS 查询","SOA 查询"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"域名解析","item":"https://util123.cn/dns/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"这个域名解析工具是怎么查到记录的？","acceptedAnswer":{"@type":"Answer","text":"工具在你的浏览器里直接调用公共的 DNS-over-HTTPS（DoH）服务（Cloudflare / Google）来解析域名，不经过本站服务器。"}},
+{"@type":"Question","name":"A 记录和 CNAME 有什么区别？","acceptedAnswer":{"@type":"Answer","text":"A 记录把域名指向一个 IPv4 地址，AAAA 指向 IPv6；CNAME 是别名，把一个域名指向另一个域名。MX 是邮件服务器记录，TXT 常用于校验域名所有权。"}},
+{"@type":"Question","name":"为什么有时查不到记录？","acceptedAnswer":{"@type":"Answer","text":"可能是该域名确实没有对应类型的记录、域名不存在（NXDOMAIN），或你的网络无法访问公共 DoH 服务。请检查域名拼写后重试。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Times New Roman,serif" font-weight="700" font-size="13" fill="#fff">DNS</text>
+      </svg>
+      <span class="name">域名解析</span>
+    </a>
+    <span class="tagline">util123 工具箱 · DNS 在线查询</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">DNS</div>
+    <h1>域名<span class="grad">解析</span></h1>
+    <p>输入域名一次查出 A / AAAA / CNAME / MX / TXT / NS / SOA 全部记录，也可按类型单独查。默认走国内可直连的公共 DoH，失败自动切换。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">查询</span>
+      <div class="row">
+        <div class="field" style="flex:2 1 260px">
+          <label for="domain">域名</label>
+          <input class="ipt" id="domain" type="text" placeholder="例如：util123.cn" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="rtype">记录类型</label>
+          <select id="rtype">
+            <option value="ALL">全部记录</option>
+            <option value="A">A</option>
+            <option value="AAAA">AAAA</option>
+            <option value="CNAME">CNAME</option>
+            <option value="MX">MX</option>
+            <option value="TXT">TXT</option>
+            <option value="NS">NS</option>
+            <option value="SOA">SOA</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="provider">解析服务</label>
+          <select id="provider">
+            <option value="auto">自动（推荐）</option>
+            <option value="alidns">阿里 DoH</option>
+            <option value="dohpub">腾讯 DoH</option>
+            <option value="google">Google</option>
+            <option value="cloudflare">Cloudflare</option>
+          </select>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="btnQuery">查询</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <div class="status" id="status" style="display:none"></div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">解析结果</span>
+      <div class="out-box" id="out" style="min-height:60px">在上方输入域名，点「查询」——默认一次查出全部类型的记录。</div>
+      <table class="tbl" id="tbl" style="display:none">
+        <thead><tr><th>类型</th><th>主机名</th><th>TTL</th><th>记录值</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="hint" id="srcHint" style="display:none;margin-top:10px"></div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>这个域名解析工具是怎么查到记录的？</dt>
+      <dd>工具在你的浏览器里直接调用公共的 DNS-over-HTTPS（DoH）服务解析域名，不经过本站服务器。默认「自动」模式优先使用阿里、腾讯 DoH（国内直连可用），失败会自动切换到 Google / Cloudflare；也可以手动指定解析服务。</dd>
+      <dt>「全部记录」是怎么查的？</dt>
+      <dd>会同时查询 A、AAAA、CNAME、MX、TXT、NS、SOA 七种类型，把结果合并成一张表格，按类型排序展示，方便一次性看清一个域名的完整解析情况。</dd>
+      <dt>A 记录和 CNAME 有什么区别？</dt>
+      <dd>A 记录把域名指向一个 IPv4 地址，AAAA 指向 IPv6；CNAME 是别名，把一个域名指向另一个域名。MX 是邮件服务器记录，TXT 常用于校验域名所有权。</dd>
+      <dt>为什么有时查不到记录？</dt>
+      <dd>可能是该域名确实没有对应类型的记录、域名不存在（NXDOMAIN），或你的网络无法访问所选的 DoH 服务——可以在「解析服务」里换一个再试。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var TYPES = {1:'A',28:'AAAA',5:'CNAME',15:'MX',16:'TXT',2:'NS',6:'SOA',12:'PTR',33:'SRV',257:'CAA'};
+var ORDER = {A:0,AAAA:1,CNAME:2,MX:3,TXT:4,NS:5,SOA:6,PTR:7,SRV:8,CAA:9};
+var ALL_TYPES = ['A','AAAA','CNAME','MX','TXT','NS','SOA'];
+/* 公共 DoH（JSON API）。国内环境优先阿里/腾讯，失败自动降级 Google/Cloudflare。
+   腾讯 doh.pub 不返回 CORS 头，浏览器直连必失败，改走本站 /api/doh/dohpub 同源反代(2026-10-29) */
+var PROVIDERS = {
+  alidns:     { label:'阿里 DoH',     url:function(n,t){ return 'https://dns.alidns.com/resolve?name='+encodeURIComponent(n)+'&type='+t; } },
+  dohpub:     { label:'腾讯 DoH',     url:function(n,t){ return 'https://util123.cn/api/doh/dohpub?name='+encodeURIComponent(n)+'&type='+t; } },
+  google:     { label:'Google',       url:function(n,t){ return 'https://dns.google/resolve?name='+encodeURIComponent(n)+'&type='+t; } },
+  cloudflare: { label:'Cloudflare',   url:function(n,t){ return 'https://cloudflare-dns.com/dns-query?name='+encodeURIComponent(n)+'&type='+t; } }
+};
+var AUTO_ORDER = ['alidns','dohpub','google','cloudflare'];
+
+function statusBox(ok,msg){ var s=$('status'); s.style.display='block'; s.className='status '+(ok?'ok':'err'); s.textContent=msg; }
+function cleanTxt(d){ return d.replace(/^"|"$/g,'').replace(/"\s*"/g,''); } // TXT 记录去引号
+
+function showTable(rows,srcLabel){
+  if (!rows.length){ $('tbl').style.display='none'; $('out').style.display='block'; $('out').textContent='没有查询到任何记录。'; $('srcHint').style.display='none'; return; }
+  rows.sort(function(a,b){ return (ORDER[a.type]!==undefined?ORDER[a.type]:99)-(ORDER[b.type]!==undefined?ORDER[b.type]:99) || a.name.localeCompare(b.name); });
+  $('out').style.display='none'; $('out').textContent=''; $('tbl').style.display='table';
+  $('tbody').innerHTML = rows.map(function(r){
+    return '<tr><td><b>'+UY.esc(r.type)+'</b></td><td>'+UY.esc(r.name)+'</td><td>'+UY.esc(String(r.ttl))+'</td><td>'+UY.esc(r.data)+'</td></tr>';
+  }).join('');
+  $('srcHint').style.display='block';
+  $('srcHint').textContent = '解析服务：' + srcLabel + ' · 共 ' + rows.length + ' 条记录';
+}
+
+/* 单次 DoH 查询：指定服务商，带 6 秒超时 */
+async function dohOnce(name, type, provKey){
+  var ac = new AbortController();
+  var timer = setTimeout(function(){ ac.abort(); }, 6000);
+  try{
+    var r = await fetch(PROVIDERS[provKey].url(name,type), {headers:{'Accept':'application/dns-json'}, signal:ac.signal, cache:'no-store'});
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    var j = await r.json();
+    return { j:j, prov:provKey };
+  } finally { clearTimeout(timer); }
+}
+/* 自动模式：按 AUTO_ORDER 依次尝试，成功即返回 */
+async function dohAuto(name, type){
+  var lastErr;
+  for (var i=0;i<AUTO_ORDER.length;i++){
+    try{ return await dohOnce(name, type, AUTO_ORDER[i]); }
+    catch(e){ lastErr=e; }
+  }
+  throw lastErr || new Error('查询失败');
+}
+async function doh(name, type, sel){
+  if (sel === 'auto') return dohAuto(name, type);
+  return dohOnce(name, type, sel);
+}
+/* 从应答提取记录行 */
+function rowsOf(j){
+  return (j.Answer||[]).map(function(a){
+    var t = TYPES[a.type] || ('TYPE'+a.type);
+    return { name:a.name, type:t, ttl:a.TTL, data: t==='TXT' ? cleanTxt(a.data) : a.data };
+  });
+}
+
+async function query(){
+  var name = $('domain').value.trim().toLowerCase();
+  var type = $('rtype').value, sel = $('provider').value;
+  name = name.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/\.$/,'');
+  if (!name){ UY.toast('请输入域名'); return; }
+  if (!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(name)){ statusBox(false,'域名格式看起来不太对，请检查。'); return; }
+  $('tbl').style.display='none'; $('out').style.display='block';
+  $('out').textContent='查询中……'; $('srcHint').style.display='none';
+  statusBox(true,'正在查询 '+name+(type==='ALL'?' 的全部记录':' 的 '+type+' 记录')+'……');
+  try{
+    var allRows = [], used = {}, firstErr = null;
+    var types = type==='ALL' ? ALL_TYPES : [type];
+    var results = await Promise.all(types.map(function(t){
+      return doh(name, t, sel).then(function(r){ return {t:t, r:r}; })
+        .catch(function(e){ if(!firstErr) firstErr=e; return {t:t, r:null}; });
+    }));
+    var okProv = null, okCount = 0;
+    results.forEach(function(res){
+      if (!res.r) return;
+      var rows = rowsOf(res.r.j);
+      // 状态码：0 正常，3 域名不存在
+      if (res.r.j.Status === 3){ if(!firstErr) firstErr = new Error('NXDOMAIN'); return; }
+      allRows = allRows.concat(rows);
+      used[res.r.prov] = (used[res.r.prov]||0) + 1;
+      okCount += rows.length;
+      if (!okProv) okProv = res.r.prov;
+    });
+    if (!allRows.length && okCount===0){
+      if (firstErr && firstErr.message==='NXDOMAIN'){
+        statusBox(false,'域名不存在（NXDOMAIN）。');
+        $('out').textContent='该域名不存在。';
+      } else if (firstErr){
+        statusBox(false,'查询失败：'+(firstErr.message||'')+'（可能是网络无法访问解析服务，可在上方换一个「解析服务」再试）');
+        $('out').textContent='查询失败，请稍后重试。';
+      } else {
+        statusBox(false,'没有查询到记录。');
+        showTable([], '');
+      }
+      return;
+    }
+    var label = okProv ? PROVIDERS[okProv].label : '';
+    // 多类型查询可能落到不同服务商，标注主用的
+    var provKeys = Object.keys(used);
+    if (provKeys.length>1) label += ' 等 ' + provKeys.length + ' 个服务';
+    showTable(allRows, label);
+    statusBox(true,'✅ 查询成功，共 '+allRows.length+' 条记录。');
+  }catch(e){
+    statusBox(false,'查询失败：'+(e.message||e)+'（可在上方换一个「解析服务」再试）');
+    $('out').style.display='block'; $('out').textContent='查询失败，请稍后重试。';
+  }
+}
+
+$('btnQuery').onclick = query;
+$('domain').addEventListener('keydown', function(e){ if(e.key==='Enter') query(); });
+$('btnClear').onclick = function(){ $('domain').value=''; $('tbl').style.display='none'; $('out').style.display='block'; $('out').textContent='在上方输入域名，点「查询」——默认一次查出全部类型的记录。'; $('srcHint').style.display='none'; $('status').style.display='none'; $('domain').focus(); };
+$('btnSample').onclick = function(){ $('domain').value='example.com'; $('btnQuery').onclick(); };
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+<script>(function(){var n=document.querySelector('.nav')||document.body.firstElementChild;if(!n)return;var b=document.createElement('div');b.setAttribute('data-gh-mirror','1');b.style.cssText='max-width:960px;margin:14px auto 0;padding:9px 14px;border:1px solid #d0d7de;border-left:3px solid #8b5cf6;border-radius:8px;background:#f6f8fa;font:13px/1.65 -apple-system,BlinkMacSystemFont,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;color:#57606a';b.innerHTML='<b style="color:#24292f">GitHub 镜像站</b> · 腾讯 DoH 需走主站同源反代，镜像站上这一条线路不可用（其余线路正常）。完整版请访问主站 <a href="https://util123.cn/dns/" style="color:#8250df;text-decoration:none;border-bottom:1px solid currentColor">util123.cn/dns/</a>';n.insertAdjacentElement('afterend',b);})();</script>
+</body>
+</html>

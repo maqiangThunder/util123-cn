@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>日期差计算 · 两个日期相差多久 - util123 工具箱</title>
+<meta name="description" content="免费在线日期差计算器：输入两个日期时间，立即算出相差多少天、小时、分钟、秒，也可算距今天还有多少天。做项目排期、生日倒计时、合同期限核对随手用。纯前端运行。">
+<link rel="canonical" href="https://util123.cn/datediff/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="日期差计算,日期相差,天数计算,倒计时,时间差,日期间隔">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="日期差计算 · 两个日期相差多久">
+<meta property="og:description" content="算两个日期相差多少天/小时/分钟/秒，及距今天数。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/datediff/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13h14v8H9z M9 13v-2M23 13v-2 M14 11v2 M19 11v2"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/datediff/#app","name":"日期差计算","url":"https://util123.cn/datediff/","description":"在线日期差计算工具，计算两个日期时间相差的天/时/分/秒及距今天数，纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["日期相减","相差天时分秒","距今天数"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"日期差计算","item":"https://util123.cn/datediff/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"日期差按什么时区算？","acceptedAnswer":{"@type":"Answer","text":"按你浏览器本地时区解析输入的日期时间，适合一般排期与倒计时；跨时区业务请以约定时区为准。"}},
+{"@type":"Question","name":"计算会上传日期吗？","acceptedAnswer":{"@type":"Answer","text":"不会。全部在浏览器本地完成，不发送任何数据。"}}
+]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13h14v8H9z M9 13v-2M23 13v-2 M14 11v2 M19 11v2"/></g>
+      </svg>
+      <span class="name">日期差计算</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 时间计算</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13h14v8H9z M9 13v-2M23 13v-2 M14 11v2 M19 11v2"/></g></svg></div>
+    <h1>日期<span class="grad">差计算</span></h1>
+    <p>输入两个日期时间，立即算出相差多少天、小时、分钟、秒，也能算距今天还有多久。纯前端，数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label class="lbl" for="d1">开始时间</label>
+          <input id="d1" class="ipt" type="datetime-local" style="height:42px">
+        </div>
+        <div class="field">
+          <label class="lbl" for="d2">结束时间</label>
+          <input id="d2" class="ipt" type="datetime-local" style="height:42px">
+        </div>
+      </div>
+      <div class="toolbar" style="margin:0 0 12px">
+        <button id="btnNow1" style="flex:1">开始=现在</button>
+        <button id="btnNow2" style="flex:1">结束=现在</button>
+        <button class="primary" id="btnToday" style="flex:1">距今天数</button>
+        <button id="btnSample" style="flex:1">示例</button>
+      </div>
+      <div id="res" class="grid" style="gap:10px"></div>
+      <p id="msg" style="color:var(--muted);font-size:13px;margin:10px 0 0"></p>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>日期差按什么时区算？</h3><p>按你浏览器本地时区解析输入的日期时间，适合一般排期与倒计时；跨时区业务请以约定时区为准。</p></div>
+    <div class="faq"><h3>计算会上传日期吗？</h3><p>不会。全部在浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    function pad(n){ return (n<10?'0':'') + n; }
+    function toLocalInput(d){
+      return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate())
+        + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+    function fmtParts(ms){
+      var s = Math.floor(Math.abs(ms)/1000);
+      var d = Math.floor(s/86400); s %= 86400;
+      var h = Math.floor(s/3600); s %= 3600;
+      var m = Math.floor(s/60); var sec = s%60;
+      return [
+        {k:'天', v:d}, {k:'小时', v:h}, {k:'分钟', v:m}, {k:'秒', v:sec}
+      ];
+    }
+    function render(ms){
+      var parts = fmtParts(ms);
+      var sign = ms < 0 ? '（结束早于开始）' : '';
+      /* 改用公共 .item 结构（移动端自动获得键值布局，不再私造内联样式） */
+      $('res').innerHTML = parts.map(function(p){
+        return '<div class="item" style="text-align:center">'
+          + '<div class="v" style="font-size:24px;font-weight:800;color:var(--primary)">'+p.v+'</div>'
+          + '<div class="k" style="margin-top:2px">'+p.k+'</div></div>';
+      }).join('');
+      $('msg').textContent = '合计 ' + (Math.abs(ms)/1000) + ' 秒 ' + sign;
+    }
+    function run(){
+      var a = new Date($('d1').value), b = new Date($('d2').value);
+      if (isNaN(a) || isNaN(b)){ $('res').innerHTML=''; $('msg').textContent='请选择两个完整的日期时间'; return; }
+      render(b - a);
+    }
+    function today(){
+      var a = new Date(); a.setHours(0,0,0,0);
+      var b = new Date($('d2').value);
+      if (isNaN(b)){ $('msg').textContent='请在“结束时间”选一个日期来算距今天数'; return; }
+      b = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+      var diff = Math.round((b - a)/86400000);
+      /* 不再顺手改写"开始时间"输入框（未声明的副作用） */
+      $('res').innerHTML = '<div class="item" style="grid-column:1/-1;text-align:center">'
+        + '<div class="v" style="font-size:24px;font-weight:800;color:var(--primary)">'+diff+'</div>'
+        + '<div class="k" style="margin-top:2px">距今天数（含正负）</div></div>';
+      $('msg').textContent = diff === 0 ? '就是今天' : (diff > 0 ? '还有 '+diff+' 天' : '已过去 '+Math.abs(diff)+' 天');
+    }
+    $('d1').addEventListener('input', run);
+    $('d2').addEventListener('input', run);
+    $('btnNow1').onclick = function(){ $('d1').value = toLocalInput(new Date()); run(); };
+    $('btnNow2').onclick = function(){ $('d2').value = toLocalInput(new Date()); run(); };
+    $('btnToday').onclick = today;
+    $('btnSample').onclick = function(){ $('d1').value='2026-01-01T09:00'; $('d2').value='2026-06-01T18:30'; run(); };
+    $('d1').value = toLocalInput(new Date(Date.now() - 86400000*3));
+    $('d2').value = toLocalInput(new Date());
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

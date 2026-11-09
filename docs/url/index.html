@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>URL 编码解码 · 在线转换与网址参数解析 - util123 工具箱</title>
+<meta name="description" content="免费在线 URL 编码 / 解码工具：网址与百分号编码互转，支持 URI 组件与完整网址两种模式，并可自动解析网址里的查询参数。纯前端处理，内容不上传服务器。">
+<link rel="canonical" href="https://util123.cn/url/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="URL编码,URL解码,urlencode,urldecode,网址编码,百分号编码,中文转URL编码,url参数解析,查询参数解析">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="URL 编码解码 · 在线转换与网址参数解析">
+<meta property="og:description" content="网址与百分号编码互转，支持 URI 组件 / 完整网址两种模式，并可解析查询参数。纯前端处理，内容不上传。">
+<meta property="og:url" content="https://util123.cn/url/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="URL 编码解码 · 在线转换与网址参数解析">
+<meta name="twitter:description" content="网址与百分号编码互转，支持 URI 组件 / 完整网址两种模式，并可解析查询参数。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="21" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="12" fill="white">%2520</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/url/#app","name":"URL 编码解码工具","url":"https://util123.cn/url/","description":"在线 URL 编码与解码工具：网址与百分号编码互转，支持 URI 组件与完整网址两种模式，并可自动解析网址里的查询参数。纯前端处理，内容不上传服务器。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["URL 编码（encodeURIComponent）","完整网址编码（encodeURI）","URL 解码还原中文","查询参数自动解析","参数表格展示","复制为 JSON"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"URL 编解码","item":"https://util123.cn/url/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"URL 编码（百分号编码）是做什么的？","acceptedAnswer":{"@type":"Answer","text":"网址里只能安全地使用一部分 ASCII 字符，中文、空格、& # ? 等字符必须转换成 % 加十六进制的形式，这就是 URL 编码（urlencode），浏览器和服务端会再解码还原。"}},
+{"@type":"Question","name":"URI 组件和完整网址两种模式有什么区别？","acceptedAnswer":{"@type":"Answer","text":"URI 组件模式（encodeURIComponent）会把 / : ? & = # 等分隔符也一起编码，适合编码单个参数值；完整网址模式（encodeURI）会保留这些分隔符，适合编码整条网址。"}},
+{"@type":"Question","name":"网址里的 + 号是什么？","acceptedAnswer":{"@type":"Answer","text":"在查询字符串中 + 常被当作空格，而标准编码里空格应是 %20。本工具解码时按标准 %XX 处理，不会把 + 自动替换成空格，避免误伤真实内容。"}},
+{"@type":"Question","name":"解析参数会上传我的网址吗？","acceptedAnswer":{"@type":"Answer","text":"不会。编码、解码与参数解析全部在浏览器本地完成，网址不会发送到服务器（也不会去访问该网址）。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="21" text-anchor="middle" font-family="Menlo,ui-monospace,Consolas,monospace" font-weight="700" font-size="12" fill="#fff" letter-spacing=".5">%20</text>
+      </svg>
+      <span class="name">URL 编解码</span>
+    </a>
+    <span class="tagline">util123 工具箱 · URL 编码 / 解码 / 参数解析</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">%20</div>
+    <h1>URL <span class="grad">编解码</span></h1>
+    <p>网址与百分号编码互转，支持「URI 组件 / 完整网址」两种模式，还能把网址里的查询参数拆成表格。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">编码模式</span>
+      <div class="seg" id="segMode">
+        <button type="button" class="on" data-mode="component">URI 组件</button>
+        <button type="button" data-mode="full">完整网址</button>
+      </div>
+      <span class="lbl" style="margin-top:18px">输入 <span class="tip">（原文或 %XX 编码串）</span></span>
+      <textarea id="inp" spellcheck="false" placeholder="粘贴要编码的文本，或要解码的 %XX 编码串 / 带参数的网址"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnEnc">编码 ↑</button>
+        <button id="btnDec">解码 ↓</button>
+        <button id="btnSwap">结果互换</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+      <span class="lbl" style="margin-top:18px">结果</span>
+      <div class="out-box" id="out">—</div>
+      <div class="status" id="status">输入内容后点击「编码」或「解码」。</div>
+      <div class="toolbar">
+        <button id="btnCopyOut">复制结果</button>
+        <button id="btnDl">下载为 .txt</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">查询参数解析 <span class="tip">（把 ?a=1&amp;b=2 拆成表格）</span></span>
+      <input class="ipt" id="qsIn" type="text" autocomplete="off" spellcheck="false"
+             placeholder="粘贴完整网址或只粘贴 a=1&amp;b=2 部分">
+      <div class="toolbar">
+        <button class="primary" id="btnParse">解析参数</button>
+        <button id="btnCopyJson">复制为 JSON</button>
+      </div>
+      <div id="qsBox" style="margin-top:4px"></div>
+      <div class="status" id="qsStatus">支持完整网址或纯查询串，参数会自动解码（中文可读）。</div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 常见问题：给搜索引擎与 AI 生成式引擎提供可引用的问答内容（GEO） -->
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>URL 编码（百分号编码）是做什么的？</dt>
+      <dd>网址里只能安全使用一部分 ASCII 字符，中文、空格、&amp; # ? 等字符必须转换成 % 加十六进制的形式，这就是 URL 编码（urlencode），浏览器与服务端会再解码还原。</dd>
+      <dt>URI 组件和完整网址两种模式有什么区别？</dt>
+      <dd>URI 组件模式（encodeURIComponent）会把 / : ? &amp; = # 等分隔符也一起编码，适合编码单个参数值；完整网址模式（encodeURI）会保留这些分隔符，适合编码整条网址。</dd>
+      <dt>网址里的 + 号是什么？</dt>
+      <dd>在查询字符串中 + 常被当作空格，而标准编码里空格应是 %20。本工具解码时按标准 %XX 处理，不会把 + 自动替换成空格，避免误伤真实内容。</dd>
+      <dt>解析参数会上传我的网址吗？</dt>
+      <dd>不会。编码、解码与参数解析全部在浏览器本地完成，网址不会发送到服务器（工具也不会去访问该网址）。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var outText = '', mode = 'component';
+
+function setStatus(msg, type){ var s = $('status'); s.textContent = msg; s.className = 'status' + (type ? ' ' + type : ''); }
+function setOut(t){ outText = t; $('out').textContent = t || '—'; }
+
+function encodeIt(){
+  var v = $('inp').value;
+  if(!v){ UY.toast('请先输入内容'); return; }
+  var r;
+  try{
+    r = mode === 'component' ? encodeURIComponent(v) : encodeURI(v);
+  }catch(e){ setStatus('编码失败：内容含非法字符（如落单的代理项）。', 'err'); return; }
+  setOut(r);
+  setStatus('编码完成 · ' + v.length + ' 字符 → ' + r.length + ' 字符（' + (mode === 'component' ? 'URI 组件' : '完整网址') + '）', 'ok');
+}
+function decodeIt(){
+  var v = $('inp').value.trim();
+  if(!v){ UY.toast('请先输入 %XX 编码串'); return; }
+  var r;
+  try{
+    r = mode === 'component' ? decodeURIComponent(v) : decodeURI(v);
+  }catch(e){
+    setOut(''); setStatus('解码失败：存在不完整的 %XX 转义（例如 % 后面不是两位十六进制）。', 'err'); return;
+  }
+  setOut(r);
+  setStatus('解码完成 · ' + v.length + ' 字符 → ' + r.length + ' 字符', 'ok');
+}
+
+/* ---- 查询参数解析 ---- */
+var qsRows = [];
+function parseQs(){
+  var v = $('qsIn').value.trim();
+  var box = $('qsBox');
+  qsRows = [];
+  if(!v){ box.innerHTML = ''; $('qsStatus').textContent = '请先粘贴网址或查询串。'; $('qsStatus').className = 'status'; return; }
+  var qs = v;
+  var q = v.indexOf('?');
+  if(q > -1) qs = v.slice(q + 1);
+  var h = qs.indexOf('#');
+  if(h > -1) qs = qs.slice(0, h);
+  try{
+    var sp = new URLSearchParams(qs);
+    sp.forEach(function(val, key){ qsRows.push([key, val]); });
+  }catch(e){
+    box.innerHTML = ''; $('qsStatus').textContent = '解析失败：查询串格式有误。'; $('qsStatus').className = 'status err'; return;
+  }
+  if(!qsRows.length){
+    box.innerHTML = '<div class="empty">没有解析到查询参数。</div>';
+    $('qsStatus').textContent = '这个网址里没有 ?key=value 形式的参数。';
+    $('qsStatus').className = 'status';
+    return;
+  }
+  var html = '<table class="tbl"><thead><tr><th>参数名</th><th>值</th></tr></thead><tbody>' +
+    qsRows.map(function(r){
+      /* URLSearchParams 的 key/val 均已解码，直接转义即可（再 decode 一次会双重解码，且裸 % 会抛 URIError） */
+      return '<tr><td>' + UY.esc(r[0]) + '</td><td>' + UY.esc(r[1]) + '</td></tr>';
+    }).join('') + '</tbody></table>';
+  box.innerHTML = html;
+  $('qsStatus').textContent = '解析完成 · 共 ' + qsRows.length + ' 个参数。';
+  $('qsStatus').className = 'status ok';
+}
+function qsToJson(){
+  if(!qsRows.length){ UY.toast('请先解析出参数'); return; }
+  var obj = {};
+  qsRows.forEach(function(r){
+    var k = r[0];
+    if(Object.prototype.hasOwnProperty.call(obj, k)){
+      if(Object.prototype.toString.call(obj[k]) === '[object Array]') obj[k].push(r[1]);
+      else obj[k] = [obj[k], r[1]];
+    }else obj[k] = r[1];
+  });
+  UY.copyWith(JSON.stringify(obj, null, 2), '参数已复制为 JSON');
+}
+
+/* ---- 事件 ---- */
+$('btnEnc').onclick = encodeIt;
+$('btnDec').onclick = decodeIt;
+$('btnSample').onclick = function(){
+  $('inp').value = 'https://example.com/搜索?q=测试&lang=中文';
+  $('btnEnc').onclick();
+};
+$('btnSwap').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可以互换'); return; }
+  $('inp').value = outText; setOut(''); setStatus('已把结果放回输入框，可继续转换。', '');
+};
+$('btnClear').onclick = function(){ $('inp').value = ''; setOut(''); setStatus('输入内容后点击「编码」或「解码」。', ''); $('inp').focus(); };
+$('btnCopyOut').onclick = function(){ if(!outText){ UY.toast('还没有结果可复制'); return; } UY.copyWith(outText, '结果已复制'); };
+$('btnDl').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可下载'); return; }
+  UY.download('url-util123.txt', URL.createObjectURL(new Blob([outText], { type: 'text/plain;charset=utf-8' })));
+  UY.toast('已下载 txt');
+};
+$('btnParse').onclick = parseQs;
+$('btnCopyJson').onclick = qsToJson;
+$('qsIn').addEventListener('input', function(){
+  $('qsStatus').textContent = '按「解析参数」或直接输入（会自动解析）。';
+  $('qsStatus').className = 'status';
+  parseQs();
+});
+UY.qsa('#segMode button').forEach(function(b){
+  b.onclick = function(){
+    mode = b.getAttribute('data-mode');
+    UY.qsa('#segMode button').forEach(function(x){ x.classList.toggle('on', x === b); });
+    setStatus('已切换到「' + (mode === 'component' ? 'URI 组件' : '完整网址') + '」模式。', '');
+  };
+});
+$('inp').addEventListener('input', function(){
+  var v = $('inp').value;
+  if(/%[0-9A-Fa-f]{2}/.test(v)) setStatus('检测到 %XX 编码，可点「解码 ↓」还原成可读内容。', '');
+  else setStatus('输入内容后点击「编码」或「解码」。', '');
+});
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

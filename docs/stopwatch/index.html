@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>秒表计时器 · 在线秒表与倒计时 - util123 工具箱</title>
+<meta name="description" content="免费在线秒表与倒计时工具：秒表支持计圈，倒计时结束自动响铃提醒。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/stopwatch/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="秒表,在线秒表,倒计时,计时器,计圈,倒计时提醒">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="秒表计时器 · 在线秒表与倒计时">
+<meta property="og:description" content="秒表支持计圈，倒计时结束自动响铃。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/stopwatch/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="秒表计时器 · 在线秒表与倒计时">
+<meta name="twitter:description" content="秒表与倒计时随手用。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="23" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="16" fill="white">%E2%8F%B2</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/stopwatch/#app","name":"秒表计时器","url":"https://util123.cn/stopwatch/","description":"在线秒表（支持计圈）与倒计时（结束响铃提醒）。纯前端运行，数据不上传。","applicationCategory":"UtilityApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["秒表计圈","倒计时提醒","Web Audio 响铃"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"秒表计时器","item":"https://util123.cn/stopwatch/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"倒计时结束会提醒吗？","acceptedAnswer":{"@type":"Answer","text":"会。倒计时归零时页面会弹出提示并播放一段浏览器合成的响铃声（Web Audio，无需任何外部文件），即使切到别的标签页也能听到。"}},
+{"@type":"Question","name":"数据会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。计时完全在浏览器本地运行，不涉及任何服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="23" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="16" fill="#fff">⏲</text>
+      </svg>
+      <span class="name">秒表计时器</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 秒表与倒计时</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">⏲</div>
+    <h1>秒表<span class="grad">计时器</span></h1>
+    <p>秒表支持计圈，倒计时结束自动响铃提醒。健身、煮蛋、专注番茄钟都用得上。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">秒表</span>
+      <div id="swDisp" style="font-family:var(--mono);font-size:40px;font-weight:800;text-align:center;letter-spacing:1px;margin:6px 0 14px">00:00.00</div>
+      <div class="toolbar" style="justify-content:center">
+        <button class="primary" id="swStart">开始</button>
+        <button id="swLap">计圈</button>
+        <button id="swReset">重置</button>
+      </div>
+      <ol id="swLaps" style="margin:14px 0 0;padding-left:20px;color:var(--muted);font-family:var(--mono);font-size:13px;max-height:180px;overflow:auto"></ol>
+    </div>
+
+    <div class="card">
+      <span class="lbl">倒计时</span>
+      <div style="display:flex;gap:10px;align-items:center;justify-content:center;margin:6px 0 12px">
+        <input id="tmMin" class="ipt" type="number" min="0" max="599" value="5" style="max-width:80px;text-align:center"> <span style="color:var(--muted)">分</span>
+        <input id="tmSec" class="ipt" type="number" min="0" max="59" value="0" style="max-width:80px;text-align:center"> <span style="color:var(--muted)">秒</span>
+      </div>
+      <div id="tmDisp" style="font-family:var(--mono);font-size:40px;font-weight:800;text-align:center;letter-spacing:1px;margin:6px 0 14px">05:00</div>
+      <div class="toolbar" style="justify-content:center">
+        <button class="primary" id="tmStart">开始</button>
+        <button id="tmReset">重置</button>
+      </div>
+      <div class="note" id="tmNote">提示：到点会响铃并弹出提醒。</div>
+    </div>
+
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>倒计时结束会提醒吗？</dt>
+      <dd>会。倒计时归零时页面会弹出提示并播放一段浏览器合成的响铃声（Web Audio，无需任何外部文件），即使切到别的标签页也能听到。</dd>
+      <dt>秒表能计圈吗？</dt>
+      <dd>能。点「计圈」会记录当前时刻与上一圈的差值，列表里逐条显示每圈用时。</dd>
+      <dt>数据会上传吗？</dt>
+      <dd>不会。计时完全在浏览器本地运行，不涉及任何服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+function fmtMS(ms){
+  var t = Math.max(0, ms);
+  var m = Math.floor(t / 60000);
+  var s = Math.floor((t % 60000) / 1000);
+  var cs = Math.floor((t % 1000) / 10);
+  function p(n, w){ n = String(n); while (n.length < w) n = '0'+n; return n; }
+  return p(m,2) + ':' + p(s,2) + '.' + p(cs,2);
+}
+/* 倒计时显示 mm:ss：分钟允许三位以上，不能用 slice 截断（599 分钟会被切成 "599:0"） */
+function fmtMMSS(ms){
+  var t = Math.max(0, ms);
+  var m = Math.floor(t / 60000);
+  var s = Math.floor((t % 60000) / 1000);
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+// ===== 秒表 =====
+var swBase = 0, swStartT = 0, swRunning = false, swRaf = 0, swLast = 0;
+var laps = [];
+function swRender(){
+  var e = swRunning ? swBase + (performance.now() - swStartT) : swBase;
+  $('swDisp').textContent = fmtMS(e);
+  swLast = e;
+}
+function swLoop(){ if (!swRunning) return; swRender(); swRaf = requestAnimationFrame(swLoop); }
+$('swStart').onclick = function(){
+  swRunning = !swRunning;
+  if (swRunning){ swStartT = performance.now(); this.textContent = '暂停'; this.classList.remove('primary'); }
+  else { swBase += performance.now() - swStartT; this.textContent = '继续'; this.classList.add('primary'); }
+  swLoop();
+};
+$('swLap').onclick = function(){
+  if (!swLast && !swBase) return;
+  var cur = swRunning ? swBase + (performance.now() - swStartT) : swBase;
+  var prev = laps.length ? laps[laps.length-1].total : 0;
+  laps.push({ total: cur, split: cur - prev });
+  var li = document.createElement('li');
+  li.textContent = '第 ' + laps.length + ' 圈：本圈 ' + fmtMS(cur - prev) + ' · 累计 ' + fmtMS(cur);
+  $('swLaps').appendChild(li);
+};
+$('swReset').onclick = function(){
+  swRunning = false; cancelAnimationFrame(swRaf);
+  swBase = 0; swLast = 0; laps = [];
+  $('swDisp').textContent = '00:00.00';
+  $('swLaps').innerHTML = '';
+  $('swStart').textContent = '开始'; $('swStart').classList.add('primary');
+};
+// ===== 倒计时 =====
+var tmTarget = 0, tmEnd = 0, tmRunning = false, tmRaf = 0;
+function tmRender(){
+  var left = tmEnd - performance.now();
+  if (left <= 0){ $('tmDisp').textContent = '00:00'; finishTimer(); return; }
+  $('tmDisp').textContent = fmtMMSS(left);
+  tmRaf = requestAnimationFrame(tmRender);
+}
+function beep(){
+  try{
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    var ctx = new AC();
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine'; o.frequency.value = 880;
+    g.gain.setValueAtTime(0.001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+    o.start(); o.stop(ctx.currentTime + 0.62);
+    o.onended = function(){ ctx.close(); };
+  }catch(e){}
+}
+function finishTimer(){
+  tmRunning = false; cancelAnimationFrame(tmRaf);
+  beep(); setTimeout(beep, 700);
+  $('tmStart').textContent = '开始'; $('tmStart').classList.add('primary');
+  $('tmNote').textContent = '⏰ 时间到！';
+  UY.toast('倒计时结束');
+}
+$('tmStart').onclick = function(){
+  if (tmRunning){
+    tmRunning = false; cancelAnimationFrame(tmRaf);
+    tmTarget = Math.max(0, tmEnd - performance.now());
+    this.textContent = '继续'; this.classList.add('primary');
+    return;
+  }
+  var m = parseFloat($('tmMin').value) || 0;
+  var s = parseFloat($('tmSec').value) || 0;
+  var dur = (m * 60 + s) * 1000;
+  if (dur <= 0){ UY.toast('请设置大于 0 的时间'); return; }
+  if (!tmTarget) tmTarget = dur;
+  else { dur = tmTarget; }
+  tmEnd = performance.now() + dur;
+  tmTarget = 0;
+  tmRunning = true;
+  this.textContent = '暂停'; this.classList.remove('primary');
+  $('tmNote').textContent = '倒计时进行中…';
+  tmRender();
+};
+$('tmReset').onclick = function(){
+  tmRunning = false; cancelAnimationFrame(tmRaf); tmTarget = 0;
+  var m = parseFloat($('tmMin').value) || 0, s = parseFloat($('tmSec').value) || 0;
+  $('tmDisp').textContent = fmtMMSS((m*60+s)*1000);
+  $('tmNote').textContent = '提示：到点会响铃并弹出提醒。';
+  $('tmStart').textContent = '开始'; $('tmStart').classList.add('primary');
+};
+// 初始显示：读输入框默认值，不硬编码
+(function(){
+  var m = parseFloat($('tmMin').value) || 0, s = parseFloat($('tmSec').value) || 0;
+  $('tmDisp').textContent = fmtMMSS((m*60+s)*1000);
+})();
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

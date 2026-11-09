@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>大小写转换 · 驼峰 / 蛇形 / 短横 - util123 工具箱</title>
+<meta name="description" content="免费在线大小写转换工具：一键转大写、小写、词首大写、句子首字母大写，以及驼峰 camelCase、蛇形 snake_case、短横 kebab-case。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/case/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="大小写转换,大写,小写,驼峰命名,camelCase,蛇形命名,snake_case,kebab-case,词首大写,在线转换">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="大小写转换 · 驼峰 / 蛇形 / 短横">
+<meta property="og:description" content="转大写、小写、词首大写、句子首字母大写，以及驼峰、蛇形、短横。纯前端运行，数据不上传。">
+<meta property="og:url" content="https://util123.cn/case/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大小写转换 · 驼峰 / 蛇形 / 短横">
+<meta name="twitter:description" content="大小写、驼峰、蛇形、短横互转。纯前端运行，数据不上传。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="15" fill="white">Aa</text></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/case/#app","name":"大小写转换工具","url":"https://util123.cn/case/","description":"在线大小写转换：一键转大写、小写、词首大写、句子首字母大写，以及驼峰 camelCase、蛇形 snake_case、短横 kebab-case。纯前端运行，数据不上传。","applicationCategory":"DeveloperApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["大写 / 小写","词首大写","句子首字母大写","驼峰 camelCase","蛇形 snake_case","短横 kebab-case"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"大小写转换","item":"https://util123.cn/case/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"驼峰、蛇形、短横分别是什么？","acceptedAnswer":{"@type":"Answer","text":"都是多词命名的写法：驼峰（camelCase）每个词首字母大写且连写无空格；蛇形（snake_case）全小写用下划线连接；短横（kebab-case）全小写用连字符连接。常见用于变量名、文件名、CSS 类名等。"}},
+{"@type":"Question","name":"中文会被转换吗？","acceptedAnswer":{"@type":"Answer","text":"大小写只作用于英文字母，中文、数字和标点保持原样。驼峰 / 蛇形 / 短横会以非字母数字字符作为词的边界来切分。"}},
+{"@type":"Question","name":"转换会上传文本吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有转换都在浏览器本地完成，文本不会发送到服务器。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Menlo,monospace" font-weight="700" font-size="15" fill="#fff">Aa</text>
+      </svg>
+      <span class="name">大小写转换</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 大写 / 驼峰 / 蛇形 / 短横</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true">Aa</div>
+    <h1>大小写<span class="grad">转换</span></h1>
+    <p>大写、小写、词首大写，再到驼峰、蛇形、短横命名。写代码、起变量名时随手就用。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <span class="lbl">输入文本</span>
+      <textarea id="inp" spellcheck="false" placeholder="输入要转换的英文，例如：hello world example"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="btnUpper">大写</button>
+        <button id="btnLower">小写</button>
+        <button id="btnTitle">词首大写</button>
+        <button id="btnSentence">句子首字母</button>
+      </div>
+      <div class="toolbar">
+        <button id="btnCamel">驼峰 camelCase</button>
+        <button id="btnSnake">蛇形 snake_case</button>
+        <button id="btnKebab">短横 kebab-case</button>
+        <button id="btnClear">清空</button>
+        <button id="btnSample">示例</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="lbl">转换结果</span>
+      <div class="out-box" id="out">—</div>
+      <div class="toolbar">
+        <button id="btnCopy">复制结果</button>
+      </div>
+    </div>
+
+    <!-- ▼ 广告位·底部横幅：投放时把 .ad-box 整个替换成广告代码（建议 728×90），容器样式保留 -->
+    <div class="ad-slot">
+      <div class="ad-box" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="geo-faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">常见问题</h2>
+    <dl>
+      <dt>驼峰、蛇形、短横分别是什么？</dt>
+      <dd>都是多词命名的写法：驼峰（camelCase）每个词首字母大写且连写无空格；蛇形（snake_case）全小写用下划线连接；短横（kebab-case）全小写用连字符连接。常见用于变量名、文件名、CSS 类名等。</dd>
+      <dt>中文会被转换吗？</dt>
+      <dd>大小写只作用于英文字母，中文、数字和标点保持原样。驼峰 / 蛇形 / 短横会以非字母数字字符作为词的边界来切分。</dd>
+      <dt>转换会上传文本吗？</dt>
+      <dd>不会。所有转换都在浏览器本地完成，文本不会发送到服务器。</dd>
+    </dl>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+<script src="/util123-cn/assets/tool.js?v=13"></script>
+<script>
+(function(){
+'use strict';
+var $ = UY.$;
+var outText = '';
+
+function setOut(t){ outText = t; $('out').textContent = t || '—'; }
+
+function words(s){
+  /* 先在驼峰边界插空格再切分，否则 helloWorld 会被并成一个词 */
+  return s.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .toLowerCase().split(/[^a-z0-9]+/i).filter(Boolean);
+}
+/* 撇号后不大写（don't → Don't），连字符/句点等后面才大写 */
+function titleCase(s){ return s.replace(/(^|[\s\t\n.()\[\]"-])([a-z])/g, function(m, p, c){ return p + c.toUpperCase(); }); }
+function sentenceCase(s){
+  return s.replace(/(^\s*|[.!?。！？\n]\s*)([a-z])/g, function(m, p, c){ return p + c.toUpperCase(); });
+}
+
+$('btnUpper').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(v.toUpperCase()); };
+$('btnLower').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(v.toLowerCase()); };
+$('btnTitle').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(titleCase(v)); };
+$('btnSentence').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(sentenceCase(v)); };
+$('btnCamel').onclick = function(){
+  var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; }
+  setOut(words(v).map(function(w, i){ return i === 0 ? w : w.charAt(0).toUpperCase() + w.slice(1); }).join(''));
+};
+$('btnSnake').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(words(v).join('_')); };
+$('btnKebab').onclick = function(){ var v = $('inp').value; if(!v){ UY.toast('请先输入'); return; } setOut(words(v).join('-')); };
+$('btnClear').onclick = function(){ $('inp').value=''; setOut(''); };
+$('btnSample').onclick = function(){
+  $('inp').value = 'hello world example text';
+  $('btnUpper').onclick();
+};
+$('btnCopy').onclick = function(){
+  if(!outText){ UY.toast('还没有结果可复制'); return; }
+  UY.copyWith(outText, '结果已复制');
+};
+$('out').onclick = function(){ if(outText) UY.copyWith(outText, '结果已复制'); };
+})();
+</script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

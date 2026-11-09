@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lorem 生成器 · 占位文本 - util123 工具箱</title>
+<meta name="description" content="免费在线 Lorem Ipsum 占位文本生成器：按段落、句子或单词生成，可自定义数量，一键复制，做原型、设计稿、排版测试随手用。纯前端运行，数据不上传。">
+<link rel="canonical" href="https://util123.cn/lorem/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="Lorem Ipsum,占位文本,乱数假文,占位文字,假文生成,Lorem生成器">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="Lorem 生成器 · 占位文本">
+<meta property="og:description" content="按段落/句子/单词生成占位文本，一键复制。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/lorem/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lorem 生成器 · 占位文本">
+<meta name="twitter:description" content="按段落/句子/单词生成占位文本，一键复制。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M9 11h14M9 16h14M9 21h9" opacity=".85"/><circle cx="23" cy="21" r="1.6" fill="white" stroke="none"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/lorem/#app","name":"Lorem 生成器","url":"https://util123.cn/lorem/","description":"在线 Lorem Ipsum 占位文本生成工具，支持按段落、句子或单词生成并自定义数量，一键复制。纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["段落生成","句子生成","单词生成","一键复制"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"Lorem 生成器","item":"https://util123.cn/lorem/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Lorem Ipsum 是什么？","acceptedAnswer":{"@type":"Answer","text":"Lorem Ipsum 是一段源自拉丁文的占位文本，排版与设计行业常用它填充版面，避免被真实内容干扰、专注于版式结构。"}},
+{"@type":"Question","name":"生成的文本会上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。所有生成都在你的浏览器本地完成，不发送任何数据。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 11h14M9 16h14M9 21h9" opacity=".85"/><circle cx="23" cy="21" r="1.6" fill="#fff" stroke="none"/></g>
+      </svg>
+      <span class="name">Lorem 生成器</span>
+    </a>
+    <span class="tagline">util123 工具箱 · 占位文本</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11h14M9 16h14M9 21h9" opacity=".85"/><circle cx="23" cy="21" r="1.6" fill="currentColor" stroke="none"/></g></svg></div>
+    <h1>Lorem <span class="grad">生成器</span></h1>
+    <p>按段落、句子或单词生成占位文本，做原型与设计稿随手用。纯前端，数据不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label class="lbl" for="type">生成类型</label>
+          <select id="type" class="ipt" style="height:42px">
+            <option value="para">段落</option>
+            <option value="sentence">句子</option>
+            <option value="word">单词</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="count">数量</label>
+          <input id="count" class="ipt" type="number" min="1" max="100" value="3" style="height:42px">
+        </div>
+        <div class="field" style="flex:0 1 160px">
+          <label class="lbl">&nbsp;</label>
+          <button class="primary" id="btnGen" style="width:100%;height:42px">生成</button>
+        </div>
+      </div>
+      <label class="lbl" for="out">生成结果</label>
+      <textarea id="out" class="ipt" style="min-height:220px;resize:vertical" readonly aria-label="生成结果"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopy">复制</button>
+        <span id="msg" style="color:var(--muted);font-size:13px;align-self:center"></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>Lorem Ipsum 是什么？</h3><p>Lorem Ipsum 是一段源自拉丁文的占位文本，排版与设计行业常用它填充版面，避免被真实内容干扰、专注于版式结构。</p></div>
+    <div class="faq"><h3>生成的文本会上传吗？</h3><p>不会。所有生成都在你的浏览器本地完成，不发送任何数据。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var WORDS = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum').split(' ');
+    function pick(){ return WORDS[Math.floor(Math.random() * WORDS.length)]; }
+    function sentence(){
+      var n = 8 + Math.floor(Math.random() * 7);
+      var s = [];
+      for (var i=0; i<n; i++) s.push(pick());
+      s[0] = s[0].charAt(0).toUpperCase() + s[0].slice(1);
+      return s.join(' ') + '.';
+    }
+    function paragraph(){
+      var n = 4 + Math.floor(Math.random() * 3);
+      var s = [];
+      for (var i=0; i<n; i++) s.push(sentence());
+      return s.join(' ');
+    }
+    function generate(){
+      var type = $('type').value;
+      var count = parseInt($('count').value, 10);
+      if (isNaN(count) || count < 1) count = 1;
+      if (count > 100) count = 100;
+      var res;
+      if (type === 'word'){
+        var w = []; for (var i=0;i<count;i++) w.push(pick());
+        res = w.join(' ');
+      } else if (type === 'sentence'){
+        var se = []; for (var j=0;j<count;j++) se.push(sentence());
+        res = se.join(' ');
+      } else {
+        var ps = []; for (var k=0;k<count;k++) ps.push(paragraph());
+        res = ps.join('\n\n');
+      }
+      $('out').value = res;
+      $('msg').textContent = count + ' ' + (type==='word'?'个单词':type==='sentence'?'个句子':'段') + ' · ' + res.length + ' 字符';
+    }
+    $('btnGen').onclick = generate;
+    $('btnCopy').onclick = function(){ UY.copyWith($('out').value, '已复制'); };
+    $('count').addEventListener('input', generate);
+    $('type').addEventListener('change', generate);
+    generate();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>

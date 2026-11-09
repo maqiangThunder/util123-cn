@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HTML / CSS 格式化 · 代码美化 - util123 工具箱</title>
+<meta name="description" content="免费在线 HTML 与 CSS 格式化工具：HTML 按 DOM 结构自动缩进美化，CSS 按规则与分号排版对齐，输入即格式化，一键复制。纯前端运行，代码不上传。">
+<link rel="canonical" href="https://util123.cn/htmlfmt/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="keywords" content="HTML格式化,CSS格式化,代码美化,HTML美化,CSS排版,代码格式化工具">
+<meta name="author" content="util123">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="util123 工具箱">
+<meta property="og:title" content="HTML / CSS 格式化 · 代码美化">
+<meta property="og:description" content="HTML 按结构缩进、CSS 按规则排版，一键复制。纯前端运行。">
+<meta property="og:url" content="https://util123.cn/htmlfmt/">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML / CSS 格式化 · 代码美化">
+<meta name="twitter:description" content="HTML 按结构缩进、CSS 按规则排版，一键复制。">
+<meta name="theme-color" content="#f6f8fa">
+<link rel="stylesheet" href="/util123-cn/assets/tool.css?v=17">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236366f1"/><stop offset="1" stop-color="%23a855f7"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(%23g)"/><g fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11 8 16l5 5"/><path d="M19 11l5 5-5 5"/><path d="M18 8l-4 16" opacity=".55"/></g></svg>'>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://util123.cn/htmlfmt/#app","name":"HTML / CSS 格式化","url":"https://util123.cn/htmlfmt/","description":"在线 HTML 与 CSS 代码格式化工具，HTML 按 DOM 结构缩进、CSS 按规则排版，一键复制。纯前端运行。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web)","browserRequirements":"需要支持 JavaScript 的现代浏览器","inLanguage":"zh-CN","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"publisher":{"@type":"Organization","name":"util123 工具箱","url":"https://util123.cn/"},"featureList":["HTML 结构缩进","CSS 规则排版","一键复制","离线可用"]},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":"首页","item":"https://util123.cn/"},
+{"@type":"ListItem","position":2,"name":"HTML / CSS 格式化","item":"https://util123.cn/htmlfmt/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"格式化会把我写的内容上传吗？","acceptedAnswer":{"@type":"Answer","text":"不会。代码只在你的浏览器本地解析与排版，不会发送到任何服务器。"}},
+{"@type":"Question","name":"HTML 格式化支持哪些情况？","acceptedAnswer":{"@type":"Answer","text":"基于浏览器 DOM 重新生成带缩进的结构化 HTML，能正确处理嵌套标签、自闭合标签与文本节点；注释与 doctype 会被省略，仅用于日常排版美化。"}},
+{"@type":"Question","name":"CSS 格式化会改动我的选择器吗？","acceptedAnswer":{"@type":"Answer","text":"不会。工具只调整缩进与换行，不改变选择器、属性名与属性值的任何内容。"}}]}
+]}
+</script>
+</head>
+<body>
+  <div class="nav">
+    <a class="brand" href="/util123-cn/" title="返回 util123 工具箱">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lgNav" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6366f1"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="9" fill="url(#lgNav)"/>
+        <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11 8 16l5 5"/><path d="M19 11l5 5-5 5"/><path d="M18 8l-4 16" opacity=".55"/></g>
+      </svg>
+      <span class="name">代码格式化</span>
+    </a>
+    <span class="tagline">util123 工具箱 · HTML / CSS 美化</span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnTheme" title="切换深色/浅色主题">🌙</button>
+  </div>
+
+  <div class="hero">
+    <div class="mark f3" aria-hidden="true"><svg viewBox="0 0 32 32" style="width:100%;height:100%"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 11 8 16l5 5"/><path d="M19 11l5 5-5 5"/><path d="M18 8l-4 16" opacity=".55"/></g></svg></div>
+    <h1>HTML / CSS <span class="grad">格式化</span></h1>
+    <p>挤在一行的代码，一键排得整整齐齐。纯前端，代码不出浏览器。</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field">
+          <label class="lbl" for="mode">格式化类型</label>
+          <select id="mode" style="height:42px">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+          </select>
+        </div>
+        <div class="field" style="flex:0 1 160px">
+          <label class="lbl">&nbsp;</label>
+          <button class="primary" id="btnFmt" style="width:100%;height:42px">格式化</button>
+        </div>
+      </div>
+      <label class="lbl" for="src">待格式化代码</label>
+      <textarea id="src" class="ipt" style="min-height:200px;resize:vertical" placeholder="把 HTML 或 CSS 代码粘到这里…" aria-label="待格式化代码">&lt;div class="card"&gt;&lt;h3&gt;标题&lt;/h3&gt;&lt;p&gt;一段文字&lt;/p&gt;&lt;ul&gt;&lt;li&gt;项目一&lt;/li&gt;&lt;li&gt;项目二&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</textarea>
+      <label class="lbl" for="out" style="margin-top:14px">格式化结果</label>
+      <textarea id="out" class="ipt" style="min-height:200px;resize:vertical" readonly aria-label="格式化结果"></textarea>
+      <div class="toolbar" style="margin-top:10px">
+        <button class="primary" id="btnCopy">复制结果</button>
+        <button id="btnSample">填入示例</button>
+        <span id="msg" style="color:var(--muted);font-size:13px;align-self:center"></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="geo-faq">
+    <h2>常见问题</h2>
+    <div class="faq"><h3>格式化会把我写的内容上传吗？</h3><p>不会。代码只在你的浏览器本地解析与排版，不会发送到任何服务器。</p></div>
+    <div class="faq"><h3>HTML 格式化支持哪些情况？</h3><p>基于浏览器 DOM 重新生成带缩进的结构化 HTML，能正确处理嵌套标签、自闭合标签与文本节点；注释与 doctype 会被省略，仅用于日常排版美化。</p></div>
+    <div class="faq"><h3>CSS 格式化会改动我的选择器吗？</h3><p>不会。工具只调整缩进与换行，不改变选择器、属性名与属性值的任何内容。</p></div>
+  </section>
+
+  <footer class="site-foot">
+    <div>util123 工具箱 · 小而美的在线工具 · 纯前端运行，数据不上传</div>
+    <nav>
+      <a href="/util123-cn/">首页</a>
+      <a href="https://util123.cn/feedback/">反馈建议</a>
+      <a href="/util123-cn/json/">JSON 工具箱</a>
+      <a href="/util123-cn/ip/">我的 IP</a>
+      <a href="/util123-cn/timestamp/">时间戳转换</a>
+      <a href="/util123-cn/qrcode/">二维码生成</a>
+      <a href="/util123-cn/password/">密码生成</a>
+      <a href="/util123-cn/base64/">Base64 编解码</a>
+      <a href="/util123-cn/url/">URL 编解码</a>
+      <a href="/util123-cn/hash/">哈希计算</a>
+      <a href="/util123-cn/regex/">正则表达式测试</a>
+      <a href="/util123-cn/radix/">进制转换</a>
+      <a href="/util123-cn/diff/">文本差异对比</a>
+      <a href="/util123-cn/unicode/">Unicode 转换</a>
+      <a href="/util123-cn/color/">颜色工具</a>
+      <a href="/util123-cn/imgbase64/">图片 Base64</a>
+      <a href="/util123-cn/uuid/">UUID 生成</a>
+      <a href="/util123-cn/m3u8/">m3u8 播放器</a>
+      <a href="/util123-cn/counter/">字数统计</a>
+      <a href="/util123-cn/lines/">文本整理</a>
+      <a href="/util123-cn/random/">随机数 · 抽奖</a>
+      <a href="/util123-cn/date/">日期计算</a>
+      <a href="/util123-cn/tz/">时区转换</a>
+      <a href="/util123-cn/case/">大小写转换</a>
+      <a href="/util123-cn/xml/">XML 格式化</a>
+      <a href="/util123-cn/encrypt/">加密解密</a>
+      <a href="/util123-cn/idcard/">身份证属地</a>
+      <a href="/util123-cn/mortgage/">房贷计算</a>
+      <a href="/util123-cn/dns/">域名解析</a>
+      <a href="/util123-cn/beian/">备案查询</a>
+      <a href="/util123-cn/dnscheck/">DNS 检测</a>
+      <a href="/util123-cn/rmb/">金额大写</a>
+      <a href="/util123-cn/jwt/">JWT 解析</a>
+      <a href="/util123-cn/csv/">CSV ↔ JSON</a>
+      <a href="/util123-cn/sqlfmt/">SQL 格式化</a>
+      <a href="/util123-cn/cron/">Cron 解析</a>
+      <a href="/util123-cn/subnet/">子网计算器</a>
+      <a href="/util123-cn/palette/">调色板生成</a>
+      <a href="/util123-cn/stopwatch/">秒表计时器</a>
+      <a href="/util123-cn/unit/">单位换算</a>
+      <a href="/util123-cn/gradient/">渐变生成器</a>
+      <a href="/util123-cn/contrast/">对比度检查</a>
+      <a href="/util123-cn/boxshadow/">盒阴影生成器</a>
+      <a href="/util123-cn/httpstatus/">HTTP 状态码</a>
+      <a href="/util123-cn/morse/">摩斯电码</a>
+      <a href="/util123-cn/ascii/">ASCII 码表</a>
+      <a href="/util123-cn/roman/">罗马数字</a>
+      <a href="/util123-cn/markdown/">Markdown 预览</a>
+      <a href="/util123-cn/htmlfmt/">HTML/CSS 格式化</a>
+      <a href="/util123-cn/lorem/">Lorem 生成</a>
+      <a href="/util123-cn/htmlentity/">HTML 实体编解码</a>
+      <a href="/util123-cn/fullhalf/">全角半角转换</a>
+      <a href="/util123-cn/datediff/">日期差计算</a>
+      <a href="/util123-cn/ua/">User-Agent 解析</a>
+    </nav>
+    <div class="site-beian">© 2026 util123.cn · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">沪ICP备2026050750号-3</a></div>
+  </footer>
+
+  <script src="/util123-cn/assets/tool.js?v=13"></script>
+  <script>
+  (function(){
+    var $ = UY.$;
+    var VOID = {area:1,base:1,br:1,col:1,embed:1,hr:1,img:1,input:1,link:1,meta:1,param:1,source:1,track:1,wbr:1};
+
+    function formatHTML(src){
+      var box = document.createElement('div');
+      box.innerHTML = src;
+      var pad = function(l){ return '  '.repeat(l); };
+      function walk(node, level){
+        var res = '';
+        node.childNodes.forEach(function(n){
+          if (n.nodeType === 3){
+            var t = n.textContent.replace(/\s+/g,' ').trim();
+            if (t) res += pad(level) + t + '\n';
+          } else if (n.nodeType === 1){
+            var tag = n.tagName.toLowerCase();
+            var attrs = '';
+            for (var k=0; k<n.attributes.length; k++){
+              var a = n.attributes[k];
+              attrs += ' ' + a.name + '="' + a.value + '"';
+            }
+            if (VOID[tag]){
+              res += pad(level) + '<' + tag + attrs + '>\n';
+            } else if (n.childNodes.length === 0){
+              res += pad(level) + '<' + tag + attrs + '></' + tag + '>\n';
+            } else if (n.childNodes.length === 1 && n.childNodes[0].nodeType === 3){
+              res += pad(level) + '<' + tag + attrs + '>' + n.childNodes[0].textContent.replace(/\s+/g,' ').trim() + '</' + tag + '>\n';
+            } else {
+              res += pad(level) + '<' + tag + attrs + '>\n';
+              res += walk(n, level + 1);
+              res += pad(level) + '</' + tag + '>\n';
+            }
+          }
+        });
+        return res;
+      }
+      return walk(box, 0).replace(/\n+$/,'\n');
+    }
+
+    function formatCSS(css){
+      css = css.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,' ').trim();
+      var out = '', level = 0, idx = 0, n = css.length;
+      var pad = function(l){ return '  '.repeat(l); };
+      while (idx < n){
+        var c = css[idx];
+        if (c === '{'){ out = out.replace(/\s+$/,'') + ' {\n'; level++; idx++; }
+        else if (c === '}'){ level = Math.max(0, level-1); out += '\n' + pad(level) + '}\n\n'; idx++; }
+        else if (c === ';'){ out = out.replace(/\s+$/,'') + ';\n' + pad(level); idx++; }
+        else {
+          var j = idx;
+          while (j < n && '{};'.indexOf(css[j]) === -1) j++;
+          var seg = css.slice(idx, j).trim();
+          if (seg) out += pad(level) + seg;
+          idx = j;
+        }
+      }
+      return out.replace(/\n{3,}/g,'\n\n').trim();
+    }
+
+    function run(){
+      var mode = $('mode').value;
+      var v = $('src').value;
+      if (!v.trim()){ $('msg').textContent = '先粘贴代码'; return; }
+      try {
+        $('out').value = (mode === 'css') ? formatCSS(v) : formatHTML(v);
+        $('msg').textContent = '已格式化 · ' + $('out').value.length + ' 字符';
+      } catch(e){
+        $('out').value = '';
+        $('msg').textContent = '解析出错：' + (e && e.message ? e.message : e);
+      }
+    }
+    $('btnFmt').onclick = run;
+    $('btnCopy').onclick = function(){ UY.copyWith($('out').value, '结果已复制'); };
+    /* 与站内其它输入型工具一致：清空后能一键恢复示例 */
+    var SAMPLE = '<div class="card"><h3>标题</h3><p>一段文字</p><ul><li>项目一</li><li>项目二</li></ul></div>';
+    $('btnSample').onclick = function(){ $('src').value = SAMPLE; run(); UY.toast('已填入示例'); };
+    $('src').addEventListener('input', function(){
+      if ($('out').value && $('src').value.trim()) run();
+    });
+    run();
+  })();
+  </script>
+<script src="https://stat.flightkb.com/t.js" async></script>
+</body>
+</html>
